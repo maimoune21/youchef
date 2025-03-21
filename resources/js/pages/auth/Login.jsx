@@ -1,15 +1,13 @@
 import React from "react";
 import TextInputGroup from "../../components/ui/TextInputGroup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "@inertiajs/react";
 import { useState } from "react";
 
 export const Login = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
 
   const HData = (e) => {
     const { name, value } = e.target;
@@ -17,8 +15,6 @@ export const Login = () => {
   };
   const HSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
-    navigate("/youchef-ui/home");
   };
   return (
     <>
@@ -43,7 +39,7 @@ export const Login = () => {
                       label="Email"
                       type="email"
                       id="mail"
-                      name="mail"
+                      name="email"
                       onChange={HData}
                       placeholder="Your Email Here..."
                       classLabel="font-bold text-sm"
@@ -56,7 +52,7 @@ export const Login = () => {
                       label="Password"
                       type="password"
                       id="pass"
-                      name="pass"
+                      name="password"
                       placeholder="Your Password Here..."
                       onChange={HData}
                       classLabel="font-bold text-sm"
@@ -66,7 +62,7 @@ export const Login = () => {
                 <tr>
                   <td colSpan={2}>
                     <Link
-                      to={`/youchef-ui/register`}
+                      href='/register'
                       className="text-xs text-green-600 font-bold hover:text-gray-500"
                     >
                       Create An Account !

@@ -1,10 +1,9 @@
 import React from "react";
 import TextInputGroup from "../../components/ui/TextInputGroup";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "@inertiajs/react";
 import { useState } from "react";
 
 export const Register = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState({
     fname: "",
     lname: "",
@@ -18,8 +17,6 @@ export const Register = () => {
   };
   const HSubmit = (e) => {
     e.preventDefault();
-
-    navigate("/youchef-ui/home");
   };
 
   return (
@@ -96,7 +93,7 @@ export const Register = () => {
                 <tr>
                   <td colSpan={2}>
                     <Link
-                      to={`/youchef-ui/login`}
+                      href='/login'
                       className="text-xs text-green-600 font-bold hover:text-gray-500"
                     >
                       Already Have An Account?

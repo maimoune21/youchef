@@ -10,12 +10,13 @@ import {
 import Logo from "../ui/Logo";
 import { Link } from "@inertiajs/react";
 
+
 const navLinks = [
   { path: "/", label: "Home", icon: HomeIcon },
   { path: "/meals", label: "Meals", icon: MealsIcon },
   { path: "/postMeal", label: "Post", icon: PostIcon },
   { path: "/favorites", label: "Favorites", icon: (props) => <HeartIcon size="size-7 fill-none" {...props} /> },
-  { path: "/profile/meals", label: "Profile", icon: ProfileIcon },
+  { path: "/login", label: "Profile", icon: ProfileIcon },
   {
     path: "/dashboard/reportedMeals",
     label: "Manage",
