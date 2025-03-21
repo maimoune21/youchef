@@ -1,37 +1,19 @@
 import React from "react";
 import Navbar from "../components/parts/NavBar";
 import Footer from "../components/parts/Footer";
+import { usePage } from "@inertiajs/react";
 
 const Layout = ({children}) => {
-  // const location = useLocation();
-  // const hiddenOverflowPaths = [
-  //   "/youchef-ui/Dashboard/ReportedMeals",
-  //   "/youchef-ui/Dashboard/UserAccounts",
-  //   "/youchef-ui/Dashboard/UserMessages",
-  //   "/youchef-ui/Meals",
-  // ];
-
-  // const noFooter = !hiddenOverflowPaths.includes(location.pathname);
-
-  // useEffect(() => {
-  //   if (hiddenOverflowPaths.includes(location.pathname)) {
-  //     document.body.classList.add("overflow-hidden");
-  //   } else {
-  //     document.body.classList.remove("overflow-hidden");
-  //   }
-
-  //   return () => {
-  //     document.body.classList.remove("overflow-hidden");
-  //   };
-  // }, [location.pathname]);
+  const {component} = usePage();
+  console.log(component)
 
   return (
     <>
       <Navbar />
-      <main className="pt-25 mb-10! max-md:pb-10 min-h-[50vh] grid place-items-center">
+      <main className={`pt-25 mb-13 max-md:pb-10 min-h-[50vh] grid place-items-center ${(component == "admin/Dashboard" || component == "meals/Meals") && "md:mb-0! max-h-[100vh] overflow-hidden"}`}>
         {children}
       </main>
-      {/* {noFooter && <Footer />} */}
+      {component == "admin/Dashboard" || component == "meals/Meals" ? "" : <Footer /> }
     </>
   );
 };

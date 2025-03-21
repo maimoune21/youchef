@@ -33,7 +33,7 @@ import {
 import { ReportedMeals } from "./ReportedMeals";
 import { UserMessages } from "./UserMessages";
 import { UserAccounts } from "./UserAccounts";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "@inertiajs/react";
 
 // Sample data (only admin data remains)
 const data = {
@@ -43,18 +43,17 @@ const data = {
   },
 };
 
-const Dashboard = () => {
+const Dashboard = ({location}) => {
   const [activeTeam, setActiveTeam] = React.useState({});
-  const location = useLocation();
 
   // Determine which component to render based on the URL
   const renderContent = () => {
-    switch (location.pathname) {
-      case "/youchef-ui/Dashboard/ReportedMeals":
+    switch (location) {
+      case "reportedMeals":
         return <ReportedMeals />;
-      case "/youchef-ui/Dashboard/UserMessages":
+      case "userMessages":
         return <UserMessages />;
-      case "/youchef-ui/Dashboard/UserAccounts":
+      case "userAccounts":
         return <UserAccounts />;
       default:
         return <ReportedMeals />;
@@ -77,22 +76,19 @@ const Dashboard = () => {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
-                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${
-                  state === "collapsed" ? "rounded-full" : ""
-                }`}
+                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${state === "collapsed" ? "rounded-full" : ""
+                  }`}
               >
                 <div
-                  className={`flex aspect-square size-8 items-center justify-center bg-white! rounded-full! border-1 border-[var(--bg-10)] ${
-                    state === "collapsed" ? "ml-2" : "hidden"
-                  }`}
+                  className={`flex aspect-square size-8 items-center justify-center bg-white! rounded-full! border-1 border-[var(--bg-10)] ${state === "collapsed" ? "ml-2" : "hidden"
+                    }`}
                 >
                   <img src={YouchefIcon} className="w-full p-1" alt="logo" />
                 </div>
                 <div className="grid text-left text-sm leading-tight">
                   <span
-                    className={`truncate font-semibold text-base ${
-                      state === "collapsed" ? "hidden" : ""
-                    }`}
+                    className={`truncate font-semibold text-base ${state === "collapsed" ? "hidden" : ""
+                      }`}
                   >
                     <Logo size="20" />
                   </span>
@@ -125,9 +121,8 @@ const Dashboard = () => {
             >
               <SidebarMenuButton
                 size="lg"
-                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex flex-col h-20 ${
-                  state === "collapsed" ? "" : ""
-                }`}
+                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex flex-col h-20 ${state === "collapsed" ? "" : ""
+                  }`}
               >
                 <div>
                   <Avatar className="rounded-lg h-8 w-8">
@@ -150,18 +145,16 @@ const Dashboard = () => {
   };
 
   const NavMain = () => {
-    const location = useLocation();
     const getButtonClass = (path) => {
-      return location.pathname === path
-        ? "bg-[var(--bg-10)]! text-white!"
-        : "bg-gray-200!";
+      return location == path
+        ? "bg-10 text-white!"
+        : "";
     };
     const getIconStyles = (path) => {
-      return location.pathname === path
+      return location == path
         ? "fill-white text-white"
         : "fill-black text-black";
     };
-
     return (
       <SidebarGroup className="pl-0 h-full mt-5">
         <SidebarGroupLabel className="flexy gap-2 border-b-1 rounded-none pb-2 mt-4">
@@ -170,45 +163,43 @@ const Dashboard = () => {
         </SidebarGroupLabel>
         <SidebarMenu className="flex gap-8 h-full mt-6">
           <SidebarMenuItem>
-            <Link to="/youchef-ui/Dashboard/ReportedMeals">
+            <Link href="/dashboard/reportedMeals">
               <SidebarMenuButton
                 tooltip="Reported Meals"
-                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! ${getButtonClass(
-                  "/youchef-ui/Dashboard/ReportedMeals"
-                )}`}
+                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! shadow hover:brightness-95 ${getButtonClass("reportedMeals")}`}
               >
                 <RepportIcon
-                  style={`size-7! ${getIconStyles("/youchef-ui/Dashboard/ReportedMeals")}`}
+                  style={`size-7! ${getIconStyles("reportedMeals")}`}
                 />
                 <span className="font-bold text-[17px]">Reported Meals</span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <Link to="/youchef-ui/Dashboard/UserAccounts">
+            <Link href="/dashboard/userAccounts">
               <SidebarMenuButton
                 tooltip="Users Accounts"
-                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! ${getButtonClass(
-                  "/youchef-ui/Dashboard/UserAccounts"
+                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! shadow hover:brightness-95 ${getButtonClass(
+                  "userAccounts"
                 )}`}
               >
                 <UserIcon
-                  style={`size-7! ${getIconStyles("/youchef-ui/Dashboard/UserAccounts")}`}
+                  style={`size-7! ${getIconStyles("userAccounts")}`}
                 />
                 <span className="font-bold text-[17px]">Users Accounts</span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <Link to="/youchef-ui/Dashboard/UserMessages">
+            <Link href="/dashboard/userMessages">
               <SidebarMenuButton
                 tooltip="User Messages"
-                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! ${getButtonClass(
-                  "/youchef-ui/Dashboard/UserMessages"
+                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! shadow hover:brightness-95 ${getButtonClass(
+                  "userMessages"
                 )}`}
               >
                 <MessagesIcon
-                  style={`size-6.5! ${getIconStyles("/youchef-ui/Dashboard/UserMessages")}`}
+                  style={`size-6.5! ${getIconStyles("userMessages")}`}
                 />
                 <span className="font-bold text-[17px]">User Messages</span>
               </SidebarMenuButton>
@@ -221,10 +212,10 @@ const Dashboard = () => {
 
   // Main component render
   return (
-    <SidebarProvider className="mt-[-1.5rem]! -mb-10 min-h-[87vh]">
+    <SidebarProvider className="-mt-5!">
       <Sidebar
         collapsible="icon"
-        className="relative! h-full bg-red-600 group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:w-20"
+        className="relative! h-[91vh] group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:w-20"
       >
         <SidebarHeader className="z-50!">
           <Compagy />

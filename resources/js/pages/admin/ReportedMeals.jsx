@@ -8,83 +8,12 @@ import { RepportIcon } from "@/../../public/icons/Icons";
 
 export const ReportedMeals = () => {
   const reportedMeals = [
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,}
   ];
   return (
     <div className="mt-4 max-md:mb-20 overflow-hidden">
@@ -107,7 +36,7 @@ export const ReportedMeals = () => {
             Filter
           </button>
         </div>
-        <div className="flex flex-col overflow-auto h-auto max-h-[70vh] scrollbar pb-10 max-md:pb-0!">
+        <div className="flex flex-col overflow-auto h-auto max-h-[75vh] scrollbar pb-10 max-md:pb-0!">
           {reportedMeals.map((meal) => (
             <div key={meal.id}>
               <div className="border-b-1 border-gray-400 py-2.5 px-2">

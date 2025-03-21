@@ -17,7 +17,7 @@ const navLinks = [
   { path: "/favorites", label: "Favorites", icon: (props) => <HeartIcon size="size-7 fill-none" {...props} /> },
   { path: "/profile/meals", label: "Profile", icon: ProfileIcon },
   {
-    path: "/Dashboard/ReportedMeals",
+    path: "/dashboard/reportedMeals",
     label: "Manage",
     icon: ManageIcon,
   },

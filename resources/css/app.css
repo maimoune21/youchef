@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "tailwindcss-animate";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -9,8 +10,6 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
-
-@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -187,7 +186,7 @@ body {
   @apply w-full h-13 py-1 rounded border-[0.3px] text-sm;
 }
 .sideBarBtn {
-  @apply flex bg-green-500 rounded-r-full py-8 pl-7 gap-4 cursor-pointer;
+  @apply flex rounded-r-full py-7 pl-7 gap-4 cursor-pointer;
 }
 .TopManageDashboard {
   @apply absolute top-2.5 left-1/2 transform -translate-x-1/2 py-2 px-5 flex items-center justify-center gap-4 border-b

@@ -37,7 +37,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import MealCard from "@/components/ui/MealCard";
-import axios from "axios";
 
 const Meals = () => {
   const [meals, setMeals] = useState([]);
@@ -51,12 +50,7 @@ const Meals = () => {
     { label: "Snaks", img: Snaks },
     { label: "Desserts", img: Desserts },
   ];
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/meals")
-      .then((res) => setMeals(res.data));
-    }, []);
-    console.log(meals);
+
   const [activeTeam, setActiveTeam] = useState({});
   const [categorieSelected, setCategorieSelected] = useState("");
   // Compagy Component
@@ -243,7 +237,7 @@ const Meals = () => {
         </SidebarContent>
         <SidebarRail />
       </Sidebar>
-      <SidebarInset>
+      <SidebarInset className="h-[91vh]">
         <header className="flex h-12 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <CustomSidebarTrigger />
@@ -255,7 +249,7 @@ const Meals = () => {
           </div>
         </header>
         <div className="flex-1 flex-col gap-4 p-4 max-sm:p-0 px-0 pt-0">
-          <div className="h-auto max-h-[85vh] overflow-hidden">
+          <div className="h-auto overflow-hidden">
             <div className="grid grid-cols-3 max-lg:grid-cols-2 max-tn:grid-cols-1! max-tn:pb-5! max-sm:pb-10! max-md:pb-20! gap-x-3 gap-y-4 px-2 h-auto pb-10 max-h-[85vh] overflow-y-auto scrollbar">
               {meals.map((meal) => (
                 <MealCard key={meal.id} meal={meal} />

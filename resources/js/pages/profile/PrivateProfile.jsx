@@ -49,6 +49,7 @@ const PrivateProfile = ({ status }) => {
 
     return (
         <div className="mx-auto bg-30 custom-shadow rounded-lg sm:p-6 w-[95%]">
+
             {/* Profile Header */}
             <div className='flex max-md:flex-col gap-5 max-md:p-5 max-md:pt-6'>
 

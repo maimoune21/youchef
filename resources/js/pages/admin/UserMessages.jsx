@@ -63,7 +63,7 @@ export const UserMessages = () => {
         <MessagesIcon style="size-7 text-gray-500" />
         <h1 className="text-lg text-gray-500">Users Messages</h1>
       </div>
-      <div className="sm:m-3 border-t-1 border-gray-400 h-auto max-h-[70vh] overflow-auto scrollbar">
+      <div className="sm:m-3 border-t-1 border-gray-400 h-auto max-h-[80vh] overflow-auto scrollbar">
         <div className="flex flex-col">
           {Users.map((user) => (
             <div key={user.id}>
