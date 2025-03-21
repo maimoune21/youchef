@@ -1,0 +1,12 @@
+.checkmark.active{
+  animation: checkmark 300ms ease-out forwards;
+}
+
+@keyframes checkmark {
+  0%{
+      stroke-dashoffset: 75;
+  }
+  100%{
+      stroke-dashoffset: 0;
+  }
+}

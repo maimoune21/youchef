@@ -1,0 +1,37 @@
+@keyframes pulseRadius {
+  0%, 100% {
+    border-top-left-radius: 80%;
+    border-top-right-radius: 40%;
+    border-bottom-left-radius: 30%;
+    border-bottom-right-radius: 50%;
+  }
+  20% {
+    border-top-left-radius: 40%;
+    border-top-right-radius: 30%;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 60%;
+  }
+  40% {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 60%;
+    border-bottom-left-radius: 40%;
+    border-bottom-right-radius: 70%;
+  }
+  60% {
+    border-top-left-radius: 60%;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 80%;
+    border-bottom-right-radius: 40%;
+  }
+  80% {
+    border-top-left-radius: 90%;
+    border-top-right-radius: 70%;
+    border-bottom-left-radius: 60%;
+    border-bottom-right-radius: 50%;
+  }
+}
+
+
+.pulse-radius {
+  animation: pulseRadius 10s ease infinite;
+}
