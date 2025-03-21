@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title', 250);
             $table->string('meal_img', 250)->nullable();
             $table->time('duration')->nullable();
-            $table->string('country', 60)->nullable();
             $table->text('description')->nullable();
             $table->json('ingredients')->nullable();
             $table->json('instructions')->nullable();

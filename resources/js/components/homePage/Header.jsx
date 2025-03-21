@@ -6,7 +6,6 @@ import Burger from "@/../../public/images/HeaderBurger.png";
 import { Link } from "@inertiajs/react";
 import { Link as ScrollLink } from 'react-scroll';
 import BrowseRecipesButton from "../ui/BrowseRecipesButton";
-
 // Import shadow background animation
 import "@/../css/ShadowBackground-animation.css";
 
@@ -83,7 +82,7 @@ export default function Header() {
               <p className="hidden md:block text-xs">Contact Us</p>
             </div>
           </ScrollLink>
-          <Link to="/youchef-ui/AboutUs">
+          <Link href="/aboutUs">
             <div className="flexy md:flex-col">
               <div className="flexy">
                 <AboutUsIcon size="size-9.5" />
@@ -111,7 +110,7 @@ export default function Header() {
             and occasion to share your own throughout a strong food lovers
             community
           </p>
-          <Link to={"/youchef-ui/meals"}>
+          <Link href="/meals">
             <BrowseRecipesButton label="Browse Recipes" />
           </Link>
         </div>

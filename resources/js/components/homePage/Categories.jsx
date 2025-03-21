@@ -57,7 +57,7 @@ export default function SectionCategories() {
                                     key={index}
                                     className="basis-1/3 sm:basis-1/4 md:basis-1/4 lg:basis-1/6 pl-0!"
                                 >
-                                    <Link to={"/youchef-ui"} className="p-1 gap-2 flexy flex-col group hover:text-green">
+                                    <Link href="/youchef-ui" className="p-1 gap-2 flexy flex-col group hover:text-green">
                                       <div className="object-cover w-25 rounded-full aspect-square overflow-hidden">
                                         <img
                                             src={cat.img}
@@ -71,8 +71,8 @@ export default function SectionCategories() {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-                        <CarouselPrevious className="max-md:hidden cursor-pointer bg-30" />
-                        <CarouselNext className="max-md:hidden cursor-pointer bg-30" />
+                        <CarouselPrevious className="max-md:hidden cursor-pointer bg-30 hover:bg-green-600!" />
+                        <CarouselNext className="max-md:hidden cursor-pointer bg-30 hover:bg-green-600!" />
                     </Carousel>
                 </div>
             </div>

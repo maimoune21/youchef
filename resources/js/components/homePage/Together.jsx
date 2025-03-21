@@ -30,7 +30,7 @@ const Together = () => {
                 alt="Explore Recipes"
                 className="togetherRadiusAnimation aspect-square w-[80%] md:w-70 rounded-full"
               />
-              <Link to="/youchef-ui/Meals">
+              <Link href="/meals">
                 <BrowseRecipesButton label="Explore Recipes" />
               </Link>
             </div>
@@ -41,7 +41,7 @@ const Together = () => {
                 alt="Explore Recipes"
                 className="togetherRadiusAnimation2 aspect-square w-[80%] md:w-70 rounded-full"
               />
-              <Link to='/youchef-ui/postMeal'>
+              <Link href='/postMeal'>
                 <BrowseRecipesButton label="Become a Chef" />
               </Link>
             </div>

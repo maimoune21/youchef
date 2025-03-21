@@ -60,7 +60,7 @@ const Footer = () => {
                 </span>
                 <ul className="space-y-2">
                   <li>
-                    <Link to="/youchef-ui/AboutUs" className="footer-link">
+                    <Link href="/aboutUs" className="footer-link">
                       About YouChef
                     </Link>
                   </li>
@@ -76,7 +76,7 @@ const Footer = () => {
                     </ScrollLink>
                   </li>
                   <li>
-                    <Link to="/youchef-ui/FAQS" className="footer-link">
+                    <Link href="/FAQS" className="footer-link">
                       FAQs
                     </Link>
                   </li>
@@ -122,7 +122,7 @@ const Footer = () => {
                 <ul className="space-y-2">
                   <li>
                     <Link
-                      to="/youchef-ui/Privacy"
+                      href="/privacy"
                       className="footer-link"
                     >
                       Privacy Policy
@@ -130,7 +130,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      to="/youchef-ui/TermsOfService"
+                      href="/termsOfService"
                       className="footer-link"
                     >
                       Terms of Service
