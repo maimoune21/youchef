@@ -8,83 +8,12 @@ import { RepportIcon } from "@/../../public/icons/Icons";
 
 export const ReportedMeals = () => {
   const reportedMeals = [
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
-    {
-      id: 1,
-      img: Tagine,
-      title: "Traditional Moroccan Chicken Tagine",
-      chef: "Fatima El Fassi",
-      views: 215,
-      day: "3",
-      description:
-        "Description Ipsum is simply dummy text of the printing and typesetting industry.",
-      repports: 100,
-    },
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 1, img: Tagine, title: "Traditional Moroccan Chicken Tagine", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,}
   ];
   return (
     <div className="mt-4 max-md:mb-20 overflow-hidden">

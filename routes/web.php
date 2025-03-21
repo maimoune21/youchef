@@ -20,5 +20,9 @@ Route::get("/favorites", function(){
 });
 
 Route::get("/profile/{status}", function($status){
+    return  inertia("profile/PrivateProfile",["status"=>$status]);
+});
+
+Route::get("/profile/{status}", function($status){
     return  inertia("profile/PrivateProfile", compact('status'));
 });

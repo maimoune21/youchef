@@ -10,8 +10,7 @@ import Snaks from "@/../../public/images/categories/Snaks.jpg";
 import Desserts from "@/../../public/images/categories/Desserts.jpeg";
 import YouchefIcon from "@/../../public/images/YouChef-Icon.svg";
 import Logo from "../../components/ui/Logo";
-import Tajine from "@/../../public/images/Tajine.jpg";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -76,7 +75,7 @@ const Meals = () => {
               <SidebarMenuButton
                 size="lg"
                 className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${
-                  state === "collapsed" ? "rounded-full" : ""
+                  state === "collapsed" ? "rounded-full mt-2" : ""
                 }`}
               >
                 <div

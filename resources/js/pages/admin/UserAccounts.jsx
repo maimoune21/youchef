@@ -9,62 +9,12 @@ import { UserIcon } from "@/../../public/icons/Icons";
 
 export const UserAccounts = () => {
   const Users = [
-    {
-      id: 1,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
-    {
-      id: 2,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
-    {
-      id: 3,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
-    {
-      id: 3,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
-    {
-      id: 3,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
-    {
-      id: 3,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
-    {
-      id: 3,
-      img: Profile,
-      fname: "Mohamed",
-      lname: "Maimoune",
-      email: "mohamadmaimoune1@gmail.com",
-      bio: "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
-    },
+    {id: 1,img: Profile,fname: "Mohamed",lname: "Maimoune",email: "mohamadmaimoune1@gmail.com",bio: "Description Ipsum is simply dummy text of the printing and typesetting industry.",},
+    {id: 2,img: Profile,fname: "Imrane",lname: "Mejouate",email: "mejouate.imrane@gmail.com",bio: "Description Ipsum is simply dummy text of the printing and typesetting industry.",},
+    {id: 3,img: Profile,fname: "Mouad",lname: "Echehaibi",email: "professor.mouad@gmail.com",bio: "Description Ipsum is simply dummy text of the printing and typesetting industry.",},
+    {id: 4,img: Profile,fname: "Mohamed",lname: "Maimoune",email: "mohamadmaimoune1@gmail.com",bio: "Description Ipsum is simply dummy text of the printing and typesetting industry.",},
+    {id: 5,img: Profile,fname: "Imrane",lname: "Mejouate",email: "mejouate.imrane@gmail.com",bio: "Description Ipsum is simply dummy text of the printing and typesetting industry.",},
+    {id: 6,img: Profile,fname: "Mouad",lname: "Echehaibi",email: "professor.mouad@gmail.com",bio: "Description Ipsum is simply dummy text of the printing and typesetting industry.",},
   ];
   return (
     <div className="mt-4 max-md:mb-20 overflow-hidden">
