@@ -44,7 +44,7 @@ const Navbar = () => {
               ]
             : []),
         {
-            path: isAuthenticated ? "/privateProfile" : "/login",
+            path: isAuthenticated ? "/privateProfile" : "/register",
             label: "Profile",
             icon: (props) =>
                 isAuthenticated ? (
