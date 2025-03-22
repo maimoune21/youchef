@@ -68,7 +68,7 @@ export const Register = () => {
                       label="Email"
                       type="email"
                       id="mail"
-                      name="mail"
+                      name="email"
                       placeholder="Your Email Here..."
                       value={data.email}
                       onChange={HData}
@@ -82,7 +82,7 @@ export const Register = () => {
                       label="Password"
                       type="password"
                       id="pass"
-                      name="pass"
+                      name="password"
                       placeholder="Your Password Here..."
                       value={data.password}
                       onChange={HData}

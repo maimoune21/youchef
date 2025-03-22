@@ -15,6 +15,7 @@ export const Login = () => {
   };
   const HSubmit = (e) => {
     e.preventDefault();
+    post('/login');
   };
   return (
     <>

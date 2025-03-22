@@ -30,4 +30,7 @@ Route::middleware('auth')->group(function(){
     Route::get("/dashboard/{location}", function ($location) {
         return inertia("admin/Dashboard", compact("location"));
     });
+
+    // Logout :
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
