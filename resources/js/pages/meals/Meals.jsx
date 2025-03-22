@@ -40,14 +40,14 @@ import MealCard from "@/components/ui/MealCard";
 const Meals = ({ data }) => {
   const [meals, setMeals] = useState([]);
   const Categories = [
-    { label: "All", img: All },
-    { id: 1, label: "Salad", img: Salad },
-    { id: 2, label: "Cake", img: Cake },
-    { id: 3, label: "Soup", img: Soup },
-    { id: 4, label: "Drinks", img: Drinks },
-    { id: 5, label: "Pasta", img: Pasta },
-    { id: 6, label: "Snaks", img: Snaks },
-    { id: 7, label: "Desserts", img: Desserts },
+    { id: 1, label: 'All' ,img: All },
+    { id: 2, label: "Salad",    img: Salad },
+    { id: 3, label: "Cake",     img: Cake },
+    { id: 4, label: "Soup",     img: Soup },
+    { id: 5, label: "Drinks",   img: Drinks },
+    { id: 6, label: "Pasta",    img: Pasta },
+    { id: 7, label: "Snaks",    img: Snaks },
+    { id: 8, label: "Desserts", img: Desserts },
   ];
 
   const [categorieSelected, setCategorieSelected] = useState();

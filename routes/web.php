@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MealController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,8 @@ use Inertia\Inertia;
 
 // Meals :
 Route::get("/meals", [MealController::class, "index"]);
+// Categories
+Route::get('/categories', [CategoryController::class, 'index']);
 
 // Open Pages :
 Route::inertia("/", "general/Home");
