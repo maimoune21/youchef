@@ -10,8 +10,7 @@ import Snaks from "@/../../public/images/categories/Snaks.jpg";
 import Desserts from "@/../../public/images/categories/Desserts.jpeg";
 import YouchefIcon from "@/../../public/images/YouChef-Icon.svg";
 import Logo from "../../components/ui/Logo";
-import Tajine from "@/../../public/images/Tajine.jpg";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -38,21 +37,47 @@ import {
 } from "@/components/ui/accordion";
 import MealCard from "@/components/ui/MealCard";
 
-const Meals = () => {
+const Meals = ({ data }) => {
   const [meals, setMeals] = useState([]);
   const Categories = [
     { label: "All", img: All },
-    { label: "Salad", img: Salad },
-    { label: "Cake", img: Cake },
-    { label: "Soup", img: Soup },
-    { label: "Drinks", img: Drinks },
-    { label: "Pasta", img: Pasta },
-    { label: "Snaks", img: Snaks },
-    { label: "Desserts", img: Desserts },
+    { id: 1, label: "Salad", img: Salad },
+    { id: 2, label: "Cake", img: Cake },
+    { id: 3, label: "Soup", img: Soup },
+    { id: 4, label: "Drinks", img: Drinks },
+    { id: 5, label: "Pasta", img: Pasta },
+    { id: 6, label: "Snaks", img: Snaks },
+    { id: 7, label: "Desserts", img: Desserts },
   ];
 
+  const [categorieSelected, setCategorieSelected] = useState();
+  const [countries, setCountries] = useState();
+  const [difficulty, setDifficulty] = useState();
+
+  useEffect(() => {
+    setMeals(
+      data.filter(meal => {
+        const [hours, minutes, seconds] = meal.duration.split(':').map(Number);
+        const totalMinutes = hours * 60 + minutes + seconds / 60;
+        console.log(totalMinutes)
+        let state = 0
+        difficulty == "hard"
+        ? state = 21
+        : difficulty == "medium"
+        ? state = 20
+        : difficulty == "easy"
+        ? state = 10
+        : state = 0
+        
+        const isCategoryMatch = categorieSelected ? meal.idCategory == categorieSelected : true;
+        const isCountryMatch = countries ? meal.country === countries : true;
+        const isDifficultyMatch = difficulty == "hard"? totalMinutes > 20 : difficulty == "normal" ? totalMinutes >= 10 && totalMinutes <= 20 : difficulty == "easy" ? totalMinutes < 10 : true;
+        return isCategoryMatch && isCountryMatch && isDifficultyMatch;
+      })
+    );
+  }, [categorieSelected, countries, difficulty, data]);
+
   const [activeTeam, setActiveTeam] = useState({});
-  const [categorieSelected, setCategorieSelected] = useState("");
   // Compagy Component
   const Compagy = () => {
     const { isMobile } = useSidebar();
@@ -69,22 +94,19 @@ const Meals = () => {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
-                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${
-                  state === "collapsed" ? "rounded-full mt-2" : ""
-                }`}
+                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${state === "collapsed" ? "rounded-full" : ""
+                  }`}
               >
                 <div
-                  className={`flex aspect-square size-8 items-center justify-center bg-white! rounded-full! border-1 border-[var(--bg-10)] ${
-                    state === "collapsed" ? "ml-2" : "hidden"
-                  }`}
+                  className={`flex aspect-square size-8 items-center justify-center bg-white! rounded-full! border-1 border-[var(--bg-10)] ${state === "collapsed" ? "ml-2" : "hidden"
+                    }`}
                 >
                   <img src={YouchefIcon} className="w-full p-1" alt="logo" />
                 </div>
                 <div className="grid text-left text-sm leading-tight">
                   <span
-                    className={`truncate font-semibold text-base ${
-                      state === "collapsed" ? "hidden" : ""
-                    }`}
+                    className={`truncate font-semibold text-base ${state === "collapsed" ? "hidden" : ""
+                      }`}
                   >
                     <Logo size="20" />
                   </span>
@@ -104,9 +126,8 @@ const Meals = () => {
         <SidebarMenu className="mt-0">
           <span className="flexy">
             <h1
-              className={`text-center font-bold border-b-1 border-[var(--bg-10)] px-14 pb-0.5 mb-1 ${
-                state === "collapsed" ? "hidden" : ""
-              }`}
+              className={`text-center font-bold border-b-1 border-[var(--bg-10)] px-14 pb-0.5 mb-1 ${state === "collapsed" ? "hidden" : ""
+                }`}
             >
               Difficulty
             </h1>
@@ -114,12 +135,13 @@ const Meals = () => {
           <select
             name=""
             id=""
-            className={`border-1 rounded-md py-2 pl-2 mx-4 text-sm ${
-              state === "collapsed" ? "hidden" : ""
-            }`}
+            value={difficulty}
+            className={`border-1 rounded-md py-2 pl-2 mx-4 text-sm ${state === "collapsed" ? "hidden" : ""
+              }`}
+            onChange={e => {setDifficulty(e.target.value); console.log(e.target.value)}}
           >
-            <option value="" disabled selected>
-              Select a Difficulty
+            <option value="" selected>
+              All Difficulties
             </option>
             <option value="easy">Easy</option>
             <option value="normal">Normal</option>
@@ -129,9 +151,8 @@ const Meals = () => {
         <SidebarMenu className="mt-2">
           <span className="flexy">
             <h1
-              className={`text-center font-bold border-b-1 border-[var(--bg-10)] px-15 pb-0.5 mb-1 ${
-                state === "collapsed" ? "hidden" : ""
-              }`}
+              className={`text-center font-bold border-b-1 border-[var(--bg-10)] px-15 pb-0.5 mb-1 ${state === "collapsed" ? "hidden" : ""
+                }`}
             >
               Kitchen
             </h1>
@@ -139,12 +160,13 @@ const Meals = () => {
           <select
             name=""
             id=""
-            className={`border-1 rounded-md py-2 pl-2 mx-4 text-sm ${
-              state === "collapsed" ? "hidden" : ""
-            }`}
+            value={countries}
+            className={`border-1 rounded-md py-2 pl-2 mx-4 text-sm ${state === "collapsed" ? "hidden" : ""
+              }`}
+            onChange={e => setCountries(e.target.value)}
           >
-            <option value="" disabled selected>
-              Select a Kitchen
+            <option value="" selected>
+              All Kitchens
             </option>
             <Countries />
           </select>
@@ -158,9 +180,8 @@ const Meals = () => {
           >
             <AccordionItem value="item-1">
               <AccordionTrigger
-                className={`w-full relative pb-2! pr-1 gap-0! hover:no-underline cursor-pointer ${
-                  state === "collapsed" ? "hidden" : ""
-                }`}
+                className={`w-full relative pb-2! pr-1 gap-0! hover:no-underline cursor-pointer ${state === "collapsed" ? "hidden" : ""
+                  }`}
               >
                 <h1 className={`text-center w-full font-bold`}>Categories</h1>
                 <span className="bg-10 h-[1.5px] w-full absolute bottom-0"></span>
@@ -182,20 +203,17 @@ const Meals = () => {
                   {Categories.map((categorie, index) => (
                     <SidebarMenuItem key={index} className="">
                       <div
-                        onClick={() => {
-                          setCategorieSelected(categorie.label);
-                        }}
+                        onClick={_ => setCategorieSelected(categorie.id)}
                       >
                         <SidebarMenuButton
                           tooltip="Reported Meals"
-                          className={`sideBarCategoriesBtn ${
-                            categorieSelected == categorie.label
-                              ? "bg-10 hover:text-white"
-                              : categorieSelected == "" &&
-                                categorie.label == "All"
+                          className={`sideBarCategoriesBtn ${categorieSelected == categorie.id
+                            ? "bg-10 hover:text-white"
+                            : categorieSelected == "" &&
+                              categorie.id == "All"
                               ? "bg-10 hover:text-white"
                               : ""
-                          } group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-2! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! hover:brightness-95`}
+                            } group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-2! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! hover:brightness-95`}
                         >
                           <div className="flexy w-full">
                             <span className="font-bold text-[17px]">
@@ -242,9 +260,9 @@ const Meals = () => {
           <div className="flex items-center gap-2 px-4">
             <CustomSidebarTrigger />
             <h1 className="text-xl p-2 font-bold">
-              {!categorieSelected || categorieSelected == "All"
+              {categorieSelected === "All" || !categorieSelected
                 ? "All Categories"
-                : categorieSelected}
+                : Categories.find(category => category.id === categorieSelected)?.label || categorieSelected}
             </h1>
           </div>
         </header>
