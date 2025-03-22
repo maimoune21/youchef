@@ -2,36 +2,42 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MealController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    // Guest Pages
-    Route::inertia("/", "general/Home");
-    Route::inertia("/aboutUs", "general/AboutUs");
-    Route::inertia("/popularMeals", "general/PopularMeals");
-    Route::inertia("/FAQS", "general/FAQS");
-    Route::inertia("/privacy", "general/Privacy");
-    Route::inertia("/termsOfService", "general/TermsOfService");
-    Route::get("/meals",[MealController::class,"index"]);
+// Open Pages :
+Route::inertia("/", "general/Home");
+Route::inertia("/aboutUs", "general/AboutUs");
+Route::inertia("/popularMeals", "general/PopularMeals");
+Route::inertia("/FAQS", "general/FAQS");
+Route::inertia("/privacy", "general/Privacy");
+Route::inertia("/termsOfService", "general/TermsOfService");
+Route::get("/meals", [MealController::class, "index"]);
 
+// Guest Pages :
+Route::middleware('guest')->group(function () {
     // Register :
-    Route::inertia('/register', 'auth/Register');
-    Route::post('/register', [AuthController::class, "register"]);
+    Route::inertia('/register', 'auth/Register')->name('register');
+    Route::post('/register', [AuthController::class, "register"])->name('register.post');
     // Login :
-    Route::inertia('/login', 'auth/Login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::inertia('/login', 'auth/Login')->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 });
 
-Route::middleware('auth')->group(function(){
+// User Pages :
+Route::middleware('auth')->group(function () {
     Route::inertia('/postMeal', 'meals/postMeal');
     Route::inertia('/favorites', 'meals/Favorites');
     Route::get("/profile/{status}", function ($status) {
         return  inertia("profile/PrivateProfile", compact("status"));
     });
-    Route::get("/dashboard/{location}", function ($location) {
-        return inertia("admin/Dashboard", compact("location"));
-    });
-
+    // Private Profile
+    Route::inertia('/privateProfile', 'profile/PrivateProfile');
     // Logout :
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+// Admin Pages :
+Route::middleware('auth')->group(function () {
+    Route::inertia('/admin/dashboard', 'admin/Dashboard');
 });

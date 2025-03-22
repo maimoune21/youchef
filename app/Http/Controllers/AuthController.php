@@ -14,12 +14,14 @@ class AuthController extends Controller
         //Validation
         $data = $request->validate(
             [
-                'fname' => ['required', 'max:80'],
-                'lname' => ['required', 'max:80'],
+                'firstName' => ['required', 'max:80'],
+                'lastName' => ['required', 'max:80'],
                 'email' => ['required', 'max:80', 'email', 'unique:users'],
                 'password' => ['required', 'min:4', 'confirmed'],
             ]
         );
+        //Give The User a Role
+        $data['idRole'] = 2;
         //Register
         $user = User::create($data);
         //Login

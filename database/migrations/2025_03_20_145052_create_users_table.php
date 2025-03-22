@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('password', 80);
             $table->string('profile_img', 250)->nullable();
             $table->string('bio', 255)->nullable();
-            $table->foreignId('idMeal')->constrained('meals', 'idMeal')->onDelete('cascade');
-            $table->foreignId('idRole')->constrained('roles', 'idRole')->onDelete('cascade');
+            $table->foreignId('idMeal')->nullable()->constrained('meals', 'idMeal')->onDelete('cascade');
+            $table->foreignId('idRole')->default(1)->constrained('roles', 'idRole')->onDelete('cascade');
             $table->timestamps();
         });
 
