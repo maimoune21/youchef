@@ -1,46 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { SignalIcon, HeartIcon, TimeIcon, DotsIcon, EyeIcon } from "@/../../public/icons/Icons";
 import Profile from "@/../../public/images/Profile.png";
+import tajine from "@/../../public/images/Tajine.jpg";
+import { Link } from "@inertiajs/react";
 
 const MealCard = ({ meal }) => {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    meal.duration > 5
-      ? setStatus("hard")
-      : meal.duration > 3
-      ? setStatus("medium")
-      : setStatus("easy");
-  }, [meal.duration]); // Added dependency
+    const [hours, minutes, seconds] = meal.duration.split(':').map(Number);
+    const totalMinutes = hours * 60 + minutes + seconds / 60;
+
+    if (totalMinutes > 20) {
+      setStatus("hard");
+    } else if (totalMinutes >= 10 && totalMinutes <= 20) {
+      setStatus("medium");
+    } else {
+      setStatus("easy");
+    }
+  }, [meal.duration]);
 
   const calculateDaysDifference = () => {
-    const today = new Date(meal.date);
+    const today = new Date(meal.created_at);
     const target = new Date();
     const differenceInMs = target - today;
     const differenceInDays = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
     return differenceInDays;
   };
 
+  const formatDuration = (duration) => {
+    const [hours, minutes, seconds] = duration.split(":").map(Number);
+  
+    const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const paddedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  
+    if (hours > 0) {
+      return `${hours}:${paddedMinutes}:${paddedSeconds}`;
+    } else if (minutes > 0) {
+      return `${minutes}:${paddedSeconds}`;
+    } else {
+      return `00:${paddedSeconds}`;
+    }
+  };
+
   return (
-    <div className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden">
+    <Link href={"/"} className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden">
       <div className="relative w-full">
         <img
-          src={meal.image}
+          src={tajine}
           alt={meal.title}
           className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
         />
-        <div className="absolute bottom-3 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 gap-1">
+        <div className="absolute bottom-3 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
           <TimeIcon className="w-6 h-6" />
-          {meal.duration} min
+          {formatDuration(meal.duration)}
         </div>
         <div
-          className={`absolute bottom-3 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 pt-0.5 ${
-            status === "hard"
+          className={`absolute bottom-3 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${status === "hard"
               ? "text-red-500"
               : status === "medium"
-              ? "text-orange-500"
-              : "text-green-500"
-          }`}
+                ? "text-orange-500"
+                : "text-green-500"
+            }`}
         >
           <div className="flexy px-1">
             <SignalIcon size="size-5.5 pb-0.5" />
@@ -81,7 +102,7 @@ const MealCard = ({ meal }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

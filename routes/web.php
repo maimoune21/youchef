@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MealController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -11,7 +12,7 @@ Route::middleware('guest')->group(function () {
     Route::inertia("/FAQS", "general/FAQS");
     Route::inertia("/privacy", "general/Privacy");
     Route::inertia("/termsOfService", "general/TermsOfService");
-    Route::inertia("/meals", "meals/Meals");
+    Route::get("/meals",[MealController::class,"index"]);
 
     // Register :
     Route::inertia('/register', 'auth/Register');
