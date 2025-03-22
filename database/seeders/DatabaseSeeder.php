@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
           CategoriesTableSeeder::class,
+          KitchensTableSeeder::class,
           MealsTableSeeder::class,
       ]);
     }
