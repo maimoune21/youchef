@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('kitchens', function (Blueprint $table) {
             $table->id('idKitchen');
-            $table->string('nom', 80)->unique();
+            $table->string('name', 80)->unique();
+            $table->string('picture', 80)->unique();
             $table->timestamps();
         });
     }

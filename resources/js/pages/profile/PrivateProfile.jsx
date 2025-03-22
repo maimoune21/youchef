@@ -122,7 +122,7 @@ const PrivateProfile = ({ status }) => {
                 <div className="flex max-md:flex-col max-md:text-center grow gap-5">
                     {/* Avatar */}
                     <img
-                        src={user.profile_img || ProfileImg}
+                        src={`/uploads/users/${user.profile_img}` || ProfileImg}
                         alt="Profile"
                         className="rounded-full size-40 max-md:m-auto"
                     />

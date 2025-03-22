@@ -133,7 +133,7 @@ const Dashboard = ({ location }) => {
                                 <div>
                                     <Avatar className="rounded-lg h-8 w-8">
                                         <AvatarImage
-                                            src={user.profile_img ? `/${user.profile_img}` : ProfileImg}
+                                            src={user.profile_img ? `/uploads/users/${user.profile_img}` : ProfileImg}
                                             alt="profile"
                                             className="rounded-full"
                                         />

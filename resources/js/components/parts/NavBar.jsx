@@ -50,7 +50,7 @@ const Navbar = () => {
                 isAuthenticated ? (
                     auth.user.profile_img ? (
                         <img
-                            src={`/${auth.user.profile_img}`}
+                            src={`/uploads/users/${auth.user.profile_img}`}
                             alt="profile"
                             className="w-6.5 rounded-full object-cover"
                             {...props}

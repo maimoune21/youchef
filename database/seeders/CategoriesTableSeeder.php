@@ -14,14 +14,38 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['nom' => 'All'],
-            ['nom' => 'Salad'],
-            ['nom' => 'Cake'],
-            ['nom' => 'Soup'],
-            ['nom' => 'Drinks'],
-            ['nom' => 'Pasta'],
-            ['nom' => 'Snaks'],
-            ['nom' => 'Desserts'],
+            [
+                'name' => 'All',
+                'picture' => 'all.png',
+            ],
+            [
+                'name' => 'Salad',
+                'picture' => 'salad.png',
+            ],
+            [
+                'name' => 'Cake',
+                'picture' => 'cake.png',
+            ],
+            [
+                'name' => 'Soup',
+                'picture' => 'soup.png',
+            ],
+            [
+                'name' => 'Drinks',
+                'picture' => 'drinks.png',
+            ],
+            [
+                'name' => 'Pasta',
+                'picture' => 'pasta.png',
+            ],
+            [
+                'name' => 'Snaks',
+                'picture' => 'snaks.png',
+            ],
+            [
+                'name' => 'Desserts',
+                'picture' => 'desserts.png',
+            ],
         ];
         DB::table('categories')->insert($categories);
     }

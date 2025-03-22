@@ -8,17 +8,19 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import Salad from "@/../../public/images/categories/Salad.png";
-import Cake from "@/../../public/images/categories/Cake.png";
-import Soup from "@/../../public/images/categories/Soup.png";
-import Drinks from "@/../../public/images/categories/Drinks.png";
-import Pasta from "@/../../public/images/categories/Pasta.png";
-import Snaks from "@/../../public/images/categories/Snaks.jpg";
-import Desserts from "@/../../public/images/categories/Desserts.jpeg";
+import All from "@/../../public/images/categories/all.png";
+import Salad from "@/../../public/images/categories/salad.png";
+import Cake from "@/../../public/images/categories/cake.png";
+import Soup from "@/../../public/images/categories/soup.png";
+import Drinks from "@/../../public/images/categories/drinks.png";
+import Pasta from "@/../../public/images/categories/pasta.png";
+import Snaks from "@/../../public/images/categories/snaks.png";
+import Desserts from "@/../../public/images/categories/desserts.png";
 import { Link } from "@inertiajs/react";
 
 export default function SectionCategories() {
     const Categories = [
+        { label: "All", img: All },
         { label: "Salad", img: Salad },
         { label: "Cake", img: Cake },
         { label: "Soup", img: Soup },
