@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DashboardClose, DashboardOpen } from "@/../../public/icons/Icons";
+import { DashboardClose, DashboardOpen, FilterIcon } from "@/../../public/icons/Icons";
 import All from "@/../../public/images/categories/All.jpg";
 import Salad from "@/../../public/images/categories/Salad.png";
 import Cake from "@/../../public/images/categories/Cake.png";
@@ -94,7 +94,7 @@ const Meals = ({ data }) => {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
-                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${state === "collapsed" ? "rounded-full" : ""
+                className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-gray-200 pointer-events-none select-none flexy ${state === "collapsed" ? "rounded-full mt-2" : "h-10"
                   }`}
               >
                 <div
@@ -105,10 +105,11 @@ const Meals = ({ data }) => {
                 </div>
                 <div className="grid text-left text-sm leading-tight">
                   <span
-                    className={`truncate font-semibold text-base ${state === "collapsed" ? "hidden" : ""
+                    className={`flexy gap-2 truncate font-semibold text-base ${state === "collapsed" ? "hidden" : ""
                       }`}
                   >
-                    <Logo size="20" />
+                    <FilterIcon style='size-5' />
+                    <p>Filter</p>
                   </span>
                 </div>
               </SidebarMenuButton>
