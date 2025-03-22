@@ -9,10 +9,11 @@ export const TextInputGroup = ({
   onChange,
   classLabel,
   className,
+  error
 }) => {
   return (
     <>
-      <label htmlFor={id} className={classLabel}>
+      <label htmlFor={id} className={`${classLabel}`}>
         {label}
       </label>
       <input
@@ -22,9 +23,9 @@ export const TextInputGroup = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`LogInInput ${className}`}
-        required
-      />
+        className={`LogInInput ${className} ${error && `border-red-600!`}`}
+        />
+        {error ? <p className="text-sm text-red-600">{error}</p> : null}
     </>
   );
 };

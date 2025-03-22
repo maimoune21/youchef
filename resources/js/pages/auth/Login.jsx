@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import TextInputGroup from "../../components/ui/TextInputGroup";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 
 export const Login = () => {
-    const { data, setData, post, processing, errors } = useForm({
+    const { flash } = usePage().props;
+    const { data, setData, post, errors } = useForm({
         email: "",
         password: "",
     });
+    const [error, setError] = useState({});
     const HData = (e) => {
         setData(e.target.name, e.target.value);
+        if (errors[e.target.name] || flash.failed) {
+            delete errors[e.target.name];
+            flash.failed = null;
+        }
+        setError((prevState) => ({
+            ...prevState,
+            [e.target.name]: "" 
+        }));
+        if (flash.failed) {
+            flash.failed = null;
+        }
     };
     const HSubmit = (e) => {
         e.preventDefault();
+        const newErrors = {};
+        if(!data.email){
+            newErrors.email = "Email is required.";
+        } else if (!data.password){
+            newErrors.password = "Password is required.";
+        }
+        if (Object.keys(newErrors).length) {
+            setError(newErrors);
+            return;
+        }
         post("/login");
     };
     return (
@@ -41,6 +64,7 @@ export const Login = () => {
                                             onChange={HData}
                                             placeholder="Your Email Here..."
                                             classLabel="font-bold text-sm"
+                                            error={error.email}
                                         />
                                     </td>
                                 </tr>
@@ -54,11 +78,18 @@ export const Login = () => {
                                             placeholder="Your Password Here..."
                                             onChange={HData}
                                             classLabel="font-bold text-sm"
+                                            error={error.password}
                                         />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colSpan={2}>
+                                        {flash.failed && (
+                                            <b className="text-red-500 text-sm">
+                                                {flash.failed}
+                                                <br />
+                                            </b>
+                                        )}
                                         <Link
                                             href="/register"
                                             className="text-xs text-green-600 font-bold hover:text-gray-500"

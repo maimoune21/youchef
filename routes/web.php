@@ -4,15 +4,17 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MealController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
+// Meals :
+Route::get("/meals", [MealController::class, "index"]);
 
 // Open Pages :
 Route::inertia("/", "general/Home");
 Route::inertia("/aboutUs", "general/AboutUs");
-Route::inertia("/popularMeals", "general/PopularMeals");
 Route::inertia("/FAQS", "general/FAQS");
 Route::inertia("/privacy", "general/Privacy");
 Route::inertia("/termsOfService", "general/TermsOfService");
-Route::get("/meals", [MealController::class, "index"]);
 
 // Guest Pages :
 Route::middleware('guest')->group(function () {
@@ -38,6 +40,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Pages :
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::inertia('/admin/dashboard', 'admin/Dashboard');
+});
+
+// NotFound Page :
+Route::fallback(function () {
+    return Inertia::render('general/NotFound')->toResponse(request())->setStatusCode(404);
 });

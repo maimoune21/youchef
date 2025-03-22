@@ -48,6 +48,12 @@ class HandleInertiaRequests extends Middleware
                     'idRole' => $request->user()->idRole,
                 ] : null,
             ],
+            'errors' => session('errors')
+                ? session('errors')->getBag('default')->getMessages()
+                : (object) [],
+            'flash' => [
+                'failed' => session('failed'),
+            ],
         ]);
     }
 }

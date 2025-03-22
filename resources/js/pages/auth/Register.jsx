@@ -1,22 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import TextInputGroup from "../../components/ui/TextInputGroup";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 
 export const Register = () => {
-    const { data, setData, post, processing, errors } = useForm({
+    const { flash } = usePage().props;
+    const { data, setData, post, errors } = useForm({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
         password_confirmation: "",
     });
+    const [error, setError] = useState({});
     const HData = (e) => {
         setData(e.target.name, e.target.value);
+        if (errors[e.target.name] || flash.failed) {
+            delete errors[e.target.name];
+            flash.failed = null;
+        }
+        setError((prevState) => ({
+            ...prevState,
+            [e.target.name]: "" 
+        }));
+        if (flash.failed) {
+            flash.failed = null;
+        }
     };
+
     const HSubmit = (e) => {
         e.preventDefault();
+        const newErrors = {};
+
+        if (!data.firstName) {
+            newErrors.firstName = "First Name is required.";
+        } else if (!data.lastName) {
+            newErrors.lastName = "Last Name is required.";
+        } else if (!data.email) {
+            newErrors.email = "Email is required.";
+        } else if (!data.password) {
+            newErrors.password = "Password is required.";
+        } else if (!data.password_confirmation) {
+            newErrors.password_confirmation = "Password confirmation is required.";
+        } else if (data.password !== data.password_confirmation) {
+            newErrors.password_confirmation = "Passwords do not match.";
+        }
+
+        if (Object.keys(newErrors).length) {
+            setError(newErrors);
+            return;
+        }
+
         post("/register");
     };
+
     return (
         <>
             <section className="w-full grid place-items-center">
@@ -46,6 +82,7 @@ export const Register = () => {
                                             value={data.firstName}
                                             onChange={HData}
                                             classLabel="font-bold text-sm"
+                                            error={error.firstName}
                                         />
                                     </td>
                                     <td>
@@ -57,6 +94,7 @@ export const Register = () => {
                                             value={data.lastName}
                                             onChange={HData}
                                             classLabel="font-bold text-sm"
+                                            error={error.lastName}
                                         />
                                     </td>
                                 </tr>
@@ -71,6 +109,7 @@ export const Register = () => {
                                             value={data.email}
                                             onChange={HData}
                                             classLabel="font-bold text-sm"
+                                            error={error.email}
                                         />
                                     </td>
                                 </tr>
@@ -85,11 +124,12 @@ export const Register = () => {
                                             value={data.password}
                                             onChange={HData}
                                             classLabel="font-bold text-sm"
+                                            error={error.password}
                                         />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td colSpan='2'>
                                         <TextInputGroup
                                             label="Confirm Password"
                                             type="password"
@@ -99,11 +139,18 @@ export const Register = () => {
                                             value={data.password_confirmation}
                                             onChange={HData}
                                             classLabel="font-bold text-sm"
+                                            error={error.password_confirmation}
                                         />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colSpan={2}>
+                                        {errors.password && (
+                                            <b className="text-red-500 text-sm">
+                                                {errors.password}
+                                                <br />
+                                            </b>
+                                        )}
                                         <Link
                                             href="/login"
                                             className="text-xs text-green-600 font-bold hover:text-gray-500"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AuthController extends Controller
 {
@@ -44,9 +45,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('/');
         } else {
-            return back()->withErrors([
-                'failed' => 'The email or password are incorrect'
-            ]);
+            return redirect()->back()->with('failed', 'The email or password is incorrect');
         }
     }
     public function logout(Request $request) {
