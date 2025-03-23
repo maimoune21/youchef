@@ -243,15 +243,15 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         {activUser && (
                             <div className="flex gap-2 relative">
                                 <span className="flexy">
-                                    <img
-                                        src={
-                                            activUser?.profile_img
-                                                ? `/uploads/users/${activUser.profile_img}`
-                                                : `${Profile}`
-                                        }
-                                        alt="test"
-                                        className="rounded-full w-10"
-                                    />
+                                    {
+                                        activUser?.profile_img
+                                            ? <img
+                                                src={`/uploads/users/${activUser.profile_img}${Profile}`}
+                                                alt="test"
+                                                className="rounded-full w-10"
+                                            />
+                                            : <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">{activUser.firstName.charAt(0)}</span>
+                                    }
                                 </span>
                                 <form
                                     onSubmit={handleCommentSubmit}
@@ -280,15 +280,15 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                             {MealComments.map((comment) => (
                                 <div className="flex items-center gap-4 min-w-2xl m-auto">
                                     <span className="flexy">
-                                        <img
-                                            src={
-                                                comment.profile_img
-                                                    ? `/uploads/users/${comment.profile_img}`
-                                                    : `${Profile}`
-                                            }
-                                            alt="test"
-                                            className="rounded-full w-10"
-                                        />
+                                        {
+                                            comment.profile_img
+                                            ?<img
+                                                src={`/uploads/users/${comment.profile_img}`}
+                                                alt="test"
+                                                className="rounded-full w-10"
+                                            />
+                                            : <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">{comment.firstName.charAt(0)}</span>
+                                        }
                                     </span>
                                     <span className="relative w-full max-w-[39rem]">
                                         <p className="w-full border-b-2 border-[var(--third)] absolute bottom-0"></p>
