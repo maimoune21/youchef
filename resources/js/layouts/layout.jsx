@@ -5,7 +5,6 @@ import { usePage } from "@inertiajs/react";
 
 const Layout = ({children}) => {
   const {component} = usePage();
-  console.log(component)
 
   return (
     <>

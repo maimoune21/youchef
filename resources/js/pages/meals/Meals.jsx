@@ -9,7 +9,6 @@ import Pasta from "@/../../public/images/categories/pasta.png";
 import Snaks from "@/../../public/images/categories/snaks.png";
 import Desserts from "@/../../public/images/categories/desserts.png";
 import YouchefIcon from "@/../../public/images/YouChef-Icon.svg";
-import Logo from "../../components/ui/Logo";
 import { motion } from "framer-motion";
 import {
   DropdownMenu,
@@ -59,7 +58,6 @@ const Meals = ({ data }) => {
       data.filter(meal => {
         const [hours, minutes, seconds] = meal.duration.split(':').map(Number);
         const totalMinutes = hours * 60 + minutes + seconds / 60;
-        console.log(totalMinutes)
         let state = 0
         difficulty == "hard"
         ? state = 21
@@ -139,7 +137,7 @@ const Meals = ({ data }) => {
             value={difficulty}
             className={`border-1 rounded-md py-2 pl-2 mx-4 text-sm ${state === "collapsed" ? "hidden" : ""
               }`}
-            onChange={e => {setDifficulty(e.target.value); console.log(e.target.value)}}
+            onChange={e => {setDifficulty(e.target.value);}}
           >
             <option value="" selected>
               All Difficulties
@@ -251,7 +249,7 @@ const Meals = ({ data }) => {
         <SidebarHeader className={`z-50! pt-0`}>
           <Compagy />
         </SidebarHeader>
-        <SidebarContent className="z-50! scrollbar">
+        <SidebarContent className="z-50! scrollbar mb-5!">
           <NavMain />
         </SidebarContent>
         <SidebarRail />

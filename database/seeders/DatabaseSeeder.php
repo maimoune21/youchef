@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             KitchensSeeder::class,
             MealsSeeder::class,
             UsersSeeder::class,
+            CommentsSeeder::class,
         ]);
     }
 }

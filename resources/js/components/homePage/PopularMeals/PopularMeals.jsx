@@ -1,7 +1,6 @@
 import React from "react";
 import PopularCard from "./PopularCard";
-import PopularMealsimg from "@/../../public/images/Popular-Meals.png";
-
+import BlankMeal from "@/../../public/images/BlankMeal.png";
 import {
   Carousel,
   CarouselContent,
@@ -13,12 +12,13 @@ import Autoplay from "embla-carousel-autoplay";
 import { LeftArrowIcon, RightArrowIcon } from "@/../../public/icons/Icons";
 
 const PopularMeals = () => {
-  const PopularMeals = [
+
+  const popularMeals = [
     {
       user: "obama aziz",
       date: "2025-02-02",
       title: "hello from pizza",
-      image: PopularMealsimg,
+      image: BlankMeal,
       duration: 2,
       views: 200,
     },
@@ -26,7 +26,7 @@ const PopularMeals = () => {
       user: "obama aziz",
       date: "2025-02-02",
       title: "hello from pizza",
-      image: PopularMealsimg,
+      image: BlankMeal,
       duration: 6,
       views: 200,
     },
@@ -34,7 +34,7 @@ const PopularMeals = () => {
       user: "obama aziz",
       date: "2025-02-02",
       title: "hello from pizza",
-      image: PopularMealsimg,
+      image: BlankMeal,
       duration: 4,
       views: 200,
     },
@@ -59,22 +59,22 @@ const PopularMeals = () => {
             className="w-full"
           >
             <CarouselContent className="m-0 w-full">
-              {PopularMeals.map((PopularMeal, index) => (
+              {popularMeals.map((meal, index) => (
                 <CarouselItem
                   key={index}
                   className="basis-full bg-transparent px-3"
                 >
-                  <PopularCard data={PopularMeal} />
+                  <PopularCard meal={meal} />
                 </CarouselItem>
               ))}
             </CarouselContent>
             <CarouselPrevious
               className="max-md:hidden cursor-pointer absolute top-1/2 left-4 -translate-y-1/2 hover:border-none hover:bg-transparent border-none text-green-600 bg-transparent rounded-sm w-7 py-6"
-              icon={<LeftArrowIcon size="size-15" />}
+              icon={<LeftArrowIcon size="size-12!" />}
             />
             <CarouselNext
               className="max-md:hidden cursor-pointer absolute top-1/2 right-4 -translate-y-1/2 hover:border-none hover:bg-transparent border-none text-green-600 bg-transparent rounded-sm w-7 py-6"
-              icon={<RightArrowIcon size="size-15" />}
+              icon={<RightArrowIcon size="size-12!" />}
             />
           </Carousel>
         </div>

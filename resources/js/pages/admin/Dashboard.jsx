@@ -1,5 +1,5 @@
 import * as React from "react";
-import ProfileImg from "@/../../public/images/Profile.png";
+import BlankProfile from "@/../../public/images/BlankProfile.png";
 import {
     DashboardClose,
     DashboardOpen,
@@ -133,7 +133,7 @@ const Dashboard = ({ location }) => {
                                 <div>
                                     <Avatar className="rounded-lg h-8 w-8">
                                         <AvatarImage
-                                            src={user.profile_img ? `/uploads/users/${user.profile_img}` : ProfileImg}
+                                            src={user.profile_img ? `/uploads/users/${user.profile_img}` : BlankProfile}
                                             alt="profile"
                                             className="rounded-full"
                                         />

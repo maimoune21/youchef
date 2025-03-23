@@ -3,12 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MealController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Meals :
 Route::get("/meals", [MealController::class, "index"]);
+Route::get("/mealDetails/{id}", [MealController::class, "show"]);
+
 // Categories
 Route::get('/categories', [CategoryController::class, 'index']);
 

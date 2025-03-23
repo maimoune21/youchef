@@ -9,4 +9,5 @@ class Meal extends Model
 {
     /** @use HasFactory<\Database\Factories\MealFactory> */
     use HasFactory;
+    protected $primaryKey = 'idMeal';
 }
