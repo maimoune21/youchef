@@ -121,11 +121,15 @@ const PrivateProfile = ({ status }) => {
             <div className="flex max-md:flex-col gap-5 max-md:p-5 max-md:pt-6">
                 <div className="flex max-md:flex-col max-md:text-center grow gap-5">
                     {/* Avatar */}
-                    <img
-                        src={user.profile_img ? `/uploads/users/${user.profile_img}`: `${ProfileImg}`}
-                        alt="Profile"
-                        className="rounded-full size-40 max-md:m-auto"
-                    />
+                    {
+                        user.profile_img 
+                        ? <img
+                            src={`/uploads/users/${user.profile_img}`}
+                            alt="Profile"
+                            className="rounded-full size-40 max-md:m-auto"
+                        />
+                        : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{auth.user.firstName.charAt(0)}</span>
+                    }
                     <div className="space-x-4">
                         {/* Name and Post Count */}
                         <div className="">
@@ -181,11 +185,10 @@ const PrivateProfile = ({ status }) => {
                 <div className="relative w-[65%] md:w-[55%] flex justify-between">
                     <Link href={"/profile/meals"}>
                         <button
-                            className={`cursor-pointer  ${
-                                status == "meals"
-                                    ? "text-green"
-                                    : "text-gray-600"
-                            } transition duration-300 hover:text-green font-semibold`}
+                            className={`cursor-pointer  ${status == "meals"
+                                ? "text-green"
+                                : "text-gray-600"
+                                } transition duration-300 hover:text-green font-semibold`}
                             onMouseEnter={() =>
                                 status == "favorites"
                                     ? setIsMealssHovered(true)
@@ -199,11 +202,10 @@ const PrivateProfile = ({ status }) => {
 
                     <Link href={"/profile/favorites"}>
                         <button
-                            className={`cursor-pointer ${
-                                status == "favorites"
-                                    ? "text-green"
-                                    : "text-gray-600"
-                            } transition duration-300 hover:text-green font-semibold`}
+                            className={`cursor-pointer ${status == "favorites"
+                                ? "text-green"
+                                : "text-gray-600"
+                                } transition duration-300 hover:text-green font-semibold`}
                             onMouseEnter={() =>
                                 status == "meals"
                                     ? setIsFavoritesHovered(true)
@@ -216,16 +218,14 @@ const PrivateProfile = ({ status }) => {
                     </Link>
 
                     <span
-                        className={`absolute -bottom-[0.4rem] h-1 bg-10 rounded-t-full transition-all transition[left_400ms_cubic-bezier(0.175, 0.885, 0.32, 1.275)] duration-300 ${
-                            status == "meals"
-                                ? "origin-left -left-4 w-20"
-                                : "origin-right left-[calc(100%-90px)] w-28"
-                        } ${
-                            (isMealssHovered && status == "favorites") ||
-                            (isFavoritesHovered && status == "meals")
+                        className={`absolute -bottom-[0.4rem] h-1 bg-10 rounded-t-full transition-all transition[left_400ms_cubic-bezier(0.175, 0.885, 0.32, 1.275)] duration-300 ${status == "meals"
+                            ? "origin-left -left-4 w-20"
+                            : "origin-right left-[calc(100%-90px)] w-28"
+                            } ${(isMealssHovered && status == "favorites") ||
+                                (isFavoritesHovered && status == "meals")
                                 ? "scale-x-125"
                                 : ""
-                        }
+                            }
                               `}
                     ></span>
                 </div>
