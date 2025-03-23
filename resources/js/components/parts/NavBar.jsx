@@ -45,7 +45,7 @@ const Navbar = () => {
             : []),
         {
             path: isAuthenticated ? "/privateProfile" : "/register",
-            label: "Profile",
+            label: isAuthenticated? 'Profile': 'Register',
             icon: (props) =>
                 isAuthenticated ? (
                     auth.user.profile_img ? (

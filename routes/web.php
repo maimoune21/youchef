@@ -9,8 +9,6 @@ use Inertia\Inertia;
 // Meals :
 Route::get("/meals", [MealController::class, "index"]);
 Route::get("/mealDetails/{id}", [MealController::class, "show"]);
-Route::post('/meals/{id}/like', [MealController::class, 'like']);
-Route::post('/meals/{id}/dislike', [MealController::class, 'dislike']);
 
 // Categories
 Route::get('/categories', [CategoryController::class, 'index']);
@@ -34,6 +32,9 @@ Route::middleware('guest')->group(function () {
 
 // User Pages :
 Route::middleware('auth')->group(function () {
+    Route::post('/meals/{id}/like', [MealController::class, 'like']);
+    Route::post('/meals/{id}/dislike', [MealController::class, 'dislike']);
+    Route::post('/meals/{id}/comment', [MealController::class, 'addComment']);
     Route::inertia('/postMeal', 'meals/postMeal');
     Route::inertia('/favorites', 'meals/Favorites');
     Route::get("/profile/{status}", function ($status) {

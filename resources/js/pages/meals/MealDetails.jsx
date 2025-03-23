@@ -12,12 +12,12 @@ import { ReportMeal } from "../../components/models/ReportMeal";
 import { usePage, router } from "@inertiajs/react";
 
 const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
-    // Meal Commets :
+    // Meal Comments :
     const MealComments = comments;
 
     // Access the authenticated user data :
     const { auth } = usePage().props;
-    const activUser = auth.user;
+    const activUser = auth?.user;
 
     // Meal Data :
     const ingredients = JSON.parse(meal.ingredients);
@@ -29,7 +29,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
         return `${hours}h:${minutes}min`;
     };
 
-    // Convert Timstamp to days :
+    // Convert Timestamp to days :
     const getDaysAgo = (dateString) => {
         const updatedDate = new Date(dateString);
         const currentDate = new Date();
@@ -46,6 +46,10 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     // Like and Dislike Logic:
     const [likes, setLikes] = useState(meal.likes);
     const handleLike = () => {
+        if (!activUser) {
+            router.visit("/login");
+            return;
+        }
         setLikes((prevLikes) => prevLikes + 1);
         router.post(
             `/meals/${meal.idMeal}/like`,
@@ -59,6 +63,10 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     };
 
     const handleDislike = () => {
+        if (!activUser) {
+            router.visit("/login");
+            return;
+        }
         setLikes((prevLikes) => {
             if (prevLikes > 0) {
                 return prevLikes - 1;
@@ -71,6 +79,29 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
             {
                 onError: () => {
                     setLikes((prevLikes) => prevLikes + 1);
+                },
+            }
+        );
+    };
+
+    // Commenting :
+    const [newComment, setNewComment] = useState("");
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+
+        if (!activUser) {
+            router.visit("/login");
+            return;
+        }
+
+        if (!newComment.trim()) return;
+
+        router.post(
+            `/meals/${meal.idMeal}/comment`,
+            { comment: newComment },
+            {
+                onSuccess: () => {
+                    setNewComment("");
                 },
             }
         );
@@ -209,28 +240,42 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                             <b>{MealComments.length}</b>
                             <strong cl>Comments</strong>
                         </h1>
-                        <div className="flex gap-2 relative">
-                            <span className="flexy">
-                                <img
-                                    src={
-                                        activUser.profile_img
-                                            ? `/uploads/users/${activUser.profile_img}`
-                                            : `${Profile}`
-                                    }
-                                    alt="test"
-                                    className="rounded-full w-10"
-                                />
-                            </span>
-                            <TextInputGroup
-                                name="comment"
-                                id="comment"
-                                placeholder="Add a comment..."
-                                className="border-0! border-b-2! rounded-none! focus:ring-0! pr-25!"
-                            />
-                            <button className="absolute right-0 bg-10 text-first font-bold py-1.5 px-3 text-sm rounded-lg cursor-pointer">
-                                Comment
-                            </button>
-                        </div>
+                        {activUser && (
+                            <div className="flex gap-2 relative">
+                                <span className="flexy">
+                                    <img
+                                        src={
+                                            activUser?.profile_img
+                                                ? `/uploads/users/${activUser.profile_img}`
+                                                : `${Profile}`
+                                        }
+                                        alt="test"
+                                        className="rounded-full w-10"
+                                    />
+                                </span>
+                                <form
+                                    onSubmit={handleCommentSubmit}
+                                    className="w-full"
+                                >
+                                    <TextInputGroup
+                                        name="comment"
+                                        id="comment"
+                                        placeholder="Add a comment..."
+                                        className="border-0! border-b-2! rounded-none! focus:ring-0! pr-25!"
+                                        value={newComment}
+                                        onChange={(e) =>
+                                            setNewComment(e.target.value)
+                                        }
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="absolute right-0 bg-10 text-first font-bold py-1.5 px-3 text-sm rounded-lg cursor-pointer"
+                                    >
+                                        Comment
+                                    </button>
+                                </form>
+                            </div>
+                        )}
                         <div className="flex flex-col gap-6 pt-6 px-3">
                             {MealComments.map((comment) => (
                                 <div className="flex items-center gap-4 min-w-2xl m-auto">

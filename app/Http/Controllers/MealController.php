@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -111,6 +112,26 @@ class MealController extends Controller
         if ($meal && $meal->likes > 0) {
             $meal->decrement('likes');
         }
+    }
+
+    /**
+     * Commenting.
+     */
+    public function addComment(Request $request, $id)
+    {
+        $request->validate([
+            'comment' => 'required|string|max:500',
+        ]);
+        $idUser = Auth::id();
+        DB::table('comments')->insert([
+            'idMeal' => $id,
+            'idUser' => $idUser,
+            'content' => $request->comment,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->back();
     }
 
     /**
