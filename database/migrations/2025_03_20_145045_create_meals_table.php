@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->json('ingredients')->nullable();
             $table->json('instructions')->nullable();
-            $table->integer('views')->default(0);
-            $table->integer('likes')->default(0);
+            $table->unsignedInteger('views')->default(0);
+            $table->unsignedInteger('likes')->default(0);
             $table->foreignId('idCategory')->constrained('categories', 'idCategory')->onDelete('cascade');
             $table->foreignId('idKitchen')->constrained('kitchens', 'idKitchen')->onDelete('cascade');
             $table->timestamps();

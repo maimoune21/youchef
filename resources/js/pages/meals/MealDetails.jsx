@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Profile from "@/../../public/images/Profile.png";
 import Meal from "@/../../public/images/BlankMeal.png";
 import TextInputGroup from "@/components/ui/TextInputGroup";
@@ -59,7 +59,12 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     };
 
     const handleDislike = () => {
-        setLikes((prevLikes) => prevLikes - 1);
+        setLikes((prevLikes) => {
+            if (prevLikes > 0) {
+                return prevLikes - 1;
+            }
+            return prevLikes;
+        });
         router.post(
             `/meals/${meal.idMeal}/dislike`,
             {},

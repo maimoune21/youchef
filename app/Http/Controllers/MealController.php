@@ -108,7 +108,7 @@ class MealController extends Controller
     public function dislike($id)
     {
         $meal = Meal::find($id);
-        if ($meal) {
+        if ($meal && $meal->likes > 0) {
             $meal->decrement('likes');
         }
     }
