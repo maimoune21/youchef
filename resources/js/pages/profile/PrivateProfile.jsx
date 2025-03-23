@@ -128,7 +128,7 @@ const PrivateProfile = ({ status }) => {
                             alt="Profile"
                             className="rounded-full size-40 max-md:m-auto"
                         />
-                        : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{auth.user.firstName.charAt(0)}</span>
+                        : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>
                     }
                     <div className="space-x-4">
                         {/* Name and Post Count */}
