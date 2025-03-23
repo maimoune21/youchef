@@ -14,7 +14,7 @@ const WorldMeals = () => {
           </div>
           <div className="flexy gap-2 sm:gap-3 md:gap-5">
             <button className="WorldMealBtn">Italie</button>
-            <button className="WorldMealBtn px-5! sm:px-9! md:px-14!">US</button>
+            <button className="WorldMealBtn px-5! sm:px-9! md:px-14!">USA</button>
             <button className="WorldMealBtn">France</button>
           </div>
           <div className="flexy gap-4 sm:gap-6 md:gap-8">

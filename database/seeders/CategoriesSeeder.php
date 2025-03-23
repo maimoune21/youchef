@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategoriesTableSeeder extends Seeder
+class CategoriesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -47,6 +46,7 @@ class CategoriesTableSeeder extends Seeder
                 'picture' => 'desserts.png',
             ],
         ];
+        
         DB::table('categories')->insert($categories);
     }
 }

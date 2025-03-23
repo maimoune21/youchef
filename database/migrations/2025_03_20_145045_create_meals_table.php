@@ -19,9 +19,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->json('ingredients')->nullable();
             $table->json('instructions')->nullable();
-            $table->string('status', 60)->nullable();
             $table->integer('views')->default(0);
             $table->foreignId('idCategory')->constrained('categories', 'idCategory')->onDelete('cascade');
+            $table->foreignId('idKitchen')->constrained('kitchens', 'idKitchen')->onDelete('cascade');
             $table->timestamps();
         });
     }
