@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Profile from "@/../../public/images/Profile.png";
 import Meal from "@/../../public/images/BlankMeal.png";
 import TextInputGroup from "@/components/ui/TextInputGroup";
@@ -9,7 +9,7 @@ import {
     LikeIcon,
 } from "@/../../public/icons/Icons";
 import { ReportMeal } from "../../components/models/ReportMeal";
-import { usePage } from "@inertiajs/react";
+import { usePage, router } from "@inertiajs/react";
 
 const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     // Meal Commets :
@@ -42,6 +42,34 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
             : `Posted ${differenceInDays} days ago`;
     };
     const daysAgo = getDaysAgo(meal.updated_at);
+
+    // Like and Dislike Logic:
+    const [likes, setLikes] = useState(meal.likes);
+    const handleLike = () => {
+        setLikes((prevLikes) => prevLikes + 1);
+        router.post(
+            `/meals/${meal.idMeal}/like`,
+            {},
+            {
+                onError: () => {
+                    setLikes((prevLikes) => prevLikes - 1);
+                },
+            }
+        );
+    };
+
+    const handleDislike = () => {
+        setLikes((prevLikes) => prevLikes - 1);
+        router.post(
+            `/meals/${meal.idMeal}/dislike`,
+            {},
+            {
+                onError: () => {
+                    setLikes((prevLikes) => prevLikes + 1);
+                },
+            }
+        );
+    };
 
     return (
         <div className="tn:max-w-[28rem] lg:max-w-[52rem] md:max-w-[40rem] sm:max-w-[35rem] max-w-[22rem] m-auto mb-20">
@@ -82,14 +110,20 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         </div>
                         <div className="flexy gap-2">
                             <span className="rounded-full border-1 border-black flexy gap-2 px-2 py-1">
-                                <span className="flexy">
+                                <span
+                                    className="flexy cursor-pointer select-none"
+                                    onClick={handleLike}
+                                >
                                     <LikeIcon size="size-5.5" />
-                                    <b className="text-sm">
-                                        {meal ? `${meal.likes}` : "0"}
-                                    </b>
+                                    <b className="text-sm">{likes}</b>
                                 </span>
                                 <span className="h-6.5 w-px bg-black rounded-full"></span>
-                                <DislikeIcon size="size-5.5" />
+                                <span
+                                    className="cursor-pointer select-none"
+                                    onClick={handleDislike}
+                                >
+                                    <DislikeIcon size="size-5.5" />
+                                </span>
                             </span>
                             <span className="border-1 border-black rounded-full p-1.5 cursor-pointer">
                                 <HeartIcon size="size-5.5" />
@@ -125,7 +159,9 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                             <h3 className="font-bold tracking-wide text-[var(--bg-10)]">
                                 Cooking Duration :
                             </h3>
-                            <p className='text-md'>{formatDuration(meal.duration)}</p>
+                            <p className="text-md">
+                                {formatDuration(meal.duration)}
+                            </p>
                         </div>
                         <div>
                             <h3 className="font-bold tracking-wide text-[var(--bg-10)]">

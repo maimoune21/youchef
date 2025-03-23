@@ -54,8 +54,8 @@ class MealController extends Controller
         }
         // Fetching the user who posted the meal :
         $user = DB::table('users')
-        ->where('idMeal', $meal->idMeal)
-        ->first();
+            ->where('idMeal', $meal->idMeal)
+            ->first();
 
         // Fetching category and kitchen of the meal :
         $categories = DB::table('categories')->pluck('name', 'idCategory')->toArray();
@@ -65,11 +65,11 @@ class MealController extends Controller
 
         // Fetching the meal comments :
         $comments = DB::table('comments')
-        ->where('comments.idMeal', $meal->idMeal)
-        ->join('users', 'comments.idUser', '=', 'users.idUser')
-        ->select('comments.*', 'users.firstName', 'users.lastName', 'users.profile_img')
-        ->orderBy('comments.created_at', 'desc')
-        ->get();
+            ->where('comments.idMeal', $meal->idMeal)
+            ->join('users', 'comments.idUser', '=', 'users.idUser')
+            ->select('comments.*', 'users.firstName', 'users.lastName', 'users.profile_img')
+            ->orderBy('comments.created_at', 'desc')
+            ->get();
 
         // Passing data to the view :
         return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments'));
@@ -89,6 +89,28 @@ class MealController extends Controller
     public function update(Request $request, Meal $meal)
     {
         //
+    }
+
+    /**
+     * Increment the likes count for a meal.
+     */
+    public function like($id)
+    {
+        $meal = Meal::find($id);
+        if ($meal) {
+            $meal->increment('likes');
+        }
+    }
+
+    /**
+     * Decrement the likes count for a meal.
+     */
+    public function dislike($id)
+    {
+        $meal = Meal::find($id);
+        if ($meal) {
+            $meal->decrement('likes');
+        }
     }
 
     /**

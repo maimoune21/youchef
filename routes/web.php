@@ -9,6 +9,8 @@ use Inertia\Inertia;
 // Meals :
 Route::get("/meals", [MealController::class, "index"]);
 Route::get("/mealDetails/{id}", [MealController::class, "show"]);
+Route::post('/meals/{id}/like', [MealController::class, 'like']);
+Route::post('/meals/{id}/dislike', [MealController::class, 'dislike']);
 
 // Categories
 Route::get('/categories', [CategoryController::class, 'index']);
