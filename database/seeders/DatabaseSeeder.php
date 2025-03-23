@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             CategoriesSeeder::class,
             KitchensSeeder::class,
-            MealsTableSeeder::class,
+            MealsSeeder::class,
             UsersSeeder::class,
         ]);
     }

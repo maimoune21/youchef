@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MealsTableSeeder extends Seeder
+class MealsSeeder extends Seeder
 {
     public function run(): void
     {
@@ -51,8 +51,8 @@ class MealsTableSeeder extends Seeder
                 'ingredients'  => json_encode(["Spaghetti", "Eggs", "Pancetta", "Parmesan", "Black Pepper"]),
                 'instructions' => json_encode(["Cook spaghetti", "Fry pancetta", "Mix with eggs and cheese"]),
                 'views'        => 380,
-                'idCategory'   => $categoryIds['Italie'],
-                'idKitchen'    => $kitchenIds['Pasta'],
+                'idCategory'   => $categoryIds['Pasta'],
+                'idKitchen'    => $kitchenIds['Italie'],
                 'created_at'   => now(),
                 'updated_at'   => now(),
             ],
@@ -66,8 +66,8 @@ class MealsTableSeeder extends Seeder
                 'ingredients'  => json_encode(["Beef Patty", "Bun", "Lettuce", "Tomato", "Cheese", "Pickles", "Ketchup"]),
                 'instructions' => json_encode(["Grill the beef patty", "Toast the bun", "Assemble with toppings"]),
                 'views'        => 300,
-                'idCategory'   => $categoryIds['Usa'],
-                'idKitchen'    => $kitchenIds['Snaks'],
+                'idCategory'   => $categoryIds['Snaks'],
+                'idKitchen'    => $kitchenIds['Usa'],
                 'created_at'   => now(),
                 'updated_at'   => now(),
             ],
@@ -81,8 +81,8 @@ class MealsTableSeeder extends Seeder
                 'ingredients'  => json_encode(["Chicken", "Red Wine", "Mushrooms", "Bacon", "Onions", "Garlic"]),
                 'instructions' => json_encode(["Brown the chicken", "Cook with wine, mushrooms, and bacon", "Simmer until tender"]),
                 'views'        => 250,
-                'idCategory'   => $categoryIds['France'],
-                'idKitchen'    => $kitchenIds['Desserts'],
+                'idCategory'   => $categoryIds['Desserts'],
+                'idKitchen'    => $kitchenIds['France'],
                 'created_at'   => now(),
                 'updated_at'   => now(),
             ],
@@ -96,8 +96,8 @@ class MealsTableSeeder extends Seeder
                 'ingredients'  => json_encode(["Chicken", "Tomatoes", "Cream", "Butter", "Spices"]),
                 'instructions' => json_encode(["Marinate chicken", "Cook with tomatoes and spices", "Add cream and butter"]),
                 'views'        => 280,
-                'idCategory'   => $categoryIds['India'],
-                'idKitchen'    => $kitchenIds['Soup'],
+                'idCategory'   => $categoryIds['Soup'],
+                'idKitchen'    => $kitchenIds['India'],
                 'created_at'   => now(),
                 'updated_at'   => now(),
             ],
@@ -111,8 +111,8 @@ class MealsTableSeeder extends Seeder
                 'ingredients'  => json_encode(["Pork", "Pineapple", "Tortillas", "Onions", "Cilantro", "Spices"]),
                 'instructions' => json_encode(["Marinate pork", "Grill with pineapple", "Serve on tortillas with onions and cilantro"]),
                 'views'        => 270,
-                'idCategory'   => $categoryIds['Mexico'],
-                'idKitchen'    => $kitchenIds['Cake'],
+                'idCategory'   => $categoryIds['Cake'],
+                'idKitchen'    => $kitchenIds['Mexico'],
                 'created_at'   => now(),
                 'updated_at'   => now(),
             ],

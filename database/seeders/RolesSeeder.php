@@ -16,11 +16,14 @@ class RolesSeeder extends Seeder
         // Insert the 'admin' role
         Role::create([
             'name' => 'admin',
+            'created_at'   => now(),
+            'updated_at'   => now(),
         ]);
         // Insert the 'user' role
         Role::create([
             'name' => 'user',
+            'created_at'   => now(),
+            'updated_at'   => now(),
         ]);
-
     }
 }
