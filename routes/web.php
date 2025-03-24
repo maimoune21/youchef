@@ -40,9 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/meals/{id}/comment', [MealController::class, 'addComment']);
     Route::inertia('/postMeal', 'meals/postMeal');
     Route::inertia('/favorites', 'meals/Favorites');
-    Route::get("/profile/{status}", function ($status) {
-        return  inertia("profile/PrivateProfile", compact("status"));
-    });
     // Private Profile
     Route::inertia('/privateProfile', 'profile/PrivateProfile');
     // Logout :
