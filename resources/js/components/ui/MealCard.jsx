@@ -87,7 +87,7 @@ const MealCard = ({ meal }) => {
             <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flex flex-col">
                     <div className="flexy justify-between!">
-                        <h3 className="font-bold text-2xl max-sm:text-xl">
+                        <h3 className="font-bold text-2xl max-sm:text-xl truncate">
                             {meal.title}
                         </h3>
                         <DotsIcon className="w-6 h-6" />

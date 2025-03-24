@@ -74,7 +74,7 @@ const PopularCard = ({ meal }) => {
                     <div className="w-full h-full p-1 px-2 md:gap-5 md:p-4 text-white pb-0 max-md:pb-4 flex flex-col justify-center whitespace-nowrap overflow-hidden text-ellipsis">
                         <div className="flex flex-col md:gap-2">
                             <div className="flexy justify-between!">
-                                <h3 className="font-bold text-xl md:text-4xl">
+                                <h3 className="font-bold text-xl md:text-4xl truncate">
                                     {meal.title}
                                 </h3>
                                 <DotsIcon className="w-6 h-6" />
