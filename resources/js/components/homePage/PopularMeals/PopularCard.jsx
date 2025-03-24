@@ -109,7 +109,7 @@ const PopularCard = ({ meal }) => {
                                     alt="profile"
                                     className="rounded-full w-8 object-cover md:w-12"
                                 />
-                                : <span className="bg-soft text-black text-base md:text-xl font-bold w-8 md:w-12 h-full aspect-square rounded-full flexy">{meal.userFName.charAt(0)}</span>
+                                : <span className="bg-soft text-black text-base md:text-xl font-bold w-8 md:w-12 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
                             }
                             <h6 className="md:text-2xl group-hover:text-gray-400 group-hover:underline underline-offset-3">
                                 {meal

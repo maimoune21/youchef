@@ -55,7 +55,7 @@ const Navbar = () => {
                             {...props}
                         />
                     ) : (
-                        <span className="bg-soft mx-1 text-black font-bold text-base p-0.5 aspect-square rounded-full flexy">{auth.user.firstName.charAt(0)}</span>
+                        <span className="bg-soft mx-1 text-black font-bold text-base p-0.5 aspect-square rounded-full flexy">{auth.user.lastName.charAt(0)}</span>
                     )
                 ) : (
                     <ProfileIcon {...props} />

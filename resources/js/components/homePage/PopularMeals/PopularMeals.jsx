@@ -44,12 +44,12 @@ const PopularMeals = ({ popularMeals }) => {
                             ))}
                         </CarouselContent>
                         <CarouselPrevious
-                            className="max-md:hidden cursor-pointer absolute top-1/2 left-4 -translate-y-1/2 hover:border-none hover:bg-transparent border-none text-green-600 bg-transparent rounded-sm w-7 py-6"
-                            icon={<LeftArrowIcon style='size-10!'/>}
+                            className="max-md:hidden cursor-pointer absolute top-1/2 left-4 -translate-y-1/2 hover:border-none hover:bg-transparent border-none text-white hover:text-green-600 bg-transparent rounded-sm w-10 py-6 [&_svg]:size-15!"
+                            icon={<LeftArrowIcon/>}
                         />
                         <CarouselNext
-                            className="max-md:hidden cursor-pointer absolute top-1/2 right-4 -translate-y-1/2 hover:border-none hover:bg-transparent border-none text-green-600 bg-transparent rounded-sm w-7 py-6"
-                            icon={<RightArrowIcon style='size-10!'/>}
+                            className="max-md:hidden cursor-pointer absolute top-1/2 right-4 -translate-y-1/2 hover:border-none hover:bg-transparent border-none text-white hover:text-green-600 bg-transparent rounded-sm w-10 py-6 [&_svg]:size-15!"
+                            icon={<RightArrowIcon/>}
                         />
                     </Carousel>
                 </div>

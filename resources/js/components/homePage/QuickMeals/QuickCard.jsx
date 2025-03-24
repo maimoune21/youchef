@@ -117,7 +117,7 @@ const QuickCard = ({ meal }) => {
                                 alt=""
                                 className="rounded-full w-8 object-cover"
                             />
-                            : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userFName.charAt(0)}</span>
+                            : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
                             }
                             <h6 className="md:text-lg group-hover/user:text-gray-400 group-hover/user:underline underline-offset-3">
                                 {meal.userFName} {meal.userLName}
