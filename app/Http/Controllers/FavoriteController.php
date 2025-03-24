@@ -7,6 +7,7 @@ use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class FavoriteController extends Controller
 {
@@ -15,17 +16,17 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $thisUser = Auth::user();
 
         $categories = Category::all();
         $Kitchen = DB::table("kitchens")->get();
 
         $meals = DB::table('user__meal__favorite')
-            ->where('idUser', $user->idUser) 
-            ->pluck('idMeal'); 
+            ->where('idUser', $thisUser->idUser)
+            ->pluck('idMeal');
 
         $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
-            ->whereIn('meals.idMeal', $meals) 
+            ->whereIn('meals.idMeal', $meals)
             ->select(
                 'meals.*',
                 'users.idUser as idUser',
@@ -36,8 +37,7 @@ class FavoriteController extends Controller
             ->orderBy('meals.views', 'desc')
             ->get();
 
-
-        return inertia('meals/Favorites', compact('favoriteMeals', 'categories', 'Kitchen'));
+        return inertia('meals/Favorites', compact('favoriteMeals', 'categories', 'Kitchen', 'thisUser'));
     }
 
     /**
@@ -53,7 +53,33 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $idMeal = $request->input('idMeal');
+        $idUser = $request->input('idUser');
+
+        // Check if the meal is already in the favorites
+        $existing = DB::table('user__meal__favorite')
+            ->where('idMeal', $idMeal)
+            ->where('idUser', $idUser)
+            ->first();
+
+        if ($existing) {
+            // If the meal exists, remove it
+            DB::table('user__meal__favorite')
+                ->where('idMeal', $idMeal)
+                ->where('idUser', $idUser)
+                ->delete();
+
+            return Redirect::back()->with('success', 'Meal removed from favorites!');
+        } else {
+            // If the meal does not exist, add it
+            DB::table('user__meal__favorite')->insert([
+                'idMeal' => $idMeal,
+                'idUser' => $idUser
+            ]);
+
+            return Redirect::back()->with('success', 'Meal added to favorites!');
+        }
     }
 
     /**

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { SignalIcon, HeartIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
-const PopularCard = ({ meal }) => {
+const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
     const [status, setStatus] = useState("");
+    const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
         const [hours, minutes, seconds] = meal.duration.split(":").map(Number);
@@ -18,6 +19,11 @@ const PopularCard = ({ meal }) => {
             setStatus("easy");
         }
     }, [meal.duration]);
+
+    useEffect(() => {
+        const mealExists = favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        setIsFavorited(!!mealExists);
+    }, [favoriteMeals, meal.idMeal]);
 
     const calculateDaysDifference = () => {
         const today = new Date(meal.created_at);
@@ -52,12 +58,26 @@ const PopularCard = ({ meal }) => {
         }
     };
 
+    const handleFavoriteClick = () => {
+        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
+            onSuccess: () => {
+                setIsFavorited(prev => !prev);
+            },
+            onError: (errors) => {
+                console.error("Error toggling favorite:", errors);
+            }
+        });
+    };
+
     return (
         <div className="w-full bg-soft relative custom-shadow rounded-xl overflow-hidden my-2 max-h-[80vh] md:max-h-[80vh]">
             <img src={BlankMeal} alt={meal.image} className=" w-full max-sm:h-64" />
-            <div className="bg-white rounded-full p-1 absolute top-3 right-3">
-                <HeartIcon className="w-6 h-6" />
-            </div>
+            <button
+                className="bg-30 rounded-full p-1 absolute top-3 right-3 *:transition-all *:duration-200 hover:*:fill-[var(--wave-1)]"
+                onClick={handleFavoriteClick}
+            >
+                <HeartIcon className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
+            </button>
             <div className="backdrop-brightness-50 absolute rounded-b-xl bottom-0 w-full">
                 <div className="absolute -top-10 text-md max-sm:text-sm! max-sm:-top-8 left-3 bg-30 flexy rounded-full p-1 pr-2 gap-1">
                     <TimeIcon style="size-6! max-sm:size-5!" />
@@ -65,10 +85,10 @@ const PopularCard = ({ meal }) => {
                 </div>
                 <div
                     className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${status === "hard"
-                            ? "text-red-500"
-                            : status === "medium"
-                                ? "text-orange-500"
-                                : "text-green-500"
+                        ? "text-red-500"
+                        : status === "medium"
+                            ? "text-orange-500"
+                            : "text-green-500"
                         }`}
                 >
                     <div className="flexy px-1">
@@ -104,7 +124,7 @@ const PopularCard = ({ meal }) => {
                             className="rounded-lg flex items-center gap-2 hover:scale-97 group"
                         >
                             {meal.userImage
-                                ?<img
+                                ? <img
                                     src={`/uploads/users/${meal.userImage}`}
                                     alt="profile"
                                     className="rounded-full w-8 object-cover md:w-12"

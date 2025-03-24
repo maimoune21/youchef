@@ -4,7 +4,7 @@ import Countries from '@/components/ui/Countries';
 import { SearchIcon } from '/public/icons/Icons';
 import MealCard from '@/components/ui/MealCard';
 
-const Favorites = ({ favoriteMeals, categories, Kitchen }) => {
+const Favorites = ({ favoriteMeals, categories, Kitchen, thisUser }) => {
   console.log(favoriteMeals)
   const [meals, setMeals] = useState([]);
   const [categorie, setCategorie] = useState("");
@@ -67,7 +67,7 @@ const Favorites = ({ favoriteMeals, categories, Kitchen }) => {
           ? <h1 className='text-3xl text-center my-5'>No Favorites Found</h1>
           : <div className='w-[90%] py-8 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9'>
             {meals.map((card, i) => (
-              <MealCard key={i} meal={card} />
+              <MealCard key={i} meal={card} thisUser={thisUser} favoriteMeals={favoriteMeals} />
             ))}
           </div>
       }

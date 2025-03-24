@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Link } from "@inertiajs/react";
 
-const QuickMeal = ({categorie, meals}) => {
+const QuickMeal = ({categorie, meals, thisUser, favoriteMeals}) => {
 
   return (
     <div className="w-[90%] lg:w-[90%] xl:w-[85%] mx-auto rounded-xl flex flex-col py-5 pb-8 gap-4 bg-30 custom-shadow">
@@ -59,7 +59,7 @@ const QuickMeal = ({categorie, meals}) => {
                   key={index}
                   className="basis-full md:basis-1/2 lg:basis-1/3 flex-shrink-0"
                 >
-                  <QuickCard meal={card} />
+                  <QuickCard meal={card} thisUser={thisUser} favoriteMeals={favoriteMeals} />
                 </CarouselItem>
               ))
               .slice(0, 5)

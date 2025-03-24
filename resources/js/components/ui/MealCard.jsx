@@ -7,10 +7,11 @@ import {
     EyeIcon,
 } from "@/../../public/icons/Icons";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
-const MealCard = ({ meal }) => {
+const MealCard = ({ meal, thisUser, favoriteMeals }) => {
     const [status, setStatus] = useState("");
+    const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
         const [hours, minutes, seconds] = meal.duration.split(":").map(Number);
@@ -24,6 +25,11 @@ const MealCard = ({ meal }) => {
             setStatus("easy");
         }
     }, [meal.duration]);
+
+    useEffect(() => {
+        const mealExists = favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        setIsFavorited(!!mealExists); // Convert to boolean
+    }, [favoriteMeals, meal.idMeal]);
 
     const calculateDaysDifference = () => {
         const today = new Date(meal.created_at);
@@ -58,6 +64,17 @@ const MealCard = ({ meal }) => {
         }
     };
 
+    const handleFavoriteClick = () => {
+        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
+            onSuccess: () => {
+                setIsFavorited(prev => !prev); // Toggle state on success
+            },
+            onError: (errors) => {
+                console.error("Error toggling favorite:", errors);
+            }
+        });
+    };
+
     return (
         <div className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden select-none">
             <div className="relative w-full">
@@ -68,16 +85,16 @@ const MealCard = ({ meal }) => {
                         className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
                     />
                 </Link>
-                <div className="absolute bottom-3 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
+                <div className="absolute bottom-2 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
                     <TimeIcon className="w-6 h-6" />
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute bottom-3 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${status === "hard"
-                            ? "text-red-500"
-                            : status === "medium"
-                                ? "text-orange-500"
-                                : "text-green-500"
+                    className={`absolute bottom-2 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${status === "hard"
+                        ? "text-red-500"
+                        : status === "medium"
+                            ? "text-orange-500"
+                            : "text-green-500"
                         }`}
                 >
                     <div className="flexy px-1">
@@ -85,9 +102,12 @@ const MealCard = ({ meal }) => {
                         <p>{status}</p>
                     </div>
                 </div>
-                <div className="bg-white rounded-full p-1 absolute top-3 right-3">
-                    <HeartIcon className="w-6 h-6" />{" "}
-                </div>
+                <button
+                    className="bg-30 rounded-full p-1 absolute top-3 right-3 *:transition-all *:duration-200 hover:*:fill-[var(--wave-1)]"
+                    onClick={handleFavoriteClick}
+                >
+                    <HeartIcon className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
+                </button>
             </div>
             <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flex flex-col">

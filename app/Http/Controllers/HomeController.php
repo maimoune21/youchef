@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -26,7 +27,25 @@ class HomeController extends Controller
             ->get();
         $categories = Category::all();
         $Kitchen = DB::table("kitchens")->get();
-        return inertia("general/Home", compact("meals", "categories", "Kitchen"));
+        
+        $thisUser = Auth::user();
+        $mealsfav = DB::table('user__meal__favorite')
+            ->where('idUser', $thisUser->idUser)
+            ->pluck('idMeal');
+
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->whereIn('meals.idMeal', $mealsfav)
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->orderBy('meals.views', 'desc')
+            ->get();
+
+        return inertia("general/Home", compact("meals", "categories", "Kitchen", "thisUser", "favoriteMeals"));
     }
 
     /**

@@ -30,7 +30,25 @@ class MealController extends Controller
         $categorySelected = $request->query('category');
         $kitchenSelected = $request->query('kitchen');
 
-        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected"));
+        $thisUser = Auth::user();
+
+        $meals = DB::table('user__meal__favorite')
+            ->where('idUser', $thisUser->idUser)
+            ->pluck('idMeal');
+
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->whereIn('meals.idMeal', $meals)
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->orderBy('meals.views', 'desc')
+            ->get();
+
+        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals"));
     }
 
     /**

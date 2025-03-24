@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/meals/{id}/comment', [MealController::class, 'addComment']);
     Route::inertia('/postMeal', 'meals/postMeal');
     Route::get('/favorites', [FavoriteController::class,'index']);
+    Route::post('/favorite', [FavoriteController::class,'store']);
     // Private Profile
     Route::get('/privateProfile', [ProfileController::class,'privateShow']);
     Route::delete('/meals/{idMeal}', [MealController::class, 'destroy'])->name('meals.destroy');

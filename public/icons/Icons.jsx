@@ -75,13 +75,13 @@ export const FavoritesIcon = ({ size = "size-7" }) => {
   );
 };
 
-export const HeartIcon = ({ size = "size-6" }) => {
+export const HeartIcon = ({ size = "size-6", className }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={size}
+      className={size + " " + className}
       viewBox="0 0 24 24"
-      fill="black"
+      fill="none"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"

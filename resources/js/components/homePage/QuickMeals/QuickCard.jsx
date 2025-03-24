@@ -1,10 +1,11 @@
 import { SignalIcon, HeartIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
-const QuickCard = ({ meal }) => {
+const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
     const [status, setStatus] = useState("");
+    const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
         const [hours, minutes, seconds] = meal.duration.split(":").map(Number);
@@ -18,6 +19,11 @@ const QuickCard = ({ meal }) => {
             setStatus("easy");
         }
     }, [meal.duration]);
+
+    useEffect(() => {
+        const mealExists = favoriteMeals && favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        setIsFavorited(!!mealExists); // Convert to boolean
+    }, [favoriteMeals, meal.idMeal]);
 
     const calculateDaysDifference = () => {
         const today = new Date(meal.created_at);
@@ -34,9 +40,8 @@ const QuickCard = ({ meal }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${
-                differenceInDays !== 1 ? "s" : ""
-            } ago`;
+            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
+                } ago`;
         }
     };
 
@@ -44,14 +49,25 @@ const QuickCard = ({ meal }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${
-                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-            }`;
+            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+                }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
             return `0m`;
         }
+    };
+
+    const handleFavoriteClick = () => {
+        console.log(thisUser.idUser)
+        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
+            onSuccess: () => {
+                setIsFavorited(prev => !prev);
+            },
+            onError: (errors) => {
+                console.error("Error toggling favorite:", errors);
+            }
+        });
     };
 
     return (
@@ -69,22 +85,24 @@ const QuickCard = ({ meal }) => {
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute bottom-1 text-xs right-3 bg-30 flexy rounded-full py-1 px-1 pt-0.5 ${
-                        status === "hard"
-                            ? "text-red-500"
-                            : status === "medium"
+                    className={`absolute bottom-1 text-xs right-3 bg-30 flexy rounded-full py-1 px-1 pt-0.5 ${status === "hard"
+                        ? "text-red-500"
+                        : status === "medium"
                             ? "text-orange-500"
                             : "text-green-500"
-                    }`}
+                        }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-5.5 pb-0.5" />
                         <p className="pt-0.5">{status}</p>
                     </div>
                 </div>
-                <div className="bg-white rounded-full p-1 absolute top-3 right-3">
-                    <HeartIcon size="size-5" />
-                </div>
+                <button
+                    className="bg-30 rounded-full p-1 absolute top-3 right-3 *:transition-all *:duration-200 hover:*:fill-[var(--wave-1)]"
+                    onClick={handleFavoriteClick}
+                >
+                    <HeartIcon className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
+                </button>
             </div>
             <div className="w-full p-3 pb-0 max-md:pb-4 flex flex-col whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flexy justify-between!">
@@ -112,12 +130,12 @@ const QuickCard = ({ meal }) => {
                             className="rounded-lg py-2 flex items-center gap-2 group/user"
                         >
                             {meal.userImage
-                                ?<img
-                                src={`/uploads/users/${meal.userImage}`}
-                                alt=""
-                                className="rounded-full w-8 object-cover"
-                            />
-                            : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
+                                ? <img
+                                    src={`/uploads/users/${meal.userImage}`}
+                                    alt=""
+                                    className="rounded-full w-8 object-cover"
+                                />
+                                : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
                             }
                             <h6 className="md:text-lg group-hover/user:text-gray-400 group-hover/user:underline underline-offset-3">
                                 {meal.userFName} {meal.userLName}

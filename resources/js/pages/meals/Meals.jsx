@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/accordion";
 import MealCard from "@/components/ui/MealCard";
 
-const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSelected }) => {
+const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSelected, thisUser, favoriteMeals }) => {
   const [meals, setMeals] = useState([]);
   const Categories = [
     { name: 'All' ,picture: "all.png" },
@@ -245,7 +245,7 @@ const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSe
           <div className="h-auto overflow-hidden">
             <div className="grid grid-cols-3 max-lg:grid-cols-2 max-tn:grid-cols-1! max-tn:pb-5! max-sm:pb-10! max-md:pb-20! gap-x-3 gap-y-4 px-2 h-auto pb-10 max-h-[85vh] overflow-y-auto scrollbar">
               {meals.map((meal) => (
-                <MealCard key={meal.id} meal={meal} />
+                <MealCard key={meal.id} meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
               ))}
             </div>
           </div>
