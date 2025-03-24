@@ -4,8 +4,8 @@ import {
   EditIcon,
   LeftArrowIcon,
   PencilIcon,
-} from "../../../../public/icons/Icons";
-import BlankMeal from "../../../../public/images/BlankMeal.png";
+} from "@/../../public/icons/Icons";
+import BlankMeal from "@/../../public/images/BlankMeal.png";
 import TextInputGroup from "../ui/TextInputGroup";
 import TextAreaGroup from "../ui/TextAreaGroup";
 
@@ -21,7 +21,7 @@ export function UpdateMeal({ buttonStyles = "", meal }) {
     <Dialog>
       <DialogTrigger asChild>
         <button
-          className={`button rounded-full! flex gap-2 py-2! ${buttonStyles}`}
+          className={`button hover:bg-green-600! rounded-full! flex gap-2 py-2! ${buttonStyles}`}
         >
           <b>Update</b>
           <PencilIcon size="size-5" />
