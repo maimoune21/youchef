@@ -29,6 +29,9 @@ class HomeController extends Controller
         $Kitchen = DB::table("kitchens")->get();
         
         $thisUser = Auth::user();
+        if (!$thisUser) {
+            return false;
+        }
         $mealsfav = DB::table('user__meal__favorite')
             ->where('idUser', $thisUser->idUser)
             ->pluck('idMeal');

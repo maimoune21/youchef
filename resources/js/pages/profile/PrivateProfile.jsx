@@ -70,10 +70,12 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                             }
                         </div>
                         {/* Bio */}
-                        <p className="mt-4 text-gray-600 text-start">
-                            <span className="font-semibold">bio: </span>
-                            {user.bio}
-                        </p>
+                        {
+                            user.bio && <p className="mt-4 text-gray-600 text-start">
+                                <span className="font-semibold">bio: </span>
+                                {user.bio}
+                            </p>
+                        }
                     </div>
                 </div>
 
@@ -184,7 +186,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                         ? <h1 className='text-3xl text-center mt-5'>No Favorites Yet</h1>
                         : <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
                             {
-                                favoriteMeals.map(favorite => <MealCard key={favorite.id} meal={favorite} thisUser={user} favoriteMeals={favoriteMeals}/>)
+                                favoriteMeals.map(favorite => <MealCard key={favorite.id} meal={favorite} thisUser={user} favoriteMeals={favoriteMeals} />)
                             }
                         </div>
                 }
