@@ -28,21 +28,22 @@ import {
 } from "@/components/ui/accordion";
 import MealCard from "@/components/ui/MealCard";
 
-const Meals = ({ data }) => {
+const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSelected }) => {
   const [meals, setMeals] = useState([]);
   const Categories = [
     { name: 'All' ,picture: "all.png" },
-    ...data.categories
+    ...dataCategories
   ];
   
-  const [categorieSelectedName, setCategorieSelectedName] = useState(data.categorySelected? data.categorySelected : "" );
-  const [categorieSelected, setCategorieSelected] = useState(categorieSelectedName && Categories.find(cat=>cat.name == categorieSelectedName).idCategory);
-  const [countries, setCountries] = useState();
+  const [categorieSelectedName, setCategorieSelectedName] = useState(categorySelected ? categorySelected : "All" );
+  const [categorieSelected, setCategorieSelected] = useState(categorieSelectedName ? Categories.find(cat=>cat.name == categorieSelectedName).idCategory : "");
+  const [kitchenSelectedName, setKitchenSelectedName] = useState(kitchenSelected ? kitchenSelected : "" );
+  const [countries, setCountries] = useState(kitchenSelectedName ? Kitchen.find(kit=>kit.name == kitchenSelectedName).idKitchen : "");
   const [difficulty, setDifficulty] = useState();
 
   useEffect(() => {
     setMeals(
-      data.meals.filter(meal => {
+      dataMeals.filter(meal => {
         const [hours, minutes, seconds] = meal.duration.split(':').map(Number);
         const totalMinutes = hours * 60 + minutes + seconds / 60;
         
@@ -52,7 +53,7 @@ const Meals = ({ data }) => {
         return isCategoryMatch && isCountryMatch && isDifficultyMatch;
       })
     );
-  }, [categorieSelected, countries, difficulty, data.meals]);
+  }, [categorieSelected, countries, difficulty, dataMeals]);
   
   const [activeTeam, setActiveTeam] = useState({});
   // Compagy Component
@@ -142,7 +143,7 @@ const Meals = ({ data }) => {
             onChange={e => setCountries(e.target.value)}
           >
             <option value="">All Kitchens</option>
-            <Countries countries={data.countries}/>
+            <Countries countries={Kitchen}/>
           </select>
         </SidebarMenu>
         <SidebarMenu className="flex gap-4 h-full mt-4">

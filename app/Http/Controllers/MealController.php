@@ -15,17 +15,13 @@ class MealController extends Controller
      */
     public function index(Request $request)
     {
-        $meals = Meal::latest()->get();
-        $countries = DB::table("kitchens")->get();
-        $categories = Category::all();
+        $dataMeals = Meal::latest()->get();
+        $Kitchen = DB::table("kitchens")->get();
+        $dataCategories = Category::all();
         $categorySelected = $request->query('category');
-        $data = [
-            "meals"=>$meals,
-            "countries"=>$countries,
-            "categories"=>$categories,
-            "categorySelected"=>$categorySelected,
-        ];
-        return inertia("meals/Meals", compact("data"));
+        $kitchenSelected = $request->query('kitchen');
+
+        return inertia("meals/Meals", compact("dataMeals","Kitchen","dataCategories","categorySelected","kitchenSelected"));
     }
 
     /**

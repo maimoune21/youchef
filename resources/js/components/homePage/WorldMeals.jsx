@@ -1,7 +1,8 @@
+import { Link } from "@inertiajs/react";
 import worldicon from "/public/images/worldicon.svg";
 import React from "react";
 
-const WorldMeals = () => {
+const WorldMeals = ({ Kitchen }) => {
   return (
     <div className="flex flex-col w-full">
       <div className="text-center bg-soft pb-10 sm:pb-20 md:pb-30">
@@ -9,19 +10,18 @@ const WorldMeals = () => {
         <h2 className="text-green pt-3.5 pb-2 sm:text-6xl max-md:text-5xl max-sm:text-4xl tn:text-5xl font-bold tracking-wide cursor-pointer">World Meals</h2>
         <div className="flex flex-col justify-center gap-3 mt-10">
           <div className=" flexy gap-4 sm:gap-6 md:gap-8">
-            <button className="WorldMealBtn">Morocco</button>
-            <button className="WorldMealBtn">Japan</button>
+            <Link href={`/meals?kitchen=${Kitchen[0].name}`} className="WorldMealBtn">{Kitchen[0].name}</Link>
+            <Link href={`/meals?kitchen=${Kitchen[1].name}`} className="WorldMealBtn">{Kitchen[1].name}</Link>
           </div>
           <div className="flexy gap-2 sm:gap-3 md:gap-5">
-            <button className="WorldMealBtn">Italie</button>
-            <button className="WorldMealBtn px-5! sm:px-9! md:px-14!">USA</button>
-            <button className="WorldMealBtn">France</button>
+            <Link href={`/meals?kitchen=${Kitchen[2].name}`} className="WorldMealBtn">{Kitchen[2].name}</Link>
+            <Link href={`/meals?kitchen=${Kitchen[3].name}`} className="WorldMealBtn px-5! sm:px-9! md:px-14!">{Kitchen[3].name}</Link>
+            <Link href={`/meals?kitchen=${Kitchen[4].name}`} className="WorldMealBtn">{Kitchen[4].name}</Link>
           </div>
           <div className="flexy gap-4 sm:gap-6 md:gap-8">
-            <button className="WorldMealBtn">India</button>
-            <button className="WorldMealBtn">Mexic</button>
+            <Link href={`/meals?kitchen=${Kitchen[5].name}`} className="WorldMealBtn">{Kitchen[5].name}</Link>
+            <Link href={`/meals?kitchen=${Kitchen[6].name}`} className="WorldMealBtn">{Kitchen[6].name}</Link>
           </div>
-
         </div>
       </div>
     </div>
