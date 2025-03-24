@@ -33,7 +33,18 @@ const MealCard = ({ meal }) => {
         const differenceInDays = Math.floor(
             differenceInMs / (1000 * 60 * 60 * 24)
         );
-        return differenceInDays;
+
+        if (differenceInDays >= 360) {
+            const years = Math.floor(differenceInDays / 360);
+            return `${years} year${years > 1 ? "s" : ""} ago`;
+        } else if (differenceInDays >= 30) {
+            const months = Math.floor(differenceInDays / 30);
+            return `${months} month${months > 1 ? "s" : ""} ago`;
+        } else {
+            return `${differenceInDays} day${
+                differenceInDays !== 1 ? "s" : ""
+            } ago`;
+        }
     };
 
     const formatDuration = (duration) => {
@@ -51,7 +62,7 @@ const MealCard = ({ meal }) => {
     };
 
     return (
-        <div className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden">
+        <div className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden select-none">
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                     <img
@@ -85,8 +96,10 @@ const MealCard = ({ meal }) => {
             <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flex flex-col">
                     <div className="flexy justify-between!">
-                        <h3 className="font-bold text-2xl max-sm:text-xl truncate">
-                            {meal.title}
+                        <h3 className="font-bold text-2xl max-sm:text-xl truncate hover:underline">
+                            <Link href={`/mealDetails/${meal.idMeal}`}>
+                                {meal.title}
+                            </Link>
                         </h3>
                         <div>
                             <DotsIcon className="w-6 h-6" />
@@ -95,29 +108,33 @@ const MealCard = ({ meal }) => {
                     <div className="text-sm max-sm:text-xs flexy justify-start! gap-1">
                         {meal.views} views
                         <div className="h-1.5 w-1.5 text-sm max-sm:text-xs rounded-full bg-gray-700 m-0.5"></div>
-                        {calculateDaysDifference()} days ago
+                        {calculateDaysDifference()}
                     </div>
                 </div>
                 <div className="grid grid-cols-[2fr_1fr]">
                     <Link
                         href={`/publicProfile/${meal.idUser}`}
-                        className="py-0 hover:scale-98"
+                        className="py-0 hover:scale-98 group/user"
                     >
                         <div className="flex flex-col gap-2">
                             <div className="flexy justify-start! gap-2">
                                 <img
-                                    src={meal.userImage? `/uploads/users/${meal.userImage}`: Profile}
+                                    src={
+                                        meal.userImage
+                                            ? `/uploads/users/${meal.userImage}`
+                                            : Profile
+                                    }
                                     alt=""
                                     className="rounded-full w-8 object-cover"
                                 />
-                                <h6 className="max-sm:text-xs max-lg:text-sm hover:text-green-600 hover:underline underline-offset-2">
+                                <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
                                     {meal.userFName} {meal.userLName}
                                 </h6>
                             </div>
                         </div>
                     </Link>
                     <div className="flex items-center justify-end">
-                        <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)]">
+                        <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)] hover:scale-96">
                             <Link href={`/mealDetails/${meal.idMeal}`}>
                                 <EyeIcon style="size-5.5 text-black cursor-pointer" />
                             </Link>

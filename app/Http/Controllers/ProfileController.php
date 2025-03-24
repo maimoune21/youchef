@@ -20,10 +20,15 @@ class ProfileController extends Controller
         }
 
         $meals = DB::table('meals')
-        ->join('users', 'meals.idUser', '=', 'users.idUser')
-        ->where('meals.idUser', $id)
-        ->select('meals.*', 'users.firstName', 'users.lastName', 'users.profile_img')
-        ->get();
+            ->join('users', 'meals.idUser', '=', 'users.idUser')
+            ->where('meals.idUser', $id)
+            ->select(
+                'meals.*',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->get();
 
         // Passing data to the view :
         return inertia('profile/PublicProfile', compact('user', 'meals'));
@@ -33,16 +38,21 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $posts = DB::table('meals')
-        ->join('users', 'meals.idUser', '=', 'users.idUser')
-        ->where('meals.idUser', $user->idUser)
-        ->select('meals.*', 'users.firstName', 'users.lastName', 'users.profile_img')
-        ->get();
+            ->join('users', 'meals.idUser', '=', 'users.idUser')
+            ->where('meals.idUser', $user->idUser)
+            ->select(
+                'meals.*',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->get();
 
         $favoriteMeals = DB::table('user__meal__favorite')
-        ->join('meals', 'user__meal__favorite.idMeal', '=', 'meals.idMeal')  // Join with meals to get meal details
-        ->where('user__meal__favorite.idUser', $user->idUser)  // Get favorites for the authenticated user
-        ->select('meals.*')  // Select all meal columns
-        ->get();
+            ->join('meals', 'user__meal__favorite.idMeal', '=', 'meals.idMeal')
+            ->where('user__meal__favorite.idUser', $user->idUser)
+            ->select('meals.*')
+            ->get();
 
         return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));
     }

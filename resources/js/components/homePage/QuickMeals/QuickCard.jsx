@@ -27,7 +27,18 @@ const QuickCard = ({ meal }) => {
         const differenceInDays = Math.floor(
             differenceInMs / (1000 * 60 * 60 * 24)
         );
-        return differenceInDays;
+
+        if (differenceInDays >= 360) {
+            const years = Math.floor(differenceInDays / 360);
+            return `${years} year${years > 1 ? "s" : ""} ago`;
+        } else if (differenceInDays >= 30) {
+            const months = Math.floor(differenceInDays / 30);
+            return `${months} month${months > 1 ? "s" : ""} ago`;
+        } else {
+            return `${differenceInDays} day${
+                differenceInDays !== 1 ? "s" : ""
+            } ago`;
+        }
     };
 
     const formatDuration = (duration) => {
@@ -45,7 +56,7 @@ const QuickCard = ({ meal }) => {
     };
 
     return (
-        <div className="custom-shadow bg-60 rounded-3xl grid grid-col-[65%_auto] transition duration-900 md:pb-4 m-2 overflow-hidden">
+        <div className="custom-shadow bg-60 rounded-3xl grid grid-col-[65%_auto] transition duration-900 md:pb-4 m-2 overflow-hidden select-none">
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                     <img
@@ -79,7 +90,12 @@ const QuickCard = ({ meal }) => {
             <div className="w-full p-3 pb-0 max-md:pb-4 flex flex-col whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flexy justify-between!">
                     <h3 className="font-bold text-2xl truncate">
-                        {meal.title}
+                        <Link
+                            href={`/mealDetails/${meal.idMeal}`}
+                            className="hover:underline"
+                        >
+                            {meal.title}
+                        </Link>
                     </h3>
                     <div className="cursor-pointer">
                         <DotsIcon size="size-6" />
@@ -89,7 +105,7 @@ const QuickCard = ({ meal }) => {
                     <div className="text-sm flexy justify-start! gap-1">
                         {meal.views} views
                         <div className="h-1.5 w-1.5 rounded-full bg-gray-700 m-0.5"></div>
-                        {calculateDaysDifference()} days ago
+                        {calculateDaysDifference()}
                     </div>
                     <div className="flexy justify-start! gap-2 hover:scale-98">
                         <Link

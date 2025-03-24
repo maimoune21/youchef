@@ -45,18 +45,40 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
 
     // Like and Dislike Logic:
     const [likes, setLikes] = useState(meal.likes);
+    const [userAction, setUserAction] = useState({
+        liked: meal.user_has_liked || false,
+        disliked: meal.user_has_disliked || false,
+    });
     const handleLike = () => {
         if (!activUser) {
             router.visit("/login");
             return;
         }
-        setLikes((prevLikes) => prevLikes + 1);
+        if (userAction.liked) return;
+        const newState = {
+            liked: true,
+            disliked: false,
+        };
+        setUserAction(newState);
+        setLikes((prev) => {
+            if (userAction.disliked) {
+                return prev + 1;
+            }
+            return prev + 1;
+        });
         router.post(
             `/meals/${meal.idMeal}/like`,
-            {},
+            {
+                action: "like",
+                wasDisliked: userAction.disliked,
+            },
             {
                 onError: () => {
-                    setLikes((prevLikes) => prevLikes - 1);
+                    setUserAction({
+                        liked: false,
+                        disliked: userAction.disliked,
+                    });
+                    setLikes((prev) => prev - 1);
                 },
             }
         );
@@ -67,18 +89,34 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
             router.visit("/login");
             return;
         }
-        setLikes((prevLikes) => {
-            if (prevLikes > 0) {
-                return prevLikes - 1;
+        if (userAction.disliked) return;
+        const newState = {
+            liked: false,
+            disliked: true,
+        };
+        setUserAction(newState);
+        setLikes((prev) => {
+            if (userAction.liked) {
+                return prev - 1;
             }
-            return prevLikes;
+            return prev;
         });
+
         router.post(
             `/meals/${meal.idMeal}/dislike`,
-            {},
+            {
+                action: "dislike",
+                wasLiked: userAction.liked,
+            },
             {
                 onError: () => {
-                    setLikes((prevLikes) => prevLikes + 1);
+                    setUserAction({
+                        liked: userAction.liked,
+                        disliked: false,
+                    });
+                    if (userAction.liked) {
+                        setLikes((prev) => prev + 1);
+                    }
                 },
             }
         );
@@ -88,14 +126,11 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     const [newComment, setNewComment] = useState("");
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-
         if (!activUser) {
             router.visit("/login");
             return;
         }
-
         if (!newComment.trim()) return;
-
         router.post(
             `/meals/${meal.idMeal}/comment`,
             { comment: newComment },
@@ -117,16 +152,19 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                                 ? `/uploads/meals/${meal.meal_img}`
                                 : `${Meal}`
                         }
-                        className="w-full max-h-[60vh] rounded-3xl"
+                        className="w-full max-h-[60vh] rounded-t-3xl"
                         alt="test"
                     />
-                </div>
-                <div className="max-w-3xl m-auto">
-                    <h1 className="text-2xl font-bold pt-1.5 pb-2">
+                    <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 bg-white text-black rounded-b-3xl">
                         {meal.title}
                     </h1>
+                </div>
+                <div className="max-w-3xl m-auto">
                     <div className="flex items-center justify-between">
-                        <Link href={`/publicProfile/${user.idUser}`} className='hover:bg-gray-200 rounded-lg px-4 py-1'>
+                        <Link
+                            href={`/publicProfile/${user.idUser}`}
+                            className="hover:bg-gray-200 rounded-lg px-4 py-1"
+                        >
                             <div className="flex flex-col gap-2">
                                 <div className="flexy gap-4">
                                     <img
@@ -152,7 +190,11 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                                     className="flexy cursor-pointer select-none"
                                     onClick={handleLike}
                                 >
-                                    <LikeIcon size="size-5.5" />
+                                    <LikeIcon
+                                        size={`size-5.5 ${
+                                            userAction.liked ? "fill-black" : ""
+                                        }`}
+                                    />
                                     <b className="text-sm">{likes}</b>
                                 </span>
                                 <span className="h-6.5 w-px bg-black rounded-full"></span>
@@ -160,7 +202,9 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                                     className="cursor-pointer select-none"
                                     onClick={handleDislike}
                                 >
-                                    <DislikeIcon size="size-5.5" />
+                                    <DislikeIcon
+                                        size={`size-5.5`}
+                                    />
                                 </span>
                             </span>
                             <span className="border-1 border-black rounded-full p-1.5 cursor-pointer">
@@ -282,7 +326,10 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         )}
                         <div className="flex flex-col gap-6 pt-6 px-3">
                             {MealComments.map((comment) => (
-                                <div className="flex items-center gap-4 min-w-2xl m-auto">
+                                <div
+                                    key={comment.idComment}
+                                    className="flex items-center gap-4 min-w-2xl m-auto"
+                                >
                                     <span className="flexy">
                                         {comment.profile_img ? (
                                             <img

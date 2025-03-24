@@ -217,7 +217,7 @@ const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSe
 
   // Main component render
   return (
-    <SidebarProvider className="-mt-5">
+    <SidebarProvider className="-mt-7">
       <Sidebar
         collapsible="icon"
         className="relative h-[91vh]! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:w-16"
