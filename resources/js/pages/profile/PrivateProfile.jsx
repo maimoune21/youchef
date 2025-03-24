@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { UpdateProfile } from "@/components/models/UpdateProfile";
 import { Button } from "@/components/ui/button";
 import MealCard from "@/components/ui/MealCard";
-import { TrashIcon } from "@/../../public/icons/Icons";
-import { UpdateMeal } from "@/components/models/UpdateMeal";
 import { router, useForm } from "@inertiajs/react";
 
 const PrivateProfile = ({ user, posts, favoriteMeals }) => {
@@ -166,17 +164,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                             {
                                 posts.map((post) =>
                                     <div>
-                                        <MealCard key={post.idMeal} meal={post} />
-                                        <div className="bg-60 shadow-[2px_2px_3px_0px_hsla(0,0%,0%,0.2),-2px_2px_3px_0px_hsla(0,0%,0%,0.2)] px-2.5 py-1.5 rounded-b-xl flex gap-2 w-fit m-auto">
-                                            <UpdateMeal buttonStyles="rounded-lg! flexy" meal={post} />
-                                            <Button
-                                                className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
-                                                onClick={() => handleDelete(post.idMeal)}
-                                            >
-                                                Delete
-                                                <TrashIcon size="size-5 md:size-7" />
-                                            </Button>
-                                        </div>
+                                        <MealCard key={post.idMeal} meal={post} mypost={true}/>
                                     </div>
                                 )
                             }

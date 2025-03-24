@@ -8,8 +8,11 @@ import {
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { Link } from "@inertiajs/react";
 import FavoriteButton from "./favoriteButton";
+import { TrashIcon } from "@/../../public/icons/Icons";
+import { UpdateMeal } from "@/components/models/UpdateMeal";
+import { Button } from "@/components/ui/button";
 
-const MealCard = ({ meal, thisUser, favoriteMeals }) => {
+const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
     const [status, setStatus] = useState("");
 
     useEffect(() => {
@@ -85,7 +88,10 @@ const MealCard = ({ meal, thisUser, favoriteMeals }) => {
                         <p>{status}</p>
                     </div>
                 </div>
-                <FavoriteButton meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
+                {mypost
+                    ? null
+                    : <FavoriteButton meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
+                }
             </div>
             <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flex flex-col">
@@ -105,35 +111,53 @@ const MealCard = ({ meal, thisUser, favoriteMeals }) => {
                         {calculateDaysDifference()}
                     </div>
                 </div>
-                <div className="grid grid-cols-[2fr_1fr]">
-                    <Link
-                        href={`/publicProfile/${meal.idUser}`}
-                        className="py-0 hover:scale-98 group/user"
-                    >
-                        <div className="flex flex-col gap-2">
-                            <div className="flexy justify-start! gap-2">
-                                {meal.userImage
-                                    ? <img
-                                        src={`/uploads/users/${meal.userImage}`}
-                                        alt=""
-                                        className="rounded-full w-8 object-cover"
-                                    />
-                                    : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
-                                }
-                                <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
-                                    {meal.userFName} {meal.userLName}
-                                </h6>
+                {
+                    mypost
+                        ? null
+                        : <div className="grid grid-cols-[2fr_1fr]">
+                            <Link
+                                href={`/publicProfile/${meal.idUser}`}
+                                className="py-0 hover:scale-98 group/user"
+                            >
+                                <div className="flex flex-col gap-2">
+                                    <div className="flexy justify-start! gap-2">
+                                        {meal.userImage
+                                            ? <img
+                                                src={`/uploads/users/${meal.userImage}`}
+                                                alt=""
+                                                className="rounded-full w-8 object-cover"
+                                            />
+                                            : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
+                                        }
+                                        <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
+                                            {meal.userFName} {meal.userLName}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </Link>
+                            <div className="flex items-center justify-end">
+                                <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)] hover:scale-96">
+                                    <Link href={`/mealDetails/${meal.idMeal}`}>
+                                        <EyeIcon style="size-5.5 text-black cursor-pointer" />
+                                    </Link>
+                                </span>
                             </div>
                         </div>
-                    </Link>
-                    <div className="flex items-center justify-end">
-                        <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)] hover:scale-96">
-                            <Link href={`/mealDetails/${meal.idMeal}`}>
-                                <EyeIcon style="size-5.5 text-black cursor-pointer" />
-                            </Link>
-                        </span>
-                    </div>
-                </div>
+                }
+                {
+                    mypost
+                        ? <div className="mx-auto w-full px-1 flex flex-wrap justify-center gap-2 m-auto">
+                            <UpdateMeal buttonStyles="rounded-lg! flexy" meal={meal} />
+                            <Button
+                                className="text-lg font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
+                                onClick={() => handleDelete(meal.idMeal)}
+                            >
+                                Delete
+                                <TrashIcon size="size-5 md:size-6" />
+                            </Button>
+                        </div>
+                        : null
+                }
             </div>
         </div>
     );
