@@ -90,7 +90,7 @@ const PopularCard = ({ meal }) => {
                         <div className="flexy justify-start! gap-2">
                             <Link
                                 href={`/publicProfile/${meal.idUser}`}
-                                className="rounded-lg flex items-center gap-2 hover:scale-97"
+                                className="rounded-lg flex items-center gap-2 hover:scale-97 group"
                             >
                                 <img
                                     src={
@@ -101,7 +101,7 @@ const PopularCard = ({ meal }) => {
                                     alt="profile"
                                     className="rounded-full w-8 object-cover md:w-12"
                                 />
-                                <h6 className="md:text-2xl hover:text-gray-400">
+                                <h6 className="md:text-2xl group-hover:text-gray-400 group-hover:underline underline-offset-3">
                                     {meal
                                         ? `${meal.userFName} ${meal.userLName}`
                                         : "Unknown User"}

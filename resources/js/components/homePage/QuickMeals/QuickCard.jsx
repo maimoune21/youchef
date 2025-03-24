@@ -45,7 +45,7 @@ const QuickCard = ({ meal }) => {
     };
 
     return (
-        <div className="custom-shadow bg-60 rounded-3xl grid grid-col-[65%_auto] transition duration-900 md:pb-4 m-2 group overflow-hidden">
+        <div className="custom-shadow bg-60 rounded-3xl grid grid-col-[65%_auto] transition duration-900 md:pb-4 m-2 overflow-hidden">
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                     <img
@@ -94,7 +94,7 @@ const QuickCard = ({ meal }) => {
                     <div className="flexy justify-start! gap-2 hover:scale-98">
                         <Link
                             href={`/publicProfile/${meal.idUser}`}
-                            className="rounded-lg py-2"
+                            className="rounded-lg py-2 flex items-center gap-2 group/user"
                         >
                             <img
                                 src={
@@ -105,12 +105,7 @@ const QuickCard = ({ meal }) => {
                                 alt=""
                                 className="rounded-full w-8 object-cover"
                             />
-                        </Link>
-                        <Link
-                            href={`/publicProfile/${meal.idUser}`}
-                            className="rounded-lg py-2"
-                        >
-                            <h6 className="md:text-lg hover:text-gray-500">
+                            <h6 className="md:text-lg group-hover/user:text-gray-400 group-hover/user:underline underline-offset-3">
                                 {meal.userFName} {meal.userLName}
                             </h6>
                         </Link>
