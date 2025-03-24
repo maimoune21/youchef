@@ -19,8 +19,8 @@ class MealController extends Controller
             ->select(
                 'meals.*',
                 'users.idUser as idUser',
-                'users.firstName as userLName',
-                'users.lastName as userFName',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
                 'users.profile_img as userImage'
             )
             ->latest()
