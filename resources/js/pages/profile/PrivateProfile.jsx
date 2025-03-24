@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import MealCard from "@/components/ui/MealCard";
 import { TrashIcon } from "@/../../public/icons/Icons";
 import { UpdateMeal } from "@/components/models/UpdateMeal";
-import { router, useForm, usePage } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 
 const PrivateProfile = ({ user, posts, favoriteMeals }) => {
     const [isFavoritesHovered, setIsFavoritesHovered] = useState(false);
@@ -52,7 +52,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                                 alt="Profile"
                                 className="rounded-full size-40 max-md:m-auto"
                             />
-                            : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>
+                            : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{user.lastName.charAt(0)}</span>
                     }
                     <div className="space-x-4">
                         {/* Name and Post Count */}
@@ -80,7 +80,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
 
                 {/* Update And LogOut Buttons */}
                 <div className="md:w-fit flex md:flex-col justify-center gap-3">
-                    <UpdateProfile />
+                    <UpdateProfile user={user} />
                     <form onSubmit={HLogOut}>
                         <Button
                             type="submit"

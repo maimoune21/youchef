@@ -9,7 +9,14 @@ import BlankMeal from "../../../../public/images/BlankMeal.png";
 import TextInputGroup from "../ui/TextInputGroup";
 import TextAreaGroup from "../ui/TextAreaGroup";
 
-export function UpdateMeal({ buttonStyles = "", meal}) {
+export function UpdateMeal({ buttonStyles = "", meal }) {
+  const ingredientsArray = typeof meal.ingredients === 'string' 
+    ? JSON.parse(meal.ingredients) 
+    : meal.ingredients;
+  const instructionsArray = typeof meal.instructions === 'string'
+    ? JSON.parse(meal.instructions)
+    : meal.instructions;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -83,6 +90,7 @@ export function UpdateMeal({ buttonStyles = "", meal}) {
                 </span>
                 <span className="flex flex-col gap-0.5">
                   <TextInputGroup
+                    type='time'
                     label="Duration: "
                     name="title"
                     id="title"
@@ -92,32 +100,45 @@ export function UpdateMeal({ buttonStyles = "", meal}) {
                   />
                 </span>
                 <span className="flex flex-col gap-0.5">
-                  <TextAreaGroup
-                    label="Ingredients: "
-                    classLabel="font-bold"
-                    name="description"
-                    id="description"
-                    placeholder="Ingredient 1"
-                    rows="4"
-                    value={meal.ingredients}
-                  />
+                  <label className="font-bold">Ingredients:</label>
+                  <div className="flex flex-col gap-1">
+                    {ingredientsArray.map((ingredient, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <span>-</span>
+                        <TextInputGroup
+                          name={`ingredient-${index}`}
+                          id={`ingredient-${index}`}
+                          placeholder={`Ingredient ${index + 1}`}
+                          value={ingredient}
+                          noLabel
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </span>
                 <span className="flex flex-col gap-0.5">
-                  <TextAreaGroup
-                    label="Instructions: "
-                    classLabel="font-bold"
-                    name="description"
-                    id="description"
-                    placeholder="Instruction 1"
-                    rows="4"
-                    value={meal.instructions}
-                  />
+                  <label className="font-bold">Instructions:</label>
+                  <div className="flex flex-col gap-1">
+                    {instructionsArray.map((instruction, index) => (
+                      <div key={index} className="flex gap-1">
+                        <span>-</span>
+                        <TextAreaGroup
+                          name={`instruction-${index}`}
+                          id={`instruction-${index}`}
+                          placeholder={`Instruction ${index + 1}`}
+                          value={instruction}
+                          rows="2"
+                          noLabel
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </span>
               </div>
             </form>
             <div className="flexy gap-6 pb-8">
               <button className="Backbutton py-0.5! pr-4! pl-0!">
-                <LeftArrowIcon size="size-8" />
+                <b><LeftArrowIcon style="size-8" /></b>
                 <b>Discard</b>
               </button>
               <button className="Nextbutton gap-2 py-1.5! px-2! pl-4!">
