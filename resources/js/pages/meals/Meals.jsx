@@ -34,8 +34,9 @@ const Meals = ({ data }) => {
     { name: 'All' ,picture: "all.png" },
     ...data.categories
   ];
-
-  const [categorieSelected, setCategorieSelected] = useState();
+  
+  const [categorieSelectedName, setCategorieSelectedName] = useState(data.categorySelected? data.categorySelected : "" );
+  const [categorieSelected, setCategorieSelected] = useState(categorieSelectedName && Categories.find(cat=>cat.name == categorieSelectedName).idCategory);
   const [countries, setCountries] = useState();
   const [difficulty, setDifficulty] = useState();
 
@@ -52,7 +53,7 @@ const Meals = ({ data }) => {
       })
     );
   }, [categorieSelected, countries, difficulty, data.meals]);
-
+  
   const [activeTeam, setActiveTeam] = useState({});
   // Compagy Component
   const Compagy = () => {
@@ -117,9 +118,7 @@ const Meals = ({ data }) => {
               }`}
             onChange={e => {setDifficulty(e.target.value);}}
           >
-            <option value="" selected>
-              All Difficulties
-            </option>
+            <option value="">All Difficulties</option>
             <option value="easy">Easy</option>
             <option value="normal">Normal</option>
             <option value="hard">Hard</option>
@@ -142,9 +141,7 @@ const Meals = ({ data }) => {
               }`}
             onChange={e => setCountries(e.target.value)}
           >
-            <option value="" selected>
-              All Kitchens
-            </option>
+            <option value="">All Kitchens</option>
             <Countries countries={data.countries}/>
           </select>
         </SidebarMenu>
