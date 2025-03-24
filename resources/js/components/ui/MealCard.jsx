@@ -100,18 +100,18 @@ const MealCard = ({ meal }) => {
                 </div>
                 <div className="grid grid-cols-[2fr_1fr]">
                     <Link
-                        href={`/publicProfile/`}
-                        className="hover:bg-gray-200 rounded-lg px-4 py-1"
+                        href={`/publicProfile/${meal.idUser}`}
+                        className="py-0 hover:scale-98"
                     >
                         <div className="flex flex-col gap-2">
                             <div className="flexy justify-start! gap-2">
                                 <img
-                                    src={Profile}
+                                    src={meal.userImage? `/uploads/users/${meal.userImage}`: Profile}
                                     alt=""
                                     className="rounded-full w-8 object-cover"
                                 />
-                                <h6 className="max-sm:text-xs max-lg:text-sm">
-                                    Hamada
+                                <h6 className="max-sm:text-xs max-lg:text-sm hover:text-green-600 hover:underline underline-offset-2">
+                                    {meal.userFName} {meal.userLName}
                                 </h6>
                             </div>
                         </div>

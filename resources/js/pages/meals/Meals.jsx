@@ -176,7 +176,7 @@ const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSe
                   className="flex flex-col gap-3"
                 >
                   {Categories.map((categorie, index) => (
-                    <SidebarMenuItem key={index} className="">
+                    <SidebarMenuItem key={index}>
                       <div
                         onClick={_ => setCategorieSelected(categorie.idCategory)}
                       >

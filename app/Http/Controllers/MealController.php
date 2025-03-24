@@ -15,7 +15,16 @@ class MealController extends Controller
      */
     public function index(Request $request)
     {
-        $dataMeals = Meal::latest()->get();
+        $dataMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userLName',
+                'users.lastName as userFName',
+                'users.profile_img as userImage'
+            )
+            ->latest()
+            ->get();
         $Kitchen = DB::table("kitchens")->get();
         $dataCategories = Category::all();
         $categorySelected = $request->query('category');
