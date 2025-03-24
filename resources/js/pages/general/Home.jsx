@@ -7,13 +7,13 @@ import SectionCategories from "@/components/homePage/Categories";
 import QuickMeals from "@/components/homePage/QuickMeals/QuickMeals";
 import PopularMeals from "@/components/homePage/PopularMeals/PopularMeals";
 
-const Home = ({popularMeals}) => {
+const Home = ({data}) => {
   return (
     <>
       <Header />
       <SectionCategories />
       <WorldMeals />
-      <PopularMeals testing={popularMeals} />
+      <PopularMeals popularMeals={data} />
       <QuickMeals />
       <Together />
       <ContactUs />

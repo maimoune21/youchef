@@ -11,34 +11,8 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { LeftArrowIcon, RightArrowIcon } from "@/../../public/icons/Icons";
 
-const PopularMeals = () => {
+const PopularMeals = ({ popularMeals }) => {
 
-  const popularMeals = [
-    {
-      user: "obama aziz",
-      date: "2025-02-02",
-      title: "hello from pizza",
-      image: BlankMeal,
-      duration: 2,
-      views: 200,
-    },
-    {
-      user: "obama aziz",
-      date: "2025-02-02",
-      title: "hello from pizza",
-      image: BlankMeal,
-      duration: 6,
-      views: 200,
-    },
-    {
-      user: "obama aziz",
-      date: "2025-02-02",
-      title: "hello from pizza",
-      image: BlankMeal,
-      duration: 4,
-      views: 200,
-    },
-  ];
   return (
     <div id="PopularMeals" className="text-center bg-soft pb-40 pt-5 flex flex-col w-full">
       <h2 className="text-green pt-3.5 pb-2 sm:text-[54px] max-md:text-4xl max-sm:text-3xl tn:text-4xl font-bold tracking-wide cursor-pointer">

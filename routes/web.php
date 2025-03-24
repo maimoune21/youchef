@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MealController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,7 +15,7 @@ Route::get("/mealDetails/{id}", [MealController::class, "show"]);
 Route::get('/categories', [CategoryController::class, 'index']);
 
 // Open Pages :
-Route::inertia("/", "general/Home");
+Route::get("/", [HomeController::class,"index"]);
 Route::inertia("/aboutUs", "general/AboutUs");
 Route::inertia("/FAQS", "general/FAQS");
 Route::inertia("/privacy", "general/Privacy");
