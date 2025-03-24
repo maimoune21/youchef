@@ -1,7 +1,7 @@
-import { SignalIcon, HeartIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
+import { SignalIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
-import { Link, router } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 
 const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
     const [status, setStatus] = useState("");
@@ -58,18 +58,6 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
         }
     };
 
-    const handleFavoriteClick = () => {
-        console.log(thisUser.idUser)
-        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
-            onSuccess: () => {
-                setIsFavorited(prev => !prev);
-            },
-            onError: (errors) => {
-                console.error("Error toggling favorite:", errors);
-            }
-        });
-    };
-
     return (
         <div className="custom-shadow bg-60 rounded-3xl grid grid-col-[65%_auto] transition duration-900 md:pb-4 m-2 overflow-hidden select-none">
             <div className="relative w-full">
@@ -97,12 +85,7 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
                         <p className="pt-0.5">{status}</p>
                     </div>
                 </div>
-                <button
-                    className="bg-30 rounded-full p-1 absolute top-3 right-3 *:transition-all *:duration-200 hover:*:fill-[var(--wave-1)]"
-                    onClick={handleFavoriteClick}
-                >
-                    <HeartIcon className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
-                </button>
+                <FavoriteButton meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
             </div>
             <div className="w-full p-3 pb-0 max-md:pb-4 flex flex-col whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flexy justify-between!">
