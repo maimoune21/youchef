@@ -226,12 +226,12 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
                                 </span>
                             </span>
                             <button
-                                className="border-1 border-black rounded-full p-1.5 cursor-pointer"
+                                className="border-1 border-black rounded-full p-1.5 cursor-pointer group"
                                 onClick={handleFavoriteClick}
                             >
                                 <HeartIcon
                                     size="size-5.5"
-                                    className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
+                                    className={`${isFavorited ? "fill-green-500 group-hover:fill-red-500" : "fill-none group-hover:fill-[var(--wave-1)] stroke-black stroke-2"}`} />
                             </button>
                             <ReportMeal meal={meal.title} />
                         </div>

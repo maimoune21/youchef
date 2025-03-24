@@ -23,10 +23,10 @@ const FavoriteButton = ({ meal, thisUser, favoriteMeals }) => {
 
     return (
         <button
-            className="bg-30 rounded-full p-1 absolute top-3 right-3 transition-all duration-200 hover:fill-[var(--wave-1)]"
+            className="bg-30 rounded-full p-1 absolute top-3 right-3 transition-all duration-200"
             onClick={handleFavoriteClick}
         >
-            <HeartIcon className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
+            <HeartIcon className={`${isFavorited ? "fill-green-500 hover:fill-red-500" : "fill-none hover:fill-[var(--wave-1)] stroke-black stroke-2"}`} />
         </button>
     );
 };
