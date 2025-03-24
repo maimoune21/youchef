@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::inertia('/postMeal', 'meals/postMeal');
     Route::inertia('/favorites', 'meals/Favorites');
     // Private Profile
-    Route::inertia('/privateProfile', 'profile/PrivateProfile');
+    Route::get('/privateProfile', [ProfileController::class,'privateShow']);
     // Logout :
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
