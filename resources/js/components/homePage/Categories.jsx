@@ -14,7 +14,7 @@ import Cake from "@/../../public/images/categories/cake.png";
 import Soup from "@/../../public/images/categories/soup.png";
 import Drinks from "@/../../public/images/categories/drinks.png";
 import Pasta from "@/../../public/images/categories/pasta.png";
-import Snaks from "@/../../public/images/categories/snaks.png";
+import Snacks from "@/../../public/images/categories/snacks.png";
 import Desserts from "@/../../public/images/categories/desserts.png";
 import { Link } from "@inertiajs/react";
 
@@ -26,7 +26,7 @@ export default function SectionCategories() {
         { label: "Soup", img: Soup },
         { label: "Drinks", img: Drinks },
         { label: "Pasta", img: Pasta },
-        { label: "Snaks", img: Snaks },
+        { label: "Snacks", img: Snacks },
         { label: "Desserts", img: Desserts },
     ];
 

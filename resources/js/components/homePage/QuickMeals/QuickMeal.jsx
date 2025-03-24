@@ -11,11 +11,17 @@ import {
 } from "@/components/ui/carousel";
 import { Link } from "@inertiajs/react";
 
-const QuickMeal = ({ categorie }) => {
+const QuickMeal = ({categorie, meals}) => {
+  console.log(meals)
+  
+
   return (
     <div className="w-[90%] lg:w-[90%] xl:w-[85%] mx-auto rounded-xl flex flex-col py-5 pb-8 gap-4 bg-30 custom-shadow">
       <div className="px-9 flexy justify-between!">
-        <h4 className="text-green font-bold text-3xl">{categorie.label}</h4>
+        {categorie
+          ?<h4 className="text-green font-bold text-3xl">{categorie.name}</h4>
+          :<h4 className="text-green font-bold text-3xl">All Categories</h4>
+        }
         <Link>
           <h4 className="flexy gap-1 font-bold">
             See All
@@ -47,14 +53,19 @@ const QuickMeal = ({ categorie }) => {
           className="w-full px-15 max-sm:px-6 max-tn:px-2!"
         >
           <CarouselContent>
-            {categorie.data.map((card, index) => (
-              <CarouselItem
-                key={index}
-                className="basis-full md:basis-1/2 lg:basis-1/3 flex-shrink-0"
-              >
-                <QuickCard data={card} />
-              </CarouselItem>
-            ))}
+            {
+            meals
+              .filter(meal => !categorie || meal.idCategory == categorie.idCategory) // to see if category has a value to filter 
+              .map((card, index) => (
+                <CarouselItem
+                  key={index}
+                  className="basis-full md:basis-1/2 lg:basis-1/3 flex-shrink-0"
+                >
+                  <QuickCard meal={card} />
+                </CarouselItem>
+              ))
+              .slice(0, 5)
+            }
           </CarouselContent>
           <CarouselPrevious className="max-md:hidden cursor-pointer bg-10 absolute top-1/2 left-2 -translate-y-1/2" />
           <CarouselNext className="max-md:hidden cursor-pointer bg-10 absolute top-1/2 right-2 -translate-y-1/2" />

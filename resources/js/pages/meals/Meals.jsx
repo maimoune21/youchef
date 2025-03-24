@@ -6,7 +6,7 @@ import Cake from "@/../../public/images/categories/cake.png";
 import Soup from "@/../../public/images/categories/soup.png";
 import Drinks from "@/../../public/images/categories/drinks.png";
 import Pasta from "@/../../public/images/categories/pasta.png";
-import Snaks from "@/../../public/images/categories/snaks.png";
+import Snacks from "@/../../public/images/categories/snacks.png";
 import Desserts from "@/../../public/images/categories/desserts.png";
 import YouchefIcon from "@/../../public/images/YouChef-Icon.svg";
 import { motion } from "framer-motion";
@@ -45,7 +45,7 @@ const Meals = ({ data }) => {
     { id: 3, label: "Soup",     img: Soup },
     { id: 4, label: "Drinks",   img: Drinks },
     { id: 5, label: "Pasta",    img: Pasta },
-    { id: 6, label: "Snaks",    img: Snaks },
+    { id: 6, label: "Snacks",    img: Snacks },
     { id: 7, label: "Desserts", img: Desserts },
   ];
 

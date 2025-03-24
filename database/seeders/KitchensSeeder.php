@@ -26,7 +26,7 @@ class KitchensSeeder extends Seeder
                 'updated_at'   => now(),
             ],
             [
-                'name' => 'Italie',
+                'name' => 'Italy',
                 'picture' => 'italie.png',
                 'created_at'   => now(),
                 'updated_at'   => now(),

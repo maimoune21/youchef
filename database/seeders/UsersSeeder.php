@@ -39,6 +39,18 @@ class UsersSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'firstName' => 'Imrane',
+                'lastName' => 'Mejouate',
+                'email' => 'mejouate.imrane@gmail.com',
+                'password' => Hash::make('Imr123'),
+                'profile_img' => 'Imr.png',
+                'bio' => 'This is a sample bio for Imrane Mejouate.',
+                'idMeal' => 3,
+                'idRole' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'firstName' => 'Fatima',
                 'lastName' => 'El Amrani',
                 'email' => 'fatima.elamrani@gmail.com',

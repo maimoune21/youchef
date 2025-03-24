@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = Meal::latest()->get();
+        $meals = Meal::latest()->get();
+        $categories = Category::all();
+        $data = [
+            "meals"=>$meals,
+            "categories"=>$categories
+        ];
         return inertia("general/Home", compact("data"));
     }
 

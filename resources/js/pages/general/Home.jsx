@@ -7,14 +7,15 @@ import SectionCategories from "@/components/homePage/Categories";
 import QuickMeals from "@/components/homePage/QuickMeals/QuickMeals";
 import PopularMeals from "@/components/homePage/PopularMeals/PopularMeals";
 
-const Home = ({data}) => {
+const Home = ({ data }) => {
+  
   return (
     <>
       <Header />
       <SectionCategories />
       <WorldMeals />
-      <PopularMeals popularMeals={data.slice(0, 5)} />
-      <QuickMeals />
+      <PopularMeals popularMeals={data.meals.slice(0, 5)} />
+      <QuickMeals data={data} />
       <Together />
       <ContactUs />
     </>

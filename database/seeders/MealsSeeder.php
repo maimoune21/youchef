@@ -11,119 +11,72 @@ class MealsSeeder extends Seeder
     {
         $kitchenIds = DB::table('kitchens')->pluck('idKitchen', 'name')->toArray();
         $categoryIds = DB::table('categories')->pluck('idCategory', 'name')->toArray();
-        $meals = [
-            // Morocco
-            [
-                'title'        => 'Tagine Chicken',
-                'meal_img'     => 'meal1.png',
-                'duration'     => '0:02:00',
-                'description'  => 'A traditional Moroccan chicken tagine with olives and preserved lemons.',
-                'ingredients'  => json_encode(["Chicken", "Olives", "Preserved Lemons", "Onions", "Garlic", "Spices"]),
-                'instructions' => json_encode(["Brown the chicken", "Add onions, garlic, and spices", "Cook with olives and preserved lemons in a tagine"]),
-                'views'        => 320,
-                'likes'        => 2,
-                'idCategory'   => $categoryIds['All'],
-                'idKitchen'    => $kitchenIds['Morocco'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
-            ],
 
-            // Japan
-            [
-                'title'        => 'Sushi',
-                'meal_img'     => '',
-                'duration'     => '01:00:00',
-                'description'  => 'A traditional Japanese dish with vinegared rice and various toppings.',
-                'ingredients'  => json_encode(["Sushi Rice", "Fish", "Seaweed", "Vinegar", "Sugar", "Salt"]),
-                'instructions' => json_encode(["Prepare sushi rice", "Slice fish", "Assemble sushi with rice and toppings"]),
-                'views'        => 400,
-                'likes'        => 30,
-                'idCategory'   => $categoryIds['Salad'],
-                'idKitchen'    => $kitchenIds['Japan'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
+        // Updated meal configuration to match your kitchen names
+        $mealTypes = [
+            'Salad' => [
+                'countries' => ['Morocco'],
+                'ingredients' => ['Lettuce', 'Tomato', 'Cucumber', 'Olives']
             ],
-
-            // Italy
-            [
-                'title'        => 'Spaghetti Carbonara',
-                'meal_img'     => '',
-                'duration'     => '00:30:00',
-                'description'  => 'Classic Italian pasta dish with eggs, cheese, pancetta, and pepper.',
-                'ingredients'  => json_encode(["Spaghetti", "Eggs", "Pancetta", "Parmesan", "Black Pepper"]),
-                'instructions' => json_encode(["Cook spaghetti", "Fry pancetta", "Mix with eggs and cheese"]),
-                'views'        => 380,
-                'likes'        => 2,
-                'idCategory'   => $categoryIds['Pasta'],
-                'idKitchen'    => $kitchenIds['Italie'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
+            'Drinks' => [
+                'countries' => ['Japan', 'India'],
+                'ingredients' => ['Fruits', 'Yogurt', 'Ice', 'Tea Leaves']
             ],
-
-            // USA
-            [
-                'title'        => 'Hamburger',
-                'meal_img'     => '',
-                'duration'     => '00:30:00',
-                'description'  => 'A classic American hamburger with a juicy beef patty and toppings.',
-                'ingredients'  => json_encode(["Beef Patty", "Bun", "Lettuce", "Tomato", "Cheese", "Pickles", "Ketchup"]),
-                'instructions' => json_encode(["Grill the beef patty", "Toast the bun", "Assemble with toppings"]),
-                'views'        => 300,
-                'likes'        => 2,
-                'idCategory'   => $categoryIds['Snaks'],
-                'idKitchen'    => $kitchenIds['Usa'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
+            'Pasta' => [
+                'countries' => ['Italy'],
+                'ingredients' => ['Pasta', 'Cheese', 'Tomato Sauce', 'Basil']
             ],
-
-            // France
-            [
-                'title'        => 'Coq au Vin',
-                'meal_img'     => '',
-                'duration'     => '02:00:00',
-                'description'  => 'A traditional French dish of chicken braised with wine, mushrooms, and bacon.',
-                'ingredients'  => json_encode(["Chicken", "Red Wine", "Mushrooms", "Bacon", "Onions", "Garlic"]),
-                'instructions' => json_encode(["Brown the chicken", "Cook with wine, mushrooms, and bacon", "Simmer until tender"]),
-                'views'        => 250,
-                'likes'        => 2,
-                'idCategory'   => $categoryIds['Desserts'],
-                'idKitchen'    => $kitchenIds['France'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
+            'Soup' => [
+                'countries' => ['Japan', 'Mexico'],
+                'ingredients' => ['Broth', 'Vegetables', 'Chili', 'Beans']
             ],
-
-            // India
-            [
-                'title'        => 'Butter Chicken',
-                'meal_img'     => '',
-                'duration'     => '00:15:00',
-                'description'  => 'A rich and creamy Indian curry made with chicken, tomatoes, and spices.',
-                'ingredients'  => json_encode(["Chicken", "Tomatoes", "Cream", "Butter", "Spices"]),
-                'instructions' => json_encode(["Marinate chicken", "Cook with tomatoes and spices", "Add cream and butter"]),
-                'views'        => 280,
-                'likes'        => 2,
-                'idCategory'   => $categoryIds['Soup'],
-                'idKitchen'    => $kitchenIds['India'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
+            'Snacks' => [
+                'countries' => ['Usa', 'Mexico'],
+                'ingredients' => ['Potato', 'Cheese', 'Tortilla', 'Avocado']
             ],
-
-            // Mexico
-            [
-                'title'        => 'Tacos al Pastor',
-                'meal_img'     => '',
-                'duration'     => '01:00:00',
-                'description'  => 'Mexican tacos made with marinated pork, pineapple, and spices.',
-                'ingredients'  => json_encode(["Pork", "Pineapple", "Tortillas", "Onions", "Cilantro", "Spices"]),
-                'instructions' => json_encode(["Marinate pork", "Grill with pineapple", "Serve on tortillas with onions and cilantro"]),
-                'views'        => 270,
-                'likes'        => 2,
-                'idCategory'   => $categoryIds['Cake'],
-                'idKitchen'    => $kitchenIds['Mexico'],
-                'created_at'   => now(),
-                'updated_at'   => now(),
+            'Desserts' => [
+                'countries' => ['France', 'Italy'],
+                'ingredients' => ['Sugar', 'Flour', 'Eggs', 'Chocolate']
             ],
+            'Cake' => [
+                'countries' => ['Usa', 'France'],
+                'ingredients' => ['Flour', 'Sugar', 'Butter', 'Vanilla']
+            ]
         ];
+
+        $meals = [];
+        $usedDurations = [];
+        $totalMeals = rand(50, 100);
+
+        for ($i = 0; $i < $totalMeals; $i++) {
+            $category = array_rand($mealTypes);
+            $country = $mealTypes[$category]['countries'][array_rand($mealTypes[$category]['countries'])];
+
+            do {
+                $minutes = rand(1, 180);
+                $duration = sprintf("%02d:%02d:00", floor($minutes / 60), $minutes % 60);
+            } while (in_array($duration, $usedDurations));
+
+            $usedDurations[] = $duration;
+
+            $meals[] = [
+                'title' => ucfirst(fake()->words(rand(1, 3), true)),
+                'meal_img' => 'meal_' . rand(1, 10) . '.png',
+                'duration' => $duration,
+                'description' => fake()->sentence(),
+                'ingredients' => json_encode(array_merge(
+                    $mealTypes[$category]['ingredients'],
+                    fake()->randomElements(['Salt', 'Pepper', 'Oil', 'Herbs'], rand(1, 3))
+                )),
+                'instructions' => json_encode(array_map(fn($s) => ucfirst($s), fake()->sentences(rand(3, 5)))),
+                'views' => rand(50, 1000),
+                'likes' => rand(0, 100),
+                'idCategory' => $categoryIds[$category],
+                'idKitchen' => $kitchenIds[$country],
+                'created_at' => now()->subDays(rand(0, 365)),
+                'updated_at' => now(),
+            ];
+        }
 
         DB::table('meals')->insert($meals);
     }

@@ -11,12 +11,6 @@ class CategoriesSeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'All',
-                'picture' => 'all.png',
-                'created_at'   => now(),
-                'updated_at'   => now(),
-            ],
-            [
                 'name' => 'Salad',
                 'picture' => 'salad.png',
                 'created_at'   => now(),
@@ -47,8 +41,8 @@ class CategoriesSeeder extends Seeder
                 'updated_at'   => now(),
             ],
             [
-                'name' => 'Snaks',
-                'picture' => 'snaks.png',
+                'name' => 'Snacks',
+                'picture' => 'snacks.png',
                 'created_at'   => now(),
                 'updated_at'   => now(),
             ],
