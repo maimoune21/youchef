@@ -58,7 +58,7 @@ class MealsSeeder extends Seeder
 
             $meals[] = [
                 'title' => ucfirst(fake()->words(rand(1, 3), true)),
-                'meal_img' => 'meal_' . rand(1, 10) . '.png',
+                'meal_img' => '',
                 'duration' => $duration,
                 'description' => fake()->sentence(),
                 'ingredients' => json_encode(array_merge(

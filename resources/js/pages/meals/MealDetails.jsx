@@ -246,7 +246,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                                     {
                                         activUser?.profile_img
                                             ? <img
-                                                src={`/uploads/users/${activUser.profile_img}${Profile}`}
+                                                src={`/uploads/users/${activUser.profile_img}`}
                                                 alt="test"
                                                 className="rounded-full w-10"
                                             />

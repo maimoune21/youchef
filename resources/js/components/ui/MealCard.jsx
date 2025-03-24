@@ -52,7 +52,7 @@ const MealCard = ({ meal }) => {
 
     return (
         <Link
-            href={"/"}
+            href={`/mealDetails/${meal.idMeal}`}
             className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden"
         >
             <div className="relative w-full">

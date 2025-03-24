@@ -54,7 +54,7 @@ class MealController extends Controller
             abort(404);
         }
         // Fetching the user who posted the meal :
-        $user = DB::table('users')
+        $user = DB::table('meals')
             ->where('idMeal', $meal->idMeal)
             ->first();
 
