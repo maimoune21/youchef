@@ -25,7 +25,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
     const handleDelete = (idMeal) => {
         if (confirm("Are you sure you want to delete this meal?")) {
             router.delete(`/meals/${idMeal}`, {
-                onSuccess: () => { setmessageDeleted("Meal deleted successfully!"); setFlashMsg("showed")},
+                onSuccess: () => { setmessageDeleted("Meal deleted successfully!"); setFlashMsg("showed") },
             });
             setTimeout(() => {
                 setFlashMsg("hidden")
@@ -159,28 +159,34 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
 
             <div className="m-5 md:mt-10">
                 {status == "meals" ?
-                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
-                        {posts.map((post) =>
-                            <div>
-                                <MealCard key={post.idMeal} meal={post} />
-                                <div className="bg-60 shadow-[2px_2px_3px_0px_hsla(0,0%,0%,0.2),-2px_2px_3px_0px_hsla(0,0%,0%,0.2)] px-2.5 py-1.5 rounded-b-xl flex gap-2 w-fit m-auto">
-                                    <UpdateMeal buttonStyles="rounded-lg! flexy" meal={post} />
-                                    <Button
-                                        className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
-                                        onClick={() => handleDelete(post.idMeal)}
-                                    >
-                                        Delete
-                                        <TrashIcon size="size-5 md:size-7" />
-                                    </Button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                    posts.length == 0
+                        ? <h1 className='text-3xl text-center mt-5'>No Posts Yet</h1>
+                        : <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
+                            {
+                                posts.map((post) =>
+                                    <div>
+                                        <MealCard key={post.idMeal} meal={post} />
+                                        <div className="bg-60 shadow-[2px_2px_3px_0px_hsla(0,0%,0%,0.2),-2px_2px_3px_0px_hsla(0,0%,0%,0.2)] px-2.5 py-1.5 rounded-b-xl flex gap-2 w-fit m-auto">
+                                            <UpdateMeal buttonStyles="rounded-lg! flexy" meal={post} />
+                                            <Button
+                                                className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
+                                                onClick={() => handleDelete(post.idMeal)}
+                                            >
+                                                Delete
+                                                <TrashIcon size="size-5 md:size-7" />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        </div>
                     :
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
-                        {favoriteMeals && favoriteMeals.map(favorite =>
-                            <MealCard key={favorite.id} meal={favorite} />
-                        )}
+                        {
+                            favoriteMeals.length == 0
+                                ? <h1 className='text-3xl text-center mt-5'>No Favorites Yet</h1>
+                                : favoriteMeals.map(favorite => <MealCard key={favorite.id} meal={favorite} />)
+                        }
                     </div>
                 }
             </div>
