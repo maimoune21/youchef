@@ -13,7 +13,7 @@ const Home = ({data}) => {
       <Header />
       <SectionCategories />
       <WorldMeals />
-      <PopularMeals popularMeals={data} />
+      <PopularMeals popularMeals={data.slice(0, 5)} />
       <QuickMeals />
       <Together />
       <ContactUs />

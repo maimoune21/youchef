@@ -12,7 +12,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = Meal::latest()->take(5)->get();
+        $data = Meal::latest()->get();
         return inertia("general/Home", compact("data"));
     }
 
