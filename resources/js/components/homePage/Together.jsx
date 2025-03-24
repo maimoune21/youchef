@@ -25,22 +25,32 @@ const Together = () => {
         <div className="flex flex-col justify-center gap-3 mt-15">
           <div className=" flexy gap-8 sm:gap-12 md:gap-30 max-md:flex-col">
             <div className="flexy flex-col gap-5 max-md:mb-10">
-              <img
-                src={ExploreRecipes}
-                alt="Explore Recipes"
-                className="togetherRadiusAnimation aspect-square w-[80%] md:w-70 rounded-full"
-              />
+              <Link
+                className="togetherRadiusAnimation group cursor-pointer overflow-hidden aspect-square w-[80%] md:w-70"
+                href="/meals"
+              >
+                <img
+                  src={ExploreRecipes}
+                  alt="Explore Recipes"
+                  className="group-hover:scale-110 transition-all duration-300"
+                />
+              </Link>
               <Link href="/meals">
                 <BrowseRecipesButton label="Explore Recipes" />
               </Link>
             </div>
 
             <div className="flexy flex-col gap-5 max-md:mb-10">
-              <img
-                src={BecomeChef}
-                alt="Explore Recipes"
-                className="togetherRadiusAnimation2 aspect-square w-[80%] md:w-70 rounded-full"
-              />
+              <Link
+                className="togetherRadiusAnimation2 group cursor-pointer overflow-hidden aspect-square w-[80%] md:w-70"
+                href="/postMeal"
+              >
+                <img
+                  src={BecomeChef}
+                  alt="Explore Recipes"
+                  className="group-hover:scale-110 transition-all duration-300"
+                />
+              </Link>
               <Link href='/postMeal'>
                 <BrowseRecipesButton label="Become a Chef" />
               </Link>
