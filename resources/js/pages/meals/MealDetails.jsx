@@ -80,6 +80,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                     });
                     setLikes((prev) => prev - 1);
                 },
+                preserveScroll: true,
             }
         );
     };
@@ -118,6 +119,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         setLikes((prev) => prev + 1);
                     }
                 },
+                preserveScroll: true,
             }
         );
     };
@@ -138,6 +140,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                 onSuccess: () => {
                     setNewComment("");
                 },
+                preserveScroll: true,
             }
         );
     };

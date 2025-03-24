@@ -166,7 +166,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                                 <div className="bg-60 shadow-[2px_2px_3px_0px_hsla(0,0%,0%,0.2),-2px_2px_3px_0px_hsla(0,0%,0%,0.2)] px-2.5 py-1.5 rounded-b-xl flex gap-2 w-fit m-auto">
                                     <UpdateMeal buttonStyles="rounded-lg! flexy" />
                                     <Button
-                                        className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200"
+                                        className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
                                         onClick={() => handleDelete(post.idMeal)}
                                     >
                                         Delete
