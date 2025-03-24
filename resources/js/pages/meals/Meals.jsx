@@ -45,7 +45,7 @@ const Meals = ({ data }) => {
     { id: 3, label: "Soup",     img: Soup },
     { id: 4, label: "Drinks",   img: Drinks },
     { id: 5, label: "Pasta",    img: Pasta },
-    { id: 6, label: "Snacks",    img: Snacks },
+    { id: 6, label: "Snacks",   img: Snacks },
     { id: 7, label: "Desserts", img: Desserts },
   ];
 
@@ -58,6 +58,7 @@ const Meals = ({ data }) => {
       data.filter(meal => {
         const [hours, minutes, seconds] = meal.duration.split(':').map(Number);
         const totalMinutes = hours * 60 + minutes + seconds / 60;
+        
         let state = 0
         difficulty == "hard"
         ? state = 21
@@ -68,7 +69,7 @@ const Meals = ({ data }) => {
         : state = 0
         
         const isCategoryMatch = categorieSelected ? meal.idCategory == categorieSelected : true;
-        const isCountryMatch = countries ? meal.country === countries : true;
+        const isCountryMatch = countries ? meal.idKitchen == countries : true;
         const isDifficultyMatch = difficulty == "hard"? totalMinutes > 20 : difficulty == "normal" ? totalMinutes >= 10 && totalMinutes <= 20 : difficulty == "easy" ? totalMinutes < 10 : true;
         return isCategoryMatch && isCountryMatch && isDifficultyMatch;
       })
