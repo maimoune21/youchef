@@ -49,7 +49,12 @@ class ProfileController extends Controller
             )
             ->get();
 
+        $meals = DB::table('user__meal__favorite')
+            ->where('idUser', $user->idUser)
+            ->pluck('idMeal');
+
         $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->whereIn('meals.idMeal', $meals)
             ->select(
                 'meals.*',
                 'users.idUser as idUser',
@@ -57,7 +62,7 @@ class ProfileController extends Controller
                 'users.lastName as userLName',
                 'users.profile_img as userImage'
             )
-            ->latest()
+            ->orderBy('meals.views', 'desc')
             ->get();
 
         return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));

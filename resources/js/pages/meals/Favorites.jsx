@@ -64,7 +64,7 @@ const Favorites = ({ favoriteMeals, categories, Kitchen }) => {
       </div>
       {
         meals.length == 0
-          ? <h1 className='text-3xl text-center mt-5'>No Favorites Found</h1>
+          ? <h1 className='text-3xl text-center my-5'>No Favorites Found</h1>
           : <div className='w-[90%] py-8 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9'>
             {meals.map((card, i) => (
               <MealCard key={i} meal={card} />
