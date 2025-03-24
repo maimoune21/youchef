@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { router } from "@inertiajs/react";
-import HeartIcon from './HeartIcon';
+import { HeartIcon } from '@/../../public/icons/Icons';
 
 const FavoriteButton = ({ meal, thisUser, favoriteMeals }) => {
     const [isFavorited, setIsFavorited] = useState(false);

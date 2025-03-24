@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Profile from "@/../../public/images/Profile.png";
+import React, { useEffect, useState } from "react";
 import Meal from "@/../../public/images/BlankMeal.png";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import {
@@ -11,7 +10,7 @@ import {
 import { ReportMeal } from "../../components/models/ReportMeal";
 import { usePage, router, Link } from "@inertiajs/react";
 
-const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
+const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser, favoriteMeals }) => {
     // Meal Comments :
     const MealComments = comments;
 
@@ -145,6 +144,24 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
         );
     };
 
+    const [isFavorited, setIsFavorited] = useState(false);
+
+    useEffect(() => {
+        const mealExists = favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        setIsFavorited(!!mealExists);
+    }, [favoriteMeals, meal.idMeal]);
+
+    const handleFavoriteClick = () => {
+        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
+            onSuccess: () => {
+                setIsFavorited(prev => !prev);
+            },
+            onError: (errors) => {
+                console.error("Error toggling favorite:", errors);
+            }
+        });
+    };
+
     return (
         <div className="tn:max-w-[28rem] lg:max-w-[52rem] md:max-w-[40rem] sm:max-w-[35rem] max-w-[22rem] m-auto mb-20">
             <div>
@@ -171,7 +188,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                             <div className="flex flex-col gap-2">
                                 <div className="flexy gap-4">
                                     {user.profile_img
-                                        ?<img
+                                        ? <img
                                             src={`/uploads/users/${user.profile_img}`}
                                             alt="test"
                                             className="rounded-full w-12"
@@ -208,9 +225,14 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                                     />
                                 </span>
                             </span>
-                            <span className="border-1 border-black rounded-full p-1.5 cursor-pointer">
-                                <HeartIcon size="size-5.5" />
-                            </span>
+                            <button
+                                className="border-1 border-black rounded-full p-1.5 cursor-pointer"
+                                onClick={handleFavoriteClick}
+                            >
+                                <HeartIcon
+                                    size="size-5.5"
+                                    className={`transition-all duration-200 ${isFavorited ? "fill-green-500" : "fill-none stroke-black stroke-2"}`} />
+                            </button>
                             <ReportMeal meal={meal.title} />
                         </div>
                     </div>

@@ -2,6 +2,7 @@ import { SignalIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { Link } from "@inertiajs/react";
+import FavoriteButton from "../../ui/favoriteButton";
 
 const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
     const [status, setStatus] = useState("");

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { SignalIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
 import { Link } from "@inertiajs/react";
+import FavoriteButton from "../../ui/favoriteButton";
 
 const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
     const [status, setStatus] = useState("");
