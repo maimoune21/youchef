@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/favorites', [FavoriteController::class,'index']);
     // Private Profile
     Route::get('/privateProfile', [ProfileController::class,'privateShow']);
+    Route::delete('/meals/{idMeal}', [MealController::class, 'destroy'])->name('meals.destroy');
     // Logout :
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
