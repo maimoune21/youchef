@@ -1,11 +1,10 @@
 import React from 'react'
 
-const Countries = ({ selectedCountry }) => {
-  const countries = ['Morocco', 'Canada', 'Japan', 'Brazil', 'Germany', 'Australia', 'India', 'South Africa'];
+const Countries = ({ countries }) => {
   return (
-    countries.map((c, i) => (
-      <option key={i} value={i+1} selected={c === selectedCountry} className='text-black'>
-        {c}
+    countries.map((c) => (
+      <option key={c.idKitchen} value={c.idKitchen} className='text-black'>
+        {c.name}
       </option>
     ))
   )
