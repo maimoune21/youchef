@@ -1,12 +1,11 @@
 import React from 'react'
 
-const Categorie = ({selectedCategories}) => {
-  const categorie = ['Salad', 'Cake', 'Soup', 'Drinks', 'Pasta', 'Snaks'];
+const Categorie = ({ categories }) => {
   return (
     <>
-    {categorie.map((c, i)=>(
-        <option key={i} value={c} selected={c === selectedCategories} className='text-black'>
-          {c}
+    {categories.map((c)=>(
+        <option key={c.idCategory} value={c.idCategory} className='text-black'>
+          {c.name}
         </option>
     ))
     }
