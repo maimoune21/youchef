@@ -59,7 +59,7 @@ export default function Header() {
     }, [isHovering]);
 
     return (
-        <div className="bg-gradient-to-tr from-[var(--soft-blue)] via-[var(--soft-blue)] via-60% to-white relative grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 justify-center items-center w-[90%] md:w-[90%] lg:w-[90%] rounded-3xl custom-shadow -mt-5 mb-20 min-h-fit md:min-h-[85vh] max-md:max-h-[232px]">
+        <div className="border-3 border-white! bg-gradient-to-tr from-[var(--soft-blue)] via-[var(--soft-blue)] via-60% to-white relative grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 justify-center items-center w-[90%] md:w-[90%] lg:w-[90%] rounded-3xl custom-shadow -mt-5 mb-20 min-h-fit md:min-h-[85vh] max-md:max-h-[232px]">
             {userName ? (
                 <h1 className="absolute top-4 left-6 md:top-4 md:left-8 font-bold text-3xl md:text-3xl">
                     Hello <span className="text-green">{userName}</span>
