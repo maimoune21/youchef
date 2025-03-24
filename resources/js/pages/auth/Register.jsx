@@ -165,7 +165,7 @@ export const Register = () => {
                                             type="submit"
                                             className="button w-full text-base! py-2!"
                                         >
-                                            Save
+                                            Sign Up
                                         </button>
                                     </td>
                                 </tr>

@@ -104,7 +104,7 @@ export const Login = () => {
                                             type="submit"
                                             className="button w-full text-base! py-2!"
                                         >
-                                            Save
+                                            Login
                                         </button>
                                     </td>
                                 </tr>
