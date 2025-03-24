@@ -5,11 +5,11 @@ import {
   LeftArrowIcon,
   PencilIcon,
 } from "../../../../public/icons/Icons";
-import Tagine from "../../../../public/images/Tajine.jpg";
+import BlankMeal from "../../../../public/images/BlankMeal.png";
 import TextInputGroup from "../ui/TextInputGroup";
 import TextAreaGroup from "../ui/TextAreaGroup";
 
-export function UpdateMeal({ buttonStyles = "" }) {
+export function UpdateMeal({ buttonStyles = "", meal}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -24,7 +24,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
         <div className="flex flex-col gap-8 px-4 max-h-[80vh] overflow-auto scrollbar mt-1 tn:px-10">
           <span>
             <h1 className="w-full border-b-1 px-11 py-3 border-black text-center font-bold text-xl absolute top-0 left-1/2 transform -translate-x-1/2">
-              Update Meal
+              Update {meal.title}
             </h1>
           </span>
           <div className="flex flex-col gap-4 pt-2">
@@ -34,7 +34,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                   <span className="absolute right-0 top-0 p-1 bg-30 text-black rounded-bl-lg rounded-tr-lg cursor-pointer shadow-[-5px_5px_10px_hsla(0,0%,0%,0.2)]">
                     <EditIcon />
                   </span>
-                  <img src={Tagine} className="w-full rounded-lg" alt="test" />
+                  <img src={meal.meal_img || BlankMeal} className="w-full rounded-lg" alt="test" />
                 </div>
                 <div className="flex flex-col gap-4">
                   <span className="flexy gap-4">
@@ -44,6 +44,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                       id="title"
                       placeholder="Mahalabya with sosage in na9ani9"
                       classLabel="font-bold"
+                      value={meal.title}
                     />
                   </span>
                   <span>
@@ -54,6 +55,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                       id="description"
                       placeholder="Description..."
                       rows="4"
+                      value={meal.description}
                     />
                   </span>
                 </div>
@@ -66,6 +68,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                     id="title"
                     placeholder="Mahalabya with sosage in na9ani9"
                     classLabel="font-bold"
+                    value={meal.idCategory}
                   />
                 </span>
                 <span className="flex flex-col gap-0.5">
@@ -75,6 +78,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                     id="title"
                     placeholder="Mahalabya with sosage in na9ani9"
                     classLabel="font-bold"
+                    value={meal.idKitchen}
                   />
                 </span>
                 <span className="flex flex-col gap-0.5">
@@ -84,6 +88,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                     id="title"
                     placeholder="Mahalabya with sosage in na9ani9"
                     classLabel="font-bold"
+                    value={meal.duration}
                   />
                 </span>
                 <span className="flex flex-col gap-0.5">
@@ -94,6 +99,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                     id="description"
                     placeholder="Ingredient 1"
                     rows="4"
+                    value={meal.ingredients}
                   />
                 </span>
                 <span className="flex flex-col gap-0.5">
@@ -104,6 +110,7 @@ export function UpdateMeal({ buttonStyles = "" }) {
                     id="description"
                     placeholder="Instruction 1"
                     rows="4"
+                    value={meal.instructions}
                   />
                 </span>
               </div>
