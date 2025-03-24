@@ -18,9 +18,9 @@ class HomeController extends Controller
             ->select(
                 'meals.*',
                 'users.idUser as idUser',
-                'users.firstName as firstName',
-                'users.lastName as lastName',
-                'users.profile_img as profile_img'
+                'users.firstName as userLName',
+                'users.lastName as userFName',
+                'users.profile_img as userImage'
             )
             ->orderBy('meals.views', 'desc')
             ->get();

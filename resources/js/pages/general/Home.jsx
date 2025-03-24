@@ -13,8 +13,8 @@ const Home = ({ meals, categories, Kitchen }) => {
     <>
       <Header />
       <SectionCategories data={categories}/>
+      <PopularMeals popularMeals={meals.slice(0, 6)} />
       <WorldMeals Kitchen={Kitchen}/>
-      <PopularMeals popularMeals={meals.slice(0, 5)} />
       <QuickMeals meals={meals} categories={categories} />
       <Together />
       <ContactUs />

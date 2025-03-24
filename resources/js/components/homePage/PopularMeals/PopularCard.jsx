@@ -90,8 +90,8 @@ const PopularCard = ({ meal }) => {
                         <div className="flexy justify-start! gap-2">
                             <img
                                 src={
-                                    meal.profile_img
-                                        ? `/uploads/users/${meal.profile_img}`
+                                    meal.userImage
+                                        ? `/uploads/users/${meal.userImage}`
                                         : Profile
                                 }
                                 alt="profile"
@@ -99,7 +99,7 @@ const PopularCard = ({ meal }) => {
                             />
                             <h6 className="md:text-2xl">
                                 {meal
-                                    ? `${meal.firstName} ${meal.lastName}`
+                                    ? `${meal.userFName} ${meal.userLName}`
                                     : "Unknown User"}
                             </h6>
                         </div>
