@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\ProfileController;
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/meals/{id}/dislike', [MealController::class, 'dislike']);
     Route::post('/meals/{id}/comment', [MealController::class, 'addComment']);
     Route::inertia('/postMeal', 'meals/postMeal');
-    Route::inertia('/favorites', 'meals/Favorites');
+    Route::get('/favorites', [FavoriteController::class,'index']);
     // Private Profile
     Route::get('/privateProfile', [ProfileController::class,'privateShow']);
     // Logout :

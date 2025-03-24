@@ -2,19 +2,9 @@ import Categorie from '@/components/ui/Categories';
 import Countries from '@/components/ui/Countries';
 import { SearchIcon } from '/public/icons/Icons';
 import MealCard from '@/components/ui/MealCard';
-import Tajine from "@/../../public/images/Tajine.jpg";
 
-const Favorites = () => {
-  const data = [
-    { user: 'obama aziz',   date: '2025-02-02', title: 'hello from pizza', image: Tajine, duration: 6 ,views : 200 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 4 ,views : 450 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 2 ,views : 450 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 2 ,views : 450 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 4 ,views : 450 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 7 ,views : 450 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 3 ,views : 450 },
-    { user: 'modric 7amid', date: '2025-02-22', title: 'hello from m9ila', image: Tajine, duration: 2 ,views : 450 },
-  ];
+const Favorites = ({ favoriteMeals, categories, Kitchen }) => {
+  console.log(favoriteMeals)
 
   return (
     <section className='w-full flex flex-col gap-2'>
@@ -30,7 +20,7 @@ const Favorites = () => {
               className='py-2 pl-2 rounded-sm border-[0.3px] text-sm font-semibold bg-white'
             >
               <option value="" disabled>select a category</option>
-              <Categorie />
+              <Categorie categories={categories} />
             </select>
             <div className='relative flexy max-sm:order-3'>
               <input
@@ -48,16 +38,20 @@ const Favorites = () => {
               className='py-2 pl-2 rounded-sm border-[0.3px] text-sm font-semibold bg-white'
             >
               <option value="" disabled>select a country</option>
-              <Countries />
+              <Countries countries={Kitchen} />
             </select>
           </div>
         </nav>
       </div>
-      <div className='w-[90%] py-8 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9'>
-        {/* {data.map((card, i) => (
-          <MealCard key={i} meal={card} />
-        ))} */}
-      </div>
+      {
+        favoriteMeals.length == 0
+          ? <h1 className='text-3xl text-center mt-5'>No Favorites Found</h1>
+          : <div className='w-[90%] py-8 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9'>
+            {favoriteMeals.map((card, i) => (
+              <MealCard key={i} meal={card} />
+            ))}
+          </div>
+      }
     </section>
   );
 };

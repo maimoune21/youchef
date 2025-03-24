@@ -7,7 +7,6 @@ import { UpdateMeal } from "@/components/models/UpdateMeal";
 import { useForm } from "@inertiajs/react";
 
 const PrivateProfile = ({ user, posts, favoriteMeals }) => {
-    console.log(favoriteMeals)
     const [isFavoritesHovered, setIsFavoritesHovered] = useState(false);
     const [isMealssHovered, setIsMealssHovered] = useState(false);
     const [status, setStatus] = useState("meals");
