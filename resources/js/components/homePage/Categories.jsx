@@ -8,27 +8,13 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import All from "@/../../public/images/categories/all.png";
-import Salad from "@/../../public/images/categories/salad.png";
-import Cake from "@/../../public/images/categories/cake.png";
-import Soup from "@/../../public/images/categories/soup.png";
-import Drinks from "@/../../public/images/categories/drinks.png";
-import Pasta from "@/../../public/images/categories/pasta.png";
-import Snacks from "@/../../public/images/categories/snacks.png";
-import Desserts from "@/../../public/images/categories/desserts.png";
 import { Link } from "@inertiajs/react";
 
-export default function SectionCategories() {
+export default function SectionCategories({ data }) {
     const Categories = [
-        { label: "All", img: All },
-        { label: "Salad", img: Salad },
-        { label: "Cake", img: Cake },
-        { label: "Soup", img: Soup },
-        { label: "Drinks", img: Drinks },
-        { label: "Pasta", img: Pasta },
-        { label: "Snacks", img: Snacks },
-        { label: "Desserts", img: Desserts },
-    ];
+        { name: 'All' ,picture: "all.png" },
+        ...data
+      ];
 
     return (
         <div className="flex flex-col w-[100vw] lg:w-full">
@@ -59,16 +45,15 @@ export default function SectionCategories() {
                                     key={index}
                                     className="basis-1/3 sm:basis-1/4 md:basis-1/4 lg:basis-1/6 pl-0!"
                                 >
-                                    <Link href="/youchef-ui" className="p-1 gap-2 flexy flex-col group hover:text-green">
+                                    <Link href={`/meals?category=${cat.name || ""}`} className="p-1 gap-2 flexy flex-col group hover:text-green">
                                       <div className="object-cover w-25 rounded-full aspect-square overflow-hidden">
                                         <img
-                                            src={cat.img}
-                                            alt={cat.label}
+                                            src={`/images/categories/${cat.picture}`}
+                                            alt={cat.name}
                                             className="h-full group-hover:scale-110 transition duration-300"
                                         />
                                       </div>
-                                        
-                                        <p className="font-bold text-xl group-hover:text-green-600 transition duration-300">{cat.label}</p>
+                                        <p className="font-bold text-xl group-hover:text-green-600 transition duration-300">{cat.name}</p>
                                     </Link>
                                 </CarouselItem>
                             ))}

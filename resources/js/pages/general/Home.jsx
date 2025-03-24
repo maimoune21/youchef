@@ -12,7 +12,7 @@ const Home = ({ data }) => {
   return (
     <>
       <Header />
-      <SectionCategories />
+      <SectionCategories data={data.categories}/>
       <WorldMeals />
       <PopularMeals popularMeals={data.meals.slice(0, 5)} />
       <QuickMeals data={data} />

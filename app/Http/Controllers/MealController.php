@@ -13,15 +13,17 @@ class MealController extends Controller
     /**
      * Display a listing of the Meals.
      */
-    public function index()
+    public function index(Request $request)
     {
         $meals = Meal::latest()->get();
         $countries = DB::table("kitchens")->get();
         $categories = Category::all();
+        $categorySelected = $request->query('category');
         $data = [
             "meals"=>$meals,
             "countries"=>$countries,
             "categories"=>$categories,
+            "categorySelected"=>$categorySelected,
         ];
         return inertia("meals/Meals", compact("data"));
     }

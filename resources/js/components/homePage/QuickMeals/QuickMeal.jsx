@@ -12,8 +12,6 @@ import {
 import { Link } from "@inertiajs/react";
 
 const QuickMeal = ({categorie, meals}) => {
-  console.log(meals)
-  
 
   return (
     <div className="w-[90%] lg:w-[90%] xl:w-[85%] mx-auto rounded-xl flex flex-col py-5 pb-8 gap-4 bg-30 custom-shadow">
