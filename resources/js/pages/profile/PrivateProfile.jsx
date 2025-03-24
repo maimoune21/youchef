@@ -1,119 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { UpdateProfile } from "@/components/models/UpdateProfile";
 import { Button } from "@/components/ui/button";
-import ProfileImg from "@/../../public/images/Profile.png";
 import MealCard from "@/components/ui/MealCard";
-import Tajine from "@/../../public/images/Tajine.jpg";
 import { TrashIcon } from "@/../../public/icons/Icons";
 import { UpdateMeal } from "@/components/models/UpdateMeal";
-import { Link } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
-import { usePage } from "@inertiajs/react";
 
-const PrivateProfile = ({ status }) => {
+const PrivateProfile = ({ user, posts, favoriteMeals }) => {
+    console.log(favoriteMeals)
     const [isFavoritesHovered, setIsFavoritesHovered] = useState(false);
     const [isMealssHovered, setIsMealssHovered] = useState(false);
-    const [posts, setPosts] = useState([]);
-    const [favorites, setFavorites] = useState([]);
-
-    const { auth } = usePage().props;
-    const user = auth.user;
+    const [status, setStatus] = useState("meals");
+    
     // Logout :
     const { post } = useForm();
     const HLogOut = (e) => {
         e.preventDefault();
         post("/logout");
     };
-
-    useEffect(() => {
-        const post = [
-            {
-                user: "obama aziz",
-                date: "2025-02-02",
-                title: "hello from pizza",
-                image: Tajine,
-                duration: 6,
-                views: 200,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 4,
-                views: 450,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 2,
-                views: 450,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 2,
-                views: 450,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 4,
-                views: 450,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 7,
-                views: 450,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 3,
-                views: 450,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 2,
-                views: 450,
-            },
-        ];
-        setPosts(post);
-
-        const favorite = [
-            {
-                user: "obama aziz",
-                date: "2025-02-02",
-                title: "hello from pizza",
-                image: Tajine,
-                duration: 6,
-                views: 200,
-            },
-            {
-                user: "modric 7amid",
-                date: "2025-02-22",
-                title: "hello from m9ila",
-                image: Tajine,
-                duration: 4,
-                views: 450,
-            },
-        ];
-        setFavorites(favorite);
-    }, []);
 
     return (
         <div className="mx-auto bg-30 custom-shadow rounded-lg sm:p-6 w-[95%]">
@@ -122,13 +26,13 @@ const PrivateProfile = ({ status }) => {
                 <div className="flex max-md:flex-col max-md:text-center grow gap-5">
                     {/* Avatar */}
                     {
-                        user.profile_img 
-                        ? <img
-                            src={`/uploads/users/${user.profile_img}`}
-                            alt="Profile"
-                            className="rounded-full size-40 max-md:m-auto"
-                        />
-                        : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>
+                        user.profile_img
+                            ? <img
+                                src={`/uploads/users/${user.profile_img}`}
+                                alt="Profile"
+                                className="rounded-full size-40 max-md:m-auto"
+                            />
+                            : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>
                     }
                     <div className="space-x-4">
                         {/* Name and Post Count */}
@@ -138,11 +42,11 @@ const PrivateProfile = ({ status }) => {
                             </h2>
                             {status == "meals" ? (
                                 <p className="text-gray-500">
-                                    {user.posts} Posts
+                                    {posts.length} Posts
                                 </p>
                             ) : (
                                 <p className="text-gray-500">
-                                    {favorites.length} Favorites
+                                    {favoriteMeals.length} Favorites
                                 </p>
                             )}
                         </div>
@@ -183,7 +87,7 @@ const PrivateProfile = ({ status }) => {
             {/* Meals And Favorites Navigation */}
             <div className="mt-6 pt-2 pb-1.5 flex justify-around border-b-2 border-gray-300">
                 <div className="relative w-[65%] md:w-[55%] flex justify-between">
-                    <Link href={"/profile/meals"}>
+                    <button href={"/profile/meals"}>
                         <button
                             className={`cursor-pointer  ${status == "meals"
                                 ? "text-green"
@@ -195,12 +99,13 @@ const PrivateProfile = ({ status }) => {
                                     : ""
                             }
                             onMouseLeave={() => setIsMealssHovered(false)}
+                            onClick={() => setStatus("meals")}
                         >
                             Meals
                         </button>
-                    </Link>
+                    </button>
 
-                    <Link href={"/profile/favorites"}>
+                    <button href={"/profile/favorites"}>
                         <button
                             className={`cursor-pointer ${status == "favorites"
                                 ? "text-green"
@@ -212,10 +117,11 @@ const PrivateProfile = ({ status }) => {
                                     : ""
                             }
                             onMouseLeave={() => setIsFavoritesHovered(false)}
+                            onClick={() => setStatus("favorites")}
                         >
                             Favorites
                         </button>
-                    </Link>
+                    </button>
 
                     <span
                         className={`absolute -bottom-[0.4rem] h-1 bg-10 rounded-t-full transition-all transition[left_400ms_cubic-bezier(0.175, 0.885, 0.32, 1.275)] duration-300 ${status == "meals"
@@ -249,9 +155,9 @@ const PrivateProfile = ({ status }) => {
                     </div>
                 ) : (
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
-                        {/* {favorites.map(favorite =>
+                        {favoriteMeals && favoriteMeals.map(favorite =>
                             <MealCard key={favorite.id} meal={favorite} />
-                        )} */}
+                        )}
                     </div>
                 )}
             </div>

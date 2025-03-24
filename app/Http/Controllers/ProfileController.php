@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meal;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
@@ -21,12 +20,30 @@ class ProfileController extends Controller
         }
 
         $meals = DB::table('meals')
-        ->join('users', 'meals.idUser', '=', 'users.idUser')  // Join based on user ID in meals table
-        ->where('meals.idUser', $id) // Filter meals for the specific user
-        ->select('meals.*', 'users.firstName', 'users.lastName', 'users.profile_img') // Select relevant fields
+        ->join('users', 'meals.idUser', '=', 'users.idUser')
+        ->where('meals.idUser', $id)
+        ->select('meals.*', 'users.firstName', 'users.lastName', 'users.profile_img')
         ->get();
 
         // Passing data to the view :
         return inertia('profile/PublicProfile', compact('user', 'meals'));
+    }
+    public function privateShow()
+    {
+        $user = Auth::user();
+
+        $posts = DB::table('meals')
+        ->join('users', 'meals.idUser', '=', 'users.idUser')
+        ->where('meals.idUser', $user->idUser)
+        ->select('meals.*', 'users.firstName', 'users.lastName', 'users.profile_img')
+        ->get();
+
+        $favoriteMeals = DB::table('user__meal__favorite')
+        ->join('meals', 'user__meal__favorite.idMeal', '=', 'meals.idMeal')  // Join with meals to get meal details
+        ->where('user__meal__favorite.idUser', $user->idUser)  // Get favorites for the authenticated user
+        ->select('meals.*')  // Select all meal columns
+        ->get();
+
+        return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));
     }
 }
