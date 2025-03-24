@@ -53,9 +53,11 @@ class MealController extends Controller
             abort(404);
         }
         // Fetching the user who posted the meal :
-        $user = DB::table('meals')
-            ->where('idMeal', $meal->idMeal)
+        $user = DB::table('users')
+            ->where('idUser', $meal->idUser)
+            ->select('idUser', 'firstName', 'lastName', 'profile_img', 'email', 'bio')
             ->first();
+
 
         // Fetching category and kitchen of the meal :
         $categories = DB::table('categories')->pluck('name', 'idCategory')->toArray();

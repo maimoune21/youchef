@@ -54,9 +54,9 @@ const Favorites = () => {
         </nav>
       </div>
       <div className='w-[90%] py-8 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9'>
-        {data.map((card, i) => (
+        {/* {data.map((card, i) => (
           <MealCard key={i} meal={card} />
-        ))}
+        ))} */}
       </div>
     </section>
   );

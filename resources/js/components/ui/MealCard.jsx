@@ -51,16 +51,15 @@ const MealCard = ({ meal }) => {
     };
 
     return (
-        <Link
-            href={`/mealDetails/${meal.idMeal}`}
-            className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden"
-        >
+        <div className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden">
             <div className="relative w-full">
-                <img
-                    src={BlankMeal}
-                    alt={meal.title}
-                    className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
-                />
+                <Link href={`/mealDetails/${meal.idMeal}`}>
+                    <img
+                        src={BlankMeal}
+                        alt={meal.title}
+                        className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
+                    />
+                </Link>
                 <div className="absolute bottom-3 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
                     <TimeIcon className="w-6 h-6" />
                     {formatDuration(meal.duration)}
@@ -81,7 +80,6 @@ const MealCard = ({ meal }) => {
                 </div>
                 <div className="bg-white rounded-full p-1 absolute top-3 right-3">
                     <HeartIcon className="w-6 h-6" />{" "}
-                    {/* Added proper closing */}
                 </div>
             </div>
             <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
@@ -90,7 +88,9 @@ const MealCard = ({ meal }) => {
                         <h3 className="font-bold text-2xl max-sm:text-xl truncate">
                             {meal.title}
                         </h3>
-                        <DotsIcon className="w-6 h-6" />
+                        <div>
+                            <DotsIcon className="w-6 h-6" />
+                        </div>
                     </div>
                     <div className="text-sm max-sm:text-xs flexy justify-start! gap-1">
                         {meal.views} views
@@ -118,7 +118,7 @@ const MealCard = ({ meal }) => {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 };
 

@@ -546,11 +546,11 @@ export const CheckIcon = ({ size = "size-6" }) => {
   );
 };
 
-export const LeftArrowIcon = ({ size = "size-6" }) => {
+export const LeftArrowIcon = ({ style = "size-6" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={size}
+      className={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -564,11 +564,11 @@ export const LeftArrowIcon = ({ size = "size-6" }) => {
   );
 };
 
-export const RightArrowIcon = ({ size = "size-6" }) => {
+export const RightArrowIcon = ({ style = "size-6" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={size}
+      className={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

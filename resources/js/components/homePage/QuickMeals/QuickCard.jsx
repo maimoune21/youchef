@@ -81,7 +81,9 @@ const QuickCard = ({ meal }) => {
                     <h3 className="font-bold text-2xl truncate">
                         {meal.title}
                     </h3>
-                    <DotsIcon className="w-6 h-6" />
+                    <div>
+                        <DotsIcon size="size-6" />
+                    </div>
                 </div>
                 <div className="flex flex-col md:gap-2">
                     <div className="text-sm flexy justify-start! gap-1">

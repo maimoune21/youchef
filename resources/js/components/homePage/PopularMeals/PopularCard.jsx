@@ -77,7 +77,9 @@ const PopularCard = ({ meal }) => {
                                 <h3 className="font-bold text-xl md:text-4xl truncate">
                                     {meal.title}
                                 </h3>
-                                <DotsIcon className="w-6 h-6" />
+                                <div>
+                                    <DotsIcon size="size-8" />
+                                </div>
                             </div>
                             <div className="text-sm flexy justify-start! gap-1 md:text-base">
                                 {meal.views} views
