@@ -16,7 +16,7 @@ const Favorites = ({ favoriteMeals, categories, Kitchen }) => {
         favoriteMeals.filter(meal => {
           const isCategoryMatch = categorie ? meal.idCategory == categorie : true;
           const isCountryMatch = countries ? meal.idKitchen == countries : true;
-          const isSearchMatch = search.toLocaleLowerCase() ? meal.title.toLowerCase().includes(search) : true;
+          const isSearchMatch = search ? meal.title.toLowerCase().includes(search.toLowerCase()) : true;
           return isCategoryMatch && isCountryMatch && isSearchMatch;
         })
       );
