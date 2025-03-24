@@ -11,8 +11,6 @@ class MealsSeeder extends Seeder
     {
         $kitchenIds = DB::table('kitchens')->pluck('idKitchen', 'name')->toArray();
         $categoryIds = DB::table('categories')->pluck('idCategory', 'name')->toArray();
-
-        // Updated meal configuration to match your kitchen names
         $mealTypes = [
             'Salad' => [
                 'countries' => ['Morocco'],
@@ -46,9 +44,8 @@ class MealsSeeder extends Seeder
 
         $meals = [];
         $usedDurations = [];
-        $totalMeals = rand(50, 100);
 
-        for ($i = 0; $i < $totalMeals; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $category = array_rand($mealTypes);
             $country = $mealTypes[$category]['countries'][array_rand($mealTypes[$category]['countries'])];
 
@@ -73,6 +70,7 @@ class MealsSeeder extends Seeder
                 'likes' => rand(0, 100),
                 'idCategory' => $categoryIds[$category],
                 'idKitchen' => $kitchenIds[$country],
+                'idUser' => rand(1, 9),
                 'created_at' => now()->subDays(rand(0, 365)),
                 'updated_at' => now(),
             ];

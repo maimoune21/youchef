@@ -20,7 +20,7 @@ const QuickMeal = ({categorie, meals}) => {
       <div className="px-9 flexy justify-between!">
         {categorie
           ?<h4 className="text-green font-bold text-3xl">{categorie.name}</h4>
-          :<h4 className="text-green font-bold text-3xl">All Categories</h4>
+          :<h4 className="text-green font-bold text-3xl">All</h4>
         }
         <Link>
           <h4 className="flexy gap-1 font-bold">
@@ -55,7 +55,7 @@ const QuickMeal = ({categorie, meals}) => {
           <CarouselContent>
             {
             meals
-              .filter(meal => !categorie || meal.idCategory == categorie.idCategory) // to see if category has a value to filter 
+              .filter(meal => !categorie || meal.idCategory == categorie.idCategory)
               .map((card, index) => (
                 <CarouselItem
                   key={index}

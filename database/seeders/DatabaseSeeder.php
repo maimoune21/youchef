@@ -12,8 +12,8 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             CategoriesSeeder::class,
             KitchensSeeder::class,
-            MealsSeeder::class,
             UsersSeeder::class,
+            MealsSeeder::class,
             CommentsSeeder::class,
         ]);
     }

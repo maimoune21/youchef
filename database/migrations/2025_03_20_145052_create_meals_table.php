@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('likes')->default(0);
             $table->foreignId('idCategory')->constrained('categories', 'idCategory')->onDelete('cascade');
             $table->foreignId('idKitchen')->constrained('kitchens', 'idKitchen')->onDelete('cascade');
+            $table->foreignId('idUser')->constrained('users', 'idUser')->onDelete('cascade');
             $table->timestamps();
         });
     }
