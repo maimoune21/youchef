@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,11 +20,17 @@ class FavoriteController extends Controller
         $categories = Category::all();
         $Kitchen = DB::table("kitchens")->get();
 
-        $favoriteMeals = DB::table('user__meal__favorite')
-        ->join('meals', 'user__meal__favorite.idMeal', '=', 'meals.idMeal')
-        ->where('user__meal__favorite.idUser', $user->idUser) 
-        ->select('meals.*') 
-        ->get();
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->latest()
+            ->get();
+        
 
         return inertia('meals/Favorites', compact('favoriteMeals', 'categories', 'Kitchen'));
     }

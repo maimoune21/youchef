@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -48,10 +49,15 @@ class ProfileController extends Controller
             )
             ->get();
 
-        $favoriteMeals = DB::table('user__meal__favorite')
-            ->join('meals', 'user__meal__favorite.idMeal', '=', 'meals.idMeal')
-            ->where('user__meal__favorite.idUser', $user->idUser)
-            ->select('meals.*')
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->latest()
             ->get();
 
         return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));
