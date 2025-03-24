@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,14 @@ class MealController extends Controller
      */
     public function index()
     {
-        $data = Meal::latest()->get();
+        $meals = Meal::latest()->get();
+        $countries = DB::table("kitchens")->get();
+        $categories = Category::all();
+        $data = [
+            "meals"=>$meals,
+            "countries"=>$countries,
+            "categories"=>$categories,
+        ];
         return inertia("meals/Meals", compact("data"));
     }
 

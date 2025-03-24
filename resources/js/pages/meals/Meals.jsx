@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { DashboardClose, DashboardOpen, FilterIcon } from "@/../../public/icons/Icons";
-import All from "@/../../public/images/categories/all.png";
-import Salad from "@/../../public/images/categories/salad.png";
-import Cake from "@/../../public/images/categories/cake.png";
-import Soup from "@/../../public/images/categories/soup.png";
-import Drinks from "@/../../public/images/categories/drinks.png";
-import Pasta from "@/../../public/images/categories/pasta.png";
-import Snacks from "@/../../public/images/categories/snacks.png";
-import Desserts from "@/../../public/images/categories/desserts.png";
 import YouchefIcon from "@/../../public/images/YouChef-Icon.svg";
 import { motion } from "framer-motion";
 import {
@@ -39,14 +31,8 @@ import MealCard from "@/components/ui/MealCard";
 const Meals = ({ data }) => {
   const [meals, setMeals] = useState([]);
   const Categories = [
-    { label: 'All' ,img: All },
-    { id: 1, label: "Salad",    img: Salad },
-    { id: 2, label: "Cake",     img: Cake },
-    { id: 3, label: "Soup",     img: Soup },
-    { id: 4, label: "Drinks",   img: Drinks },
-    { id: 5, label: "Pasta",    img: Pasta },
-    { id: 6, label: "Snacks",   img: Snacks },
-    { id: 7, label: "Desserts", img: Desserts },
+    { name: 'All' ,picture: "all.png" },
+    ...data.categories
   ];
 
   const [categorieSelected, setCategorieSelected] = useState();
@@ -55,18 +41,9 @@ const Meals = ({ data }) => {
 
   useEffect(() => {
     setMeals(
-      data.filter(meal => {
+      data.meals.filter(meal => {
         const [hours, minutes, seconds] = meal.duration.split(':').map(Number);
         const totalMinutes = hours * 60 + minutes + seconds / 60;
-        
-        let state = 0
-        difficulty == "hard"
-        ? state = 21
-        : difficulty == "medium"
-        ? state = 20
-        : difficulty == "easy"
-        ? state = 10
-        : state = 0
         
         const isCategoryMatch = categorieSelected ? meal.idCategory == categorieSelected : true;
         const isCountryMatch = countries ? meal.idKitchen == countries : true;
@@ -74,7 +51,7 @@ const Meals = ({ data }) => {
         return isCategoryMatch && isCountryMatch && isDifficultyMatch;
       })
     );
-  }, [categorieSelected, countries, difficulty, data]);
+  }, [categorieSelected, countries, difficulty, data.meals]);
 
   const [activeTeam, setActiveTeam] = useState({});
   // Compagy Component
@@ -168,7 +145,7 @@ const Meals = ({ data }) => {
             <option value="" selected>
               All Kitchens
             </option>
-            <Countries />
+            <Countries countries={data.countries}/>
           </select>
         </SidebarMenu>
         <SidebarMenu className="flex gap-4 h-full mt-4">
@@ -203,28 +180,28 @@ const Meals = ({ data }) => {
                   {Categories.map((categorie, index) => (
                     <SidebarMenuItem key={index} className="">
                       <div
-                        onClick={_ => setCategorieSelected(categorie.id)}
+                        onClick={_ => setCategorieSelected(categorie.idCategory)}
                       >
                         <SidebarMenuButton
                           tooltip="Reported Meals"
-                          className={`sideBarCategoriesBtn ${categorieSelected == categorie.id
+                          className={`sideBarCategoriesBtn ${categorieSelected == categorie.idCategory
                             ? "bg-10 hover:text-white"
                             : categorieSelected == "" &&
-                              categorie.id == "All"
+                              categorie.idCategory == "All"
                               ? "bg-10 hover:text-white"
                               : ""
                             } group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-2! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! hover:brightness-95`}
                         >
                           <div className="flexy w-full">
                             <span className="font-bold text-[17px]">
-                              {categorie.label}
+                              {categorie.name}
                             </span>
                           </div>
                           <span className="w-15 h-11">
                             <img
-                              src={categorie.img}
+                              src={`images/categories/${categorie.picture}`}
                               className="w-full h-full rounded-full object-cover"
-                              alt={categorie.label}
+                              alt={categorie.name}
                             />
                           </span>
                         </SidebarMenuButton>
@@ -262,7 +239,7 @@ const Meals = ({ data }) => {
             <h1 className="text-xl p-2 font-bold">
               {categorieSelected === "All" || !categorieSelected
                 ? "All Categories"
-                : Categories.find(category => category.id === categorieSelected)?.label || categorieSelected}
+                : Categories.find(category => category.idCategory === categorieSelected)?.name || categorieSelected}
             </h1>
           </div>
         </header>
@@ -288,7 +265,7 @@ const CustomSidebarTrigger = () => {
     <button
       className="-ml-1 cursor-pointer focus:outline-none"
       onClick={toggleSidebar}
-      aria-label={state === "expanded" ? "Collapse Sidebar" : "Expand Sidebar"}
+      aria-name={state === "expanded" ? "Collapse Sidebar" : "Expand Sidebar"}
     >
       {state === "expanded" ? (
         <DashboardClose style="size-6!" />
