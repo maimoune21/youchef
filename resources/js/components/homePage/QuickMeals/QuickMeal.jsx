@@ -20,7 +20,7 @@ const QuickMeal = ({categorie, meals}) => {
           ?<h4 className="text-green font-bold text-3xl">{categorie.name}</h4>
           :<h4 className="text-green font-bold text-3xl">All</h4>
         }
-        <Link>
+        <Link href={`/meals?category=${categorie ? categorie.name : ""}`}>
           <h4 className="flexy gap-1 font-bold">
             See All
             <svg width="15px" height="10px" viewBox="0 0 13 10">
