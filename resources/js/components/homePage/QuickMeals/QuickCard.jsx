@@ -81,7 +81,7 @@ const QuickCard = ({ meal }) => {
                     <h3 className="font-bold text-2xl truncate">
                         {meal.title}
                     </h3>
-                    <div className='cursor-pointer'>
+                    <div className="cursor-pointer">
                         <DotsIcon size="size-6" />
                     </div>
                 </div>
@@ -91,19 +91,34 @@ const QuickCard = ({ meal }) => {
                         <div className="h-1.5 w-1.5 rounded-full bg-gray-700 m-0.5"></div>
                         {calculateDaysDifference()} days ago
                     </div>
-                    <div className="flexy justify-start! gap-2">
-                        <img
-                            src={Profile}
-                            alt=""
-                            className="rounded-full w-8 object-cover"
-                        />
-                        <h6 className="md:text-lg">{meal.user}</h6>
+                    <div className="flexy justify-start! gap-2 hover:scale-98">
+                        <Link
+                            href={`/publicProfile/${meal.idUser}`}
+                            className="rounded-lg py-2"
+                        >
+                            <img
+                                src={
+                                    meal.userImage
+                                        ? `/uploads/users/${meal.userImage}`
+                                        : Profile
+                                }
+                                alt=""
+                                className="rounded-full w-8 object-cover"
+                            />
+                        </Link>
+                        <Link
+                            href={`/publicProfile/${meal.idUser}`}
+                            className="rounded-lg py-2"
+                        >
+                            <h6 className="md:text-lg hover:text-gray-500">
+                                {meal.userFName} {meal.userLName}
+                            </h6>
+                        </Link>
                     </div>
                 </div>
-
-                <div className="flexy md:mt-4">
+                <div className="flexy md:mt-2">
                     <Link href={`/mealDetails/${meal.idMeal}`}>
-                        <button className="button px-6! py-1! text-sm lg:text-lg! rounded-full!">
+                        <button className="button px-6! py-1! text-sm lg:text-lg! rounded-full! hover:scale-98">
                             Read
                         </button>
                     </Link>
