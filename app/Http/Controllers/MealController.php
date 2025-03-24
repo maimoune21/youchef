@@ -30,7 +30,7 @@ class MealController extends Controller
         $categorySelected = $request->query('category');
         $kitchenSelected = $request->query('kitchen');
 
-        return inertia("meals/Meals", compact("dataMeals","Kitchen","dataCategories","categorySelected","kitchenSelected"));
+        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected"));
     }
 
     /**
@@ -153,8 +153,11 @@ class MealController extends Controller
     /**
      * Remove the specified Meal from storage.
      */
-    public function destroy(Meal $meal)
+    public function destroy(Meal $meal, $idMeal)
     {
-        //
+        $meal = Meal::findOrFail($idMeal);
+        $meal->delete();
+
+        return redirect()->back()->with('deleted', 'Meal deleted successfully!');
     }
 }

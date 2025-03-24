@@ -52,7 +52,7 @@ class HandleInertiaRequests extends Middleware
                 ? session('errors')->getBag('default')->getMessages()
                 : (object) [],
             'flash' => [
-                'failed' => session('failed'),
+                'failed' => session('failed')
             ],
         ]);
     }

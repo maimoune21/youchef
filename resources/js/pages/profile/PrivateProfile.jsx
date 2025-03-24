@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import MealCard from "@/components/ui/MealCard";
 import { TrashIcon } from "@/../../public/icons/Icons";
 import { UpdateMeal } from "@/components/models/UpdateMeal";
-import { useForm } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 
 const PrivateProfile = ({ user, posts, favoriteMeals }) => {
     const [isFavoritesHovered, setIsFavoritesHovered] = useState(false);
     const [isMealssHovered, setIsMealssHovered] = useState(false);
     const [status, setStatus] = useState("meals");
-    
+    const [messageDeleted, setmessageDeleted] = useState("")
+
     // Logout :
     const { post } = useForm();
     const HLogOut = (e) => {
@@ -18,8 +19,28 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
         post("/logout");
     };
 
+    const [flashMsg, setFlashMsg] = useState("showed")
+    console.log(flashMsg)
+
+    const handleDelete = (idMeal) => {
+        if (confirm("Are you sure you want to delete this meal?")) {
+            router.delete(`/meals/${idMeal}`, {
+                onSuccess: () => { setmessageDeleted("Meal deleted successfully!"); setFlashMsg("showed")},
+            });
+            setTimeout(() => {
+                setFlashMsg("hidden")
+            }, 5000)
+        }
+    };
+
     return (
         <div className="mx-auto bg-30 custom-shadow rounded-lg sm:p-6 w-[95%]">
+            {/* Post Deleted Message */}
+            {messageDeleted &&
+                <div className={`fixed top-20 z-40 -right-50 ${flashMsg == "showed" ? "right-6" : "-right-50"} bg-red-500 transition-all duration-500 p-2 rounded-md shadow-lg text-sm text-white`}>
+                    {messageDeleted}
+                </div>
+            }
             {/* Profile Header */}
             <div className="flex max-md:flex-col gap-5 max-md:p-5 max-md:pt-6">
                 <div className="flex max-md:flex-col max-md:text-center grow gap-5">
@@ -39,15 +60,15 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                             <h2 className="text-2xl md:text-3xl font-bold">
                                 {user.firstName} {user.lastName}
                             </h2>
-                            {status == "meals" ? (
+                            {status == "meals" ?
                                 <p className="text-gray-500">
                                     {posts.length} Posts
                                 </p>
-                            ) : (
+                                :
                                 <p className="text-gray-500">
                                     {favoriteMeals.length} Favorites
                                 </p>
-                            )}
+                            }
                         </div>
                         {/* Bio */}
                         <p className="mt-4 text-gray-600 text-start">
@@ -137,28 +158,31 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
             </div>
 
             <div className="m-5 md:mt-10">
-                {status == "meals" ? (
+                {status == "meals" ?
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
-                        {posts.map((post) => (
+                        {posts.map((post) =>
                             <div>
-                                <MealCard key={post.id} meal={post} />
+                                <MealCard key={post.idMeal} meal={post} />
                                 <div className="bg-60 shadow-[2px_2px_3px_0px_hsla(0,0%,0%,0.2),-2px_2px_3px_0px_hsla(0,0%,0%,0.2)] px-2.5 py-1.5 rounded-b-xl flex gap-2 w-fit m-auto">
                                     <UpdateMeal buttonStyles="rounded-lg! flexy" />
-                                    <Button className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200">
+                                    <Button
+                                        className="md:text-xl font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200"
+                                        onClick={() => handleDelete(post.idMeal)}
+                                    >
                                         Delete
                                         <TrashIcon size="size-5 md:size-7" />
                                     </Button>
                                 </div>
                             </div>
-                        ))}
+                        )}
                     </div>
-                ) : (
+                    :
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
                         {favoriteMeals && favoriteMeals.map(favorite =>
                             <MealCard key={favorite.id} meal={favorite} />
                         )}
                     </div>
-                )}
+                }
             </div>
         </div>
     );
