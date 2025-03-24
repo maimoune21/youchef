@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import BlankProfile from "@/../../public/images/BlankProfile.png";
 import {
     DashboardClose,
@@ -37,7 +37,7 @@ import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 
 const Dashboard = ({ location }) => {
-    const [activeTeam, setActiveTeam] = React.useState({});
+    const [activeTeam, setActiveTeam] = useState({});
     const { auth } = usePage().props;
     const user = auth.user;
 

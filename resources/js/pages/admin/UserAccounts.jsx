@@ -1,4 +1,4 @@
-import { ManageIcon, FilterIcon } from "@/../../public/icons/Icons";
+import { FilterIcon } from "@/../../public/icons/Icons";
 import React from "react";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import Profile from "@/../../public/images/Profile.png";

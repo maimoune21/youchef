@@ -64,7 +64,7 @@ const Navbar = () => {
         ...(isAdmin
             ? [
                   {
-                      path: "/admin/dashboard",
+                      path: "/dashboard/reportedMeals",
                       label: "Manage",
                       icon: ManageIcon,
                   },

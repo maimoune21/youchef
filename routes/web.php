@@ -48,7 +48,9 @@ Route::middleware('auth')->group(function () {
 
 // Admin Pages :
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::inertia('/admin/dashboard', 'admin/Dashboard');
+    Route::get('/dashboard/{location}', function($location){
+        return inertia('admin/Dashboard',compact('location'));
+    });
 });
 
 // NotFound Page :
