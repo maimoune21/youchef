@@ -99,16 +99,23 @@ const MealCard = ({ meal }) => {
                     </div>
                 </div>
                 <div className="grid grid-cols-[2fr_1fr]">
-                    <div className="flex flex-col gap-2">
-                        <div className="flexy justify-start! gap-2">
-                            <img
-                                src={Profile}
-                                alt=""
-                                className="rounded-full w-8 object-cover"
-                            />
-                            <h6 className="max-sm:text-xs max-lg:text-sm"></h6>
+                    <Link
+                        href={`/publicProfile/`}
+                        className="hover:bg-gray-200 rounded-lg px-4 py-1"
+                    >
+                        <div className="flex flex-col gap-2">
+                            <div className="flexy justify-start! gap-2">
+                                <img
+                                    src={Profile}
+                                    alt=""
+                                    className="rounded-full w-8 object-cover"
+                                />
+                                <h6 className="max-sm:text-xs max-lg:text-sm">
+                                    Hamada
+                                </h6>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                     <div className="flex items-center justify-end">
                         <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)]">
                             <Link href={`/mealDetails/${meal.idMeal}`}>

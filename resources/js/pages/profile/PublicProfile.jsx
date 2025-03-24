@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import ProfileImg from "@/../../public/images/Profile.png";
+import Profile from "@/../../public/images/Profile.png";
 import MealCard from '@/components/ui/MealCard';
 import Tajine from "@/../../public/images/Tajine.jpg";
 
-const PublicProfile = () => {
+const PublicProfile = ({user}) => {
+    console.log(user)
     const [meals, setMeals] = useState([]);
 
     useEffect(() => {
@@ -21,15 +22,6 @@ const PublicProfile = () => {
         setMeals(meal)
     }, [])
 
-    const chef = {
-        id: 1,
-        img: ProfileImg,
-        fname: "Imrane",
-        lname: "Mejouate",
-        posts: meals.length,
-        bio: "Ipsum is simply dummy text of the printing and typesetting industry. ",
-    }
-
     return (
         <div className="mx-auto bg-30 custom-shadow rounded-lg sm:p-6 w-[95%]">
 
@@ -37,19 +29,19 @@ const PublicProfile = () => {
             <div className='flex items-center justify-center gap-5 max-md:p-5 max-md:pt-6 max-md:flex-col max-md:text-center'>
 
                 {/* Avatar */}
-                <img src={ProfileImg} alt="Profile" className='rounded-full size-40 max-md:m-auto' />
+                <img src={user.profile_img? `/uploads/users/${user.profile_img}`: Profile} alt="Profile" className='rounded-full size-40 max-md:m-auto' />
 
                 <div className="space-x-4">
 
                     {/* Name and Post Count */}
                     <div className=''>
-                        <h2 className="text-3xl font-bold">{chef.fname} {chef.lname}</h2>
-                        <p className="text-gray-500">{chef.posts} Posts</p>
+                        <h2 className="text-3xl font-bold">{user.firstName} {user.lastName}</h2>
+                        <p className="text-gray-500"> Posts</p>
                     </div>
 
                     {/* Bio */}
                     <p className="mt-4 text-gray-600 text-start">
-                        <span className="font-semibold">bio: </span>{chef.bio}
+                        <span className="font-semibold">bio: </span>{user.bio}
                     </p>
 
                 </div>
@@ -69,9 +61,9 @@ const PublicProfile = () => {
             <div className='m-5 md:mt-10'>
 
                 <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9'>
-                    {meals.map(post =>
+                    {/* {meals.map(post =>
                         <MealCard key={post.id} meal={post} />
-                    )}
+                    )} */}
                 </div>
 
             </div>

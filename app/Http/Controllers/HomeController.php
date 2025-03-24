@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $meals = Meal::latest()->get();
+        $meals = Meal::orderBy('views', 'desc')->get();
         $categories = Category::all();
         $data = [
             "meals"=>$meals,

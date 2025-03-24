@@ -9,7 +9,7 @@ import {
     LikeIcon,
 } from "@/../../public/icons/Icons";
 import { ReportMeal } from "../../components/models/ReportMeal";
-import { usePage, router } from "@inertiajs/react";
+import { usePage, router, Link } from "@inertiajs/react";
 
 const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     // Meal Comments :
@@ -126,24 +126,26 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         {meal.title}
                     </h1>
                     <div className="flex items-center justify-between">
-                        <div className="flex flex-col gap-2">
-                            <div className="flexy gap-4">
-                                <img
-                                    src={
-                                        user.profile_img
-                                            ? `/uploads/users/${user.profile_img}`
-                                            : `${Profile}`
-                                    }
-                                    alt="test"
-                                    className="rounded-full w-12"
-                                />
-                                <h3 className="font-bold text-sm sm:text-lg">
-                                    {user
-                                        ? `${user.firstName} ${user.lastName}`
-                                        : "No User"}
-                                </h3>
+                        <Link href={`/publicProfile/${user.idUser}`} className='hover:bg-gray-200 rounded-lg px-4 py-1'>
+                            <div className="flex flex-col gap-2">
+                                <div className="flexy gap-4">
+                                    <img
+                                        src={
+                                            user.profile_img
+                                                ? `/uploads/users/${user.profile_img}`
+                                                : `${Profile}`
+                                        }
+                                        alt="test"
+                                        className="rounded-full w-12"
+                                    />
+                                    <h3 className="font-bold text-sm sm:text-lg">
+                                        {user
+                                            ? `${user.firstName} ${user.lastName}`
+                                            : "No User"}
+                                    </h3>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                         <div className="flexy gap-2">
                             <span className="rounded-full border-1 border-black flexy gap-2 px-2 py-1">
                                 <span
@@ -243,15 +245,17 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         {activUser && (
                             <div className="flex gap-2 relative">
                                 <span className="flexy">
-                                    {
-                                        activUser?.profile_img
-                                            ? <img
-                                                src={`/uploads/users/${activUser.profile_img}`}
-                                                alt="test"
-                                                className="rounded-full w-10"
-                                            />
-                                            : <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">{activUser.firstName.charAt(0)}</span>
-                                    }
+                                    {activUser?.profile_img ? (
+                                        <img
+                                            src={`/uploads/users/${activUser.profile_img}`}
+                                            alt="test"
+                                            className="rounded-full w-10"
+                                        />
+                                    ) : (
+                                        <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">
+                                            {activUser.firstName.charAt(0)}
+                                        </span>
+                                    )}
                                 </span>
                                 <form
                                     onSubmit={handleCommentSubmit}
@@ -280,15 +284,17 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                             {MealComments.map((comment) => (
                                 <div className="flex items-center gap-4 min-w-2xl m-auto">
                                     <span className="flexy">
-                                        {
-                                            comment.profile_img
-                                            ?<img
+                                        {comment.profile_img ? (
+                                            <img
                                                 src={`/uploads/users/${comment.profile_img}`}
                                                 alt="test"
                                                 className="rounded-full w-10"
                                             />
-                                            : <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">{comment.firstName.charAt(0)}</span>
-                                        }
+                                        ) : (
+                                            <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">
+                                                {comment.firstName.charAt(0)}
+                                            </span>
+                                        )}
                                     </span>
                                     <span className="relative w-full max-w-[39rem]">
                                         <p className="w-full border-b-2 border-[var(--third)] absolute bottom-0"></p>

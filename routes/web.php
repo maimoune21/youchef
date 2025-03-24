@@ -4,12 +4,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Meals :
 Route::get("/meals", [MealController::class, "index"]);
 Route::get("/mealDetails/{id}", [MealController::class, "show"]);
+Route::get("/publicProfile/{id}", [ProfileController::class, "show"]);
 
 // Categories
 Route::get('/categories', [CategoryController::class, 'index']);
