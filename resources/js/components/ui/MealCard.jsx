@@ -10,9 +10,6 @@ import { Link } from "@inertiajs/react";
 import FavoriteButton from "./favoriteButton";
 
 const MealCard = ({ meal, thisUser, favoriteMeals }) => {
-    console.log(favoriteMeals)
-    console.log(thisUser)
-    console.log(meal)
     const [status, setStatus] = useState("");
 
     useEffect(() => {

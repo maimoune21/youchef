@@ -6,7 +6,7 @@ const FavoriteButton = ({ meal, thisUser, favoriteMeals }) => {
     const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
-        const mealExists = favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        const mealExists = favoriteMeals && favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
         setIsFavorited(!!mealExists);
     }, [favoriteMeals, meal.idMeal]);
 
