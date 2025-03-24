@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,8 @@ class HomeController extends Controller
             ->orderBy('meals.views', 'desc')
             ->get();
         $categories = Category::all();
-        return inertia("general/Home", compact("meals", "categories"));
+        $Kitchen = DB::table("kitchens")->get();
+        return inertia("general/Home", compact("meals", "categories", "Kitchen"));
     }
 
     /**
