@@ -1,6 +1,5 @@
 import { SignalIcon, HeartIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
 import React, { useEffect, useState } from "react";
-import Profile from "/public/images/Profile.png";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { Link } from "@inertiajs/react";
 
@@ -112,15 +111,14 @@ const QuickCard = ({ meal }) => {
                             href={`/publicProfile/${meal.idUser}`}
                             className="rounded-lg py-2 flex items-center gap-2 group/user"
                         >
-                            <img
-                                src={
-                                    meal.userImage
-                                        ? `/uploads/users/${meal.userImage}`
-                                        : Profile
-                                }
+                            {meal.userImage
+                                ?<img
+                                src={`/uploads/users/${meal.userImage}`}
                                 alt=""
                                 className="rounded-full w-8 object-cover"
                             />
+                            : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userFName.charAt(0)}</span>
+                            }
                             <h6 className="md:text-lg group-hover/user:text-gray-400 group-hover/user:underline underline-offset-3">
                                 {meal.userFName} {meal.userLName}
                             </h6>

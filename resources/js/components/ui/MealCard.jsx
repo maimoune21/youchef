@@ -6,7 +6,6 @@ import {
     DotsIcon,
     EyeIcon,
 } from "@/../../public/icons/Icons";
-import Profile from "@/../../public/images/Profile.png";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { Link } from "@inertiajs/react";
 
@@ -41,9 +40,8 @@ const MealCard = ({ meal }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${
-                differenceInDays !== 1 ? "s" : ""
-            } ago`;
+            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
+                } ago`;
         }
     };
 
@@ -51,9 +49,8 @@ const MealCard = ({ meal }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${
-                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-            }`;
+            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+                }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -76,13 +73,12 @@ const MealCard = ({ meal }) => {
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute bottom-3 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${
-                        status === "hard"
+                    className={`absolute bottom-3 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${status === "hard"
                             ? "text-red-500"
                             : status === "medium"
-                            ? "text-orange-500"
-                            : "text-green-500"
-                    }`}
+                                ? "text-orange-500"
+                                : "text-green-500"
+                        }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-5.5 pb-0.5" />
@@ -118,15 +114,14 @@ const MealCard = ({ meal }) => {
                     >
                         <div className="flex flex-col gap-2">
                             <div className="flexy justify-start! gap-2">
-                                <img
-                                    src={
-                                        meal.userImage
-                                            ? `/uploads/users/${meal.userImage}`
-                                            : Profile
-                                    }
-                                    alt=""
-                                    className="rounded-full w-8 object-cover"
-                                />
+                                {meal.userImage
+                                    ? <img
+                                        src={`/uploads/users/${meal.userImage}`}
+                                        alt=""
+                                        className="rounded-full w-8 object-cover"
+                                    />
+                                    : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userFName.charAt(0)}</span>
+                                }
                                 <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
                                     {meal.userFName} {meal.userLName}
                                 </h6>

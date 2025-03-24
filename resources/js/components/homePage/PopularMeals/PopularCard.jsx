@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Profile from "/public/images/Profile.png";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { SignalIcon, HeartIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
 import { Link } from "@inertiajs/react";
@@ -35,9 +34,8 @@ const PopularCard = ({ meal }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${
-                differenceInDays !== 1 ? "s" : ""
-            } ago`;
+            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
+                } ago`;
         }
     };
 
@@ -45,9 +43,8 @@ const PopularCard = ({ meal }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${
-                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-            }`;
+            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+                }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -67,13 +64,12 @@ const PopularCard = ({ meal }) => {
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${
-                        status === "hard"
+                    className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${status === "hard"
                             ? "text-red-500"
                             : status === "medium"
-                            ? "text-orange-500"
-                            : "text-green-500"
-                    }`}
+                                ? "text-orange-500"
+                                : "text-green-500"
+                        }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-7.5 pb-1! max-sm:pb-0.5! max-sm:size-5.5!" />
@@ -107,15 +103,14 @@ const PopularCard = ({ meal }) => {
                             href={`/publicProfile/${meal.idUser}`}
                             className="rounded-lg flex items-center gap-2 hover:scale-97 group"
                         >
-                            <img
-                                src={
-                                    meal.userImage
-                                        ? `/uploads/users/${meal.userImage}`
-                                        : Profile
-                                }
-                                alt="profile"
-                                className="rounded-full w-8 object-cover md:w-12"
-                            />
+                            {meal.userImage
+                                ?<img
+                                    src={`/uploads/users/${meal.userImage}`}
+                                    alt="profile"
+                                    className="rounded-full w-8 object-cover md:w-12"
+                                />
+                                : <span className="bg-soft text-black text-base md:text-xl font-bold w-8 md:w-12 h-full aspect-square rounded-full flexy">{meal.userFName.charAt(0)}</span>
+                            }
                             <h6 className="md:text-2xl group-hover:text-gray-400 group-hover:underline underline-offset-3">
                                 {meal
                                     ? `${meal.userFName} ${meal.userLName}`

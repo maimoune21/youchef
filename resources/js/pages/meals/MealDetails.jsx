@@ -145,7 +145,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     return (
         <div className="tn:max-w-[28rem] lg:max-w-[52rem] md:max-w-[40rem] sm:max-w-[35rem] max-w-[22rem] m-auto mb-20">
             <div>
-                <div>
+                <div className="bg-30 custom-shadow rounded-t-3xl rounded-b-2xl mb-3">
                     <img
                         src={
                             meal.meal_img
@@ -155,7 +155,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                         className="w-full max-h-[60vh] rounded-t-3xl"
                         alt="test"
                     />
-                    <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 bg-white text-black rounded-b-3xl">
+                    <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 text-black rounded-b-3xl">
                         {meal.title}
                     </h1>
                 </div>
