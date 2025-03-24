@@ -13,7 +13,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $meals = Meal::orderBy('views', 'desc')->get();
+        $meals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as firstName',
+                'users.lastName as lastName',
+                'users.profile_img as profile_img'
+            )
+            ->orderBy('meals.views', 'desc')
+            ->get();
         $categories = Category::all();
         return inertia("general/Home", compact("meals", "categories"));
     }

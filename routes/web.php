@@ -8,13 +8,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Meals :
-Route::get("/meals", [MealController::class, "index"]);
-Route::get("/mealDetails/{id}", [MealController::class, "show"]);
-Route::get("/publicProfile/{id}", [ProfileController::class, "show"]);
-
-// Categories
-Route::get('/categories', [CategoryController::class, 'index']);
 
 // Open Pages :
 Route::get("/", [HomeController::class,"index"]);
@@ -22,6 +15,10 @@ Route::inertia("/aboutUs", "general/AboutUs");
 Route::inertia("/FAQS", "general/FAQS");
 Route::inertia("/privacy", "general/Privacy");
 Route::inertia("/termsOfService", "general/TermsOfService");
+Route::get("/meals", [MealController::class, "index"]);
+Route::get("/mealDetails/{id}", [MealController::class, "show"]);
+Route::get("/publicProfile/{id}", [ProfileController::class, "show"]);
+Route::get('/categories', [CategoryController::class, 'index']);
 
 // Guest Pages :
 Route::middleware('guest')->group(function () {
