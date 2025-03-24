@@ -148,14 +148,14 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
     return (
         <div className="tn:max-w-[28rem] lg:max-w-[52rem] md:max-w-[40rem] sm:max-w-[35rem] max-w-[22rem] m-auto mb-20">
             <div>
-                <div className="bg-30 custom-shadow rounded-t-3xl rounded-b-2xl mb-3">
+                <div className="bg-30 custom-shadow rounded-t-3xl rounded-b-2xl mb-3 overflow-hidden">
                     <img
                         src={
                             meal.meal_img
                                 ? `/uploads/meals/${meal.meal_img}`
                                 : `${Meal}`
                         }
-                        className="w-full max-h-[60vh] rounded-t-3xl"
+                        className="w-full max-h-[60vh] rounded-t-3xl border-b-2"
                         alt="test"
                     />
                     <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 text-black rounded-b-3xl">
@@ -166,19 +166,18 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                     <div className="flex items-center justify-between">
                         <Link
                             href={`/publicProfile/${user.idUser}`}
-                            className="hover:bg-gray-200 rounded-lg px-4 py-1"
+                            className="hover:bg-gray-200 rounded-lg pl-3 pr-4 py-2 group transition-all"
                         >
                             <div className="flex flex-col gap-2">
                                 <div className="flexy gap-4">
-                                    <img
-                                        src={
-                                            user.profile_img
-                                                ? `/uploads/users/${user.profile_img}`
-                                                : `${Profile}`
-                                        }
-                                        alt="test"
-                                        className="rounded-full w-12"
-                                    />
+                                    {user.profile_img
+                                        ?<img
+                                            src={`/uploads/users/${user.profile_img}`}
+                                            alt="test"
+                                            className="rounded-full w-12"
+                                        />
+                                        : <span className="bg-soft group-hover:bg-white! transition-all text-black text-base font-bold w-12 shadow h-full aspect-square rounded-full flexy">{user.lastName.charAt(0)}</span>
+                                    }
                                     <h3 className="font-bold text-sm sm:text-lg">
                                         {user
                                             ? `${user.firstName} ${user.lastName}`
@@ -194,9 +193,8 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments }) => {
                                     onClick={handleLike}
                                 >
                                     <LikeIcon
-                                        size={`size-5.5 ${
-                                            userAction.liked ? "fill-black" : ""
-                                        }`}
+                                        size={`size-5.5 ${userAction.liked ? "fill-black" : ""
+                                            }`}
                                     />
                                     <b className="text-sm">{likes}</b>
                                 </span>
