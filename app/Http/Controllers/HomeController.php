@@ -15,11 +15,7 @@ class HomeController extends Controller
     {
         $meals = Meal::orderBy('views', 'desc')->get();
         $categories = Category::all();
-        $data = [
-            "meals"=>$meals,
-            "categories"=>$categories
-        ];
-        return inertia("general/Home", compact("data"));
+        return inertia("general/Home", compact("meals", "categories"));
     }
 
     /**

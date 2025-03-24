@@ -81,7 +81,7 @@ const QuickCard = ({ meal }) => {
                     <h3 className="font-bold text-2xl truncate">
                         {meal.title}
                     </h3>
-                    <div>
+                    <div className='cursor-pointer'>
                         <DotsIcon size="size-6" />
                     </div>
                 </div>
