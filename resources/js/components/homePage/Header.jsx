@@ -60,7 +60,7 @@ export default function Header() {
 
     return (
         <>
-            <div className="relative grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 justify-center items-center w-[90%] md:w-[90%] lg:w-[90%] rounded-3xl custom-shadow -mt-5 mb-20 bg-30 min-h-fit md:min-h-[85vh] max-md:max-h-[232px]">
+            <div className="bg-[var(--soft-blue)]! relative grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 justify-center items-center w-[90%] md:w-[90%] lg:w-[90%] rounded-3xl custom-shadow -mt-5 mb-20 bg-30 min-h-fit md:min-h-[85vh] max-md:max-h-[232px]">
                 {userName ? (
                     <h1 className="absolute top-4 left-6 md:top-4 md:left-8 font-bold text-3xl md:text-3xl">
                         Hello <span className="text-green">{userName}</span>
