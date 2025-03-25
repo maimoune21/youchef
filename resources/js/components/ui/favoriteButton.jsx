@@ -1,32 +1,61 @@
 import { useState, useEffect } from "react";
 import { router } from "@inertiajs/react";
-import { HeartIcon } from '@/../../public/icons/Icons';
+import { HeartIcon } from "@/../../public/icons/Icons";
 
-const FavoriteButton = ({ meal, thisUser, favoriteMeals }) => {
+const FavoriteButton = ({
+    meal,
+    thisUser,
+    favoriteMeals,
+    buttonClass,
+    iconClass,
+}) => {
     const [isFavorited, setIsFavorited] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const mealExists = favoriteMeals && favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        const mealExists =
+            favoriteMeals &&
+            favoriteMeals.find((fav) => fav.idMeal === meal.idMeal);
         setIsFavorited(!!mealExists);
     }, [favoriteMeals, meal.idMeal]);
 
     const handleFavoriteClick = () => {
-        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
-            onSuccess: () => {
-                setIsFavorited(prev => !prev);
-            },
-            onError: (errors) => {
-                console.error("Error toggling favorite:", errors);
+        const wasFavorited = isFavorited;
+        setIsFavorited(!wasFavorited);
+        setIsLoading(true);
+
+        router.post(
+            "/favorite",
+            { idMeal: meal.idMeal, idUser: thisUser.idUser },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setIsLoading(false);
+                },
+                onError: (errors) => {
+                    console.error("Error toggling favorite:", errors);
+                    setIsFavorited(wasFavorited);
+                    setIsLoading(false);
+                },
             }
-        });
+        );
     };
 
     return (
         <button
-            className="bg-30 rounded-full p-1 absolute top-3 right-3 transition-all duration-200"
+            className={`p-1 pr-1.5 transition-all duration-200 ${buttonClass} ${
+                isLoading ? "opacity-70" : ""
+            }`}
             onClick={handleFavoriteClick}
+            disabled={isLoading}
         >
-            <HeartIcon className={`${isFavorited ? "fill-green-500 hover:fill-red-500" : "fill-none hover:fill-[var(--wave-1)] stroke-black stroke-2"}`} />
+            <HeartIcon
+                className={`cursor-pointer transition-colors duration-200 ${
+                    isFavorited
+                        ? "fill-green-600 text-green-600"
+                        : "fill-white stroke-green-600 stroke-2"
+                } ${iconClass || ""}`}
+            />
         </button>
     );
 };
