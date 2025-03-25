@@ -15,10 +15,7 @@ export const Login = () => {
             delete errors[e.target.name];
             flash.failed = null;
         }
-        setError((prevState) => ({
-            ...prevState,
-            [e.target.name]: "" 
-        }));
+        setError((prevState) => ({...prevState,[e.target.name]: "" }));
         if (flash.failed) {
             flash.failed = null;
         }
