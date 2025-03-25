@@ -10,7 +10,15 @@ import {
 import { ReportMeal } from "../../components/models/ReportMeal";
 import { usePage, router, Link } from "@inertiajs/react";
 
-const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser, favoriteMeals }) => {
+const MealDetails = ({
+    meal,
+    user,
+    categoryName,
+    kitchenName,
+    comments,
+    thisUser,
+    favoriteMeals,
+}) => {
     // Meal Comments :
     const MealComments = comments;
 
@@ -147,19 +155,26 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
     const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
-        const mealExists = favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        const mealExists = favoriteMeals.find(
+            (fav) => fav.idMeal === meal.idMeal
+        );
         setIsFavorited(!!mealExists);
     }, [favoriteMeals, meal.idMeal]);
 
     const handleFavoriteClick = () => {
-        router.post("/favorite", { idMeal: meal.idMeal, idUser: thisUser.idUser }, {
-            onSuccess: () => {
-                setIsFavorited(prev => !prev);
-            },
-            onError: (errors) => {
-                console.error("Error toggling favorite:", errors);
+        router.post(
+            "/favorite",
+            { idMeal: meal.idMeal, idUser: thisUser.idUser },
+            {
+                onSuccess: () => {
+                    setIsFavorited((prev) => !prev);
+                },
+                onError: (errors) => {
+                    console.error("Error toggling favorite:", errors);
+                },
+                preserveScroll: true,
             }
-        });
+        );
     };
 
     return (
@@ -183,21 +198,24 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
                     <div className="flex items-center justify-between">
                         <Link
                             href={`/publicProfile/${user.idUser}`}
-                            className="hover:bg-gray-200 rounded-lg pl-3 pr-4 py-2 group transition-all"
+                            className="hover:scale-98 rounded-lg pl-3 pr-4 py-2 group transition-all"
                         >
                             <div className="flex flex-col gap-2">
                                 <div className="flexy gap-4">
-                                    {user.profile_img
-                                        ? <img
+                                    {user.profile_img ? (
+                                        <img
                                             src={`/uploads/users/${user.profile_img}`}
                                             alt="test"
                                             className="rounded-full w-12"
                                         />
-                                        : <span className="bg-soft group-hover:bg-white! transition-all text-black text-base font-bold w-12 shadow h-full aspect-square rounded-full flexy">{user.lastName.charAt(0)}</span>
-                                    }
-                                    <h3 className="font-bold text-sm sm:text-lg">
+                                    ) : (
+                                        <span className="bg-soft transition-all text-black text-base font-bold w-12 shadow h-full aspect-square rounded-full flexy">
+                                            {user.lastName.charAt(0)}
+                                        </span>
+                                    )}
+                                    <h3 className="font-bold text-sm sm:text-lg group-hover:underline underline-offset-2 group-hover:text-[var(--bg-10)]">
                                         {user
-                                            ? `${user.firstName} ${user.lastName}`
+                                            ? `${user.lastName} ${user.firstName}`
                                             : "No User"}
                                     </h3>
                                 </div>
@@ -210,8 +228,9 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
                                     onClick={handleLike}
                                 >
                                     <LikeIcon
-                                        size={`size-5.5 ${userAction.liked ? "fill-black" : ""
-                                            }`}
+                                        size={`size-5.5 ${
+                                            userAction.liked ? "fill-black" : ""
+                                        }`}
                                     />
                                     <b className="text-sm">{likes}</b>
                                 </span>
@@ -220,9 +239,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
                                     className="cursor-pointer select-none"
                                     onClick={handleDislike}
                                 >
-                                    <DislikeIcon
-                                        size={`size-5.5`}
-                                    />
+                                    <DislikeIcon size={`size-5.5`} />
                                 </span>
                             </span>
                             <button
@@ -231,19 +248,24 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
                             >
                                 <HeartIcon
                                     size="size-5.5"
-                                    className={`${isFavorited ? "fill-green-500 group-hover:fill-red-500" : "fill-none group-hover:fill-[var(--wave-1)] stroke-black stroke-2"}`} />
+                                    className={`${
+                                        isFavorited
+                                            ? "fill-[var(--bg-10)] text-[var(--bg-10)]"
+                                            : "fill-none text-black fill:[var(--bg-10)] stroke-2"
+                                    }`}
+                                />
                             </button>
                             <ReportMeal meal={meal.title} />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-4 bg-30 p-4.5 py-3.5 my-4 rounded-lg custom-shadow">
+                    <div className="flex flex-col gap-3 bg-30 p-4.5 py-3.5 my-4 rounded-lg custom-shadow">
                         <div className="flex flex-col gap-1">
                             <div>
                                 <p className="text-sm">
                                     {meal.views} views • {daysAgo}
                                 </p>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 mt-1">
                                 <span className="py-1 px-4! rounded-full bg-[var(--bg-10)]! text-first font-bold">
                                     {categoryName}
                                 </span>
@@ -256,7 +278,7 @@ const MealDetails = ({ meal, user, categoryName, kitchenName, comments, thisUser
                             <h3 className="font-bold tracking-wide text-[var(--bg-10)]">
                                 Description :
                             </h3>
-                            <p className="text-[15px] text-justify pt-1">
+                            <p className="text-[15px] text-justify pt-0">
                                 {meal.description}
                             </p>
                         </div>

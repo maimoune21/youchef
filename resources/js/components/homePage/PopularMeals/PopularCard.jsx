@@ -22,7 +22,9 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
     }, [meal.duration]);
 
     useEffect(() => {
-        const mealExists = favoriteMeals.find(fav => fav.idMeal === meal.idMeal);
+        const mealExists = favoriteMeals.find(
+            (fav) => fav.idMeal === meal.idMeal
+        );
         setIsFavorited(!!mealExists);
     }, [favoriteMeals, meal.idMeal]);
 
@@ -41,8 +43,9 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
-                } ago`;
+            return `${differenceInDays} day${
+                differenceInDays !== 1 ? "s" : ""
+            } ago`;
         }
     };
 
@@ -50,8 +53,9 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-                }`;
+            return `${hours}h${
+                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+            }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -61,20 +65,24 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
 
     return (
         <div className="w-full bg-soft relative custom-shadow rounded-xl overflow-hidden my-2 max-h-[80vh] md:max-h-[80vh]">
-            <img src={BlankMeal} alt={meal.image} className=" w-full max-sm:h-64" />
-            <FavoriteButton meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
+            <img
+                src={BlankMeal}
+                alt={meal.image}
+                className=" w-full max-sm:h-64"
+            />
             <div className="backdrop-brightness-50 absolute rounded-b-xl bottom-0 w-full">
                 <div className="absolute -top-10 text-md max-sm:text-sm! max-sm:-top-8 left-3 bg-30 flexy rounded-full p-1 pr-2 gap-1">
                     <TimeIcon style="size-6! max-sm:size-5!" />
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${status === "hard"
-                        ? "text-red-500"
-                        : status === "medium"
+                    className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${
+                        status === "hard"
+                            ? "text-red-500"
+                            : status === "medium"
                             ? "text-orange-500"
                             : "text-green-500"
-                        }`}
+                    }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-7.5 pb-1! max-sm:pb-0.5! max-sm:size-5.5!" />
@@ -93,8 +101,13 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
                                     {meal.title}
                                 </Link>
                             </h3>
-                            <div className="cursor-pointer">
-                                <DotsIcon size="size-8" />
+                            <div className="bg-white p-2 mr-3 flexy rounded-full">
+                                <FavoriteButton
+                                    meal={meal}
+                                    thisUser={thisUser}
+                                    favoriteMeals={favoriteMeals}
+                                    buttonClass="p-0! text-black! fill-black!"
+                                />
                             </div>
                         </div>
                         <div className="text-sm flexy justify-start! gap-1 md:text-base">
@@ -108,15 +121,18 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
                             href={`/publicProfile/${meal.idUser}`}
                             className="rounded-lg flex items-center gap-2 hover:scale-97 group"
                         >
-                            {meal.userImage
-                                ? <img
+                            {meal.userImage ? (
+                                <img
                                     src={`/uploads/users/${meal.userImage}`}
                                     alt="profile"
                                     className="rounded-full w-8 object-cover md:w-12"
                                 />
-                                : <span className="bg-soft text-black text-base md:text-xl font-bold w-8 md:w-12 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
-                            }
-                            <h6 className="md:text-2xl group-hover:text-gray-400 group-hover:underline underline-offset-3">
+                            ) : (
+                                <span className="bg-soft text-black text-base md:text-xl font-bold w-8 md:w-12 h-full aspect-square rounded-full flexy">
+                                    {meal.userFName.charAt(0)}
+                                </span>
+                            )}
+                            <h6 className="md:text-2xl group-hover:text-[var(--bg-10)] group-hover:underline underline-offset-3">
                                 {meal
                                     ? `${meal.userFName} ${meal.userLName}`
                                     : "Unknown User"}

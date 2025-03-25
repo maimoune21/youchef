@@ -43,8 +43,9 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
-                } ago`;
+            return `${differenceInDays} day${
+                differenceInDays !== 1 ? "s" : ""
+            } ago`;
         }
     };
 
@@ -52,8 +53,9 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-                }`;
+            return `${hours}h${
+                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+            }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -76,22 +78,19 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute bottom-2 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${status === "hard"
-                        ? "text-red-500"
-                        : status === "medium"
+                    className={`absolute bottom-2 text-sm right-3 bg-30 max-sm:text-xs flexy rounded-full py-1 px-1 font-bold pt-0.5 ${
+                        status === "hard"
+                            ? "text-red-500"
+                            : status === "medium"
                             ? "text-orange-500"
                             : "text-green-500"
-                        }`}
+                    }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-5.5 pb-0.5" />
                         <p>{status}</p>
                     </div>
                 </div>
-                {mypost
-                    ? null
-                    : <FavoriteButton meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
-                }
             </div>
             <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flex flex-col">
@@ -101,8 +100,16 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
                                 {meal.title}
                             </Link>
                         </h3>
-                        <div>
-                            <DotsIcon className="w-6 h-6" />
+                        <div className="flexy bg-gray-100 p-1 rounded-full mr-0.5">
+                            {mypost ? null : (
+                                <FavoriteButton
+                                    meal={meal}
+                                    thisUser={thisUser}
+                                    favoriteMeals={favoriteMeals}
+                                    buttonClass="p-0!"
+                                    iconClass="size-6!"
+                                />
+                            )}
                         </div>
                     </div>
                     <div className="text-sm max-sm:text-xs flexy justify-start! gap-1">
@@ -111,53 +118,55 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
                         {calculateDaysDifference()}
                     </div>
                 </div>
-                {
-                    mypost
-                        ? null
-                        : <div className="grid grid-cols-[2fr_1fr]">
-                            <Link
-                                href={`/publicProfile/${meal.idUser}`}
-                                className="py-0 hover:scale-98 group/user"
-                            >
-                                <div className="flex flex-col gap-2">
-                                    <div className="flexy justify-start! gap-2">
-                                        {meal.userImage
-                                            ? <img
-                                                src={`/uploads/users/${meal.userImage}`}
-                                                alt=""
-                                                className="rounded-full w-8 object-cover"
-                                            />
-                                            : <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">{meal.userLName.charAt(0)}</span>
-                                        }
-                                        <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
-                                            {meal.userFName} {meal.userLName}
-                                        </h6>
-                                    </div>
+                {mypost ? null : (
+                    <div className="grid grid-cols-[2fr_1fr]">
+                        <Link
+                            href={`/publicProfile/${meal.idUser}`}
+                            className="py-0 hover:scale-98 group/user"
+                        >
+                            <div className="flex flex-col gap-2">
+                                <div className="flexy justify-start! gap-2">
+                                    {meal.userImage ? (
+                                        <img
+                                            src={`/uploads/users/${meal.userImage}`}
+                                            alt=""
+                                            className="rounded-full w-8 object-cover"
+                                        />
+                                    ) : (
+                                        <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">
+                                            {meal.userLName.charAt(0)}
+                                        </span>
+                                    )}
+                                    <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
+                                        {meal.userLName} {meal.userFName}
+                                    </h6>
                                 </div>
-                            </Link>
-                            <div className="flex items-center justify-end">
-                                <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)] hover:scale-96">
-                                    <Link href={`/mealDetails/${meal.idMeal}`}>
-                                        <EyeIcon style="size-5.5 text-black cursor-pointer" />
-                                    </Link>
-                                </span>
                             </div>
+                        </Link>
+                        <div className="flex items-center justify-end">
+                            <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)] hover:scale-96">
+                                <Link href={`/mealDetails/${meal.idMeal}`}>
+                                    <EyeIcon style="size-5.5 text-black cursor-pointer" />
+                                </Link>
+                            </span>
                         </div>
-                }
-                {
-                    mypost
-                        ? <div className="mx-auto w-full px-1 flex flex-wrap justify-center gap-2 m-auto">
-                            <UpdateMeal buttonStyles="rounded-lg! flexy" meal={meal} />
-                            <Button
-                                className="text-lg font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
-                                onClick={() => handleDelete(meal.idMeal)}
-                            >
-                                Delete
-                                <TrashIcon size="size-5 md:size-6" />
-                            </Button>
-                        </div>
-                        : null
-                }
+                    </div>
+                )}
+                {mypost ? (
+                    <div className="mx-auto w-full px-1 flex flex-wrap justify-center gap-2 m-auto">
+                        <UpdateMeal
+                            buttonStyles="rounded-lg! flexy"
+                            meal={meal}
+                        />
+                        <Button
+                            className="text-lg font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
+                            onClick={() => handleDelete(meal.idMeal)}
+                        >
+                            Delete
+                            <TrashIcon size="size-5 md:size-6" />
+                        </Button>
+                    </div>
+                ) : null}
             </div>
         </div>
     );
