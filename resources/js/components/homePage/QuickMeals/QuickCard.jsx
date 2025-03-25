@@ -142,7 +142,7 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
                 </div>
                 <div className="flexy md:mt-2">
                     <Link href={`/mealDetails/${meal.idMeal}`}>
-                        <button className="button px-6! py-1! text-sm lg:text-lg! rounded-full! hover:scale-98">
+                        <button className="button px-6! py-1! text-sm lg:text-lg! rounded-xl! hover:scale-98">
                             Read
                         </button>
                     </Link>
