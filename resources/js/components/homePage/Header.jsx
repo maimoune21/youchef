@@ -1,13 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePage } from "@inertiajs/react";
 import Logo from "../ui/Logo";
 import CustomCursor from "../ui/custom-cursor";
 import { AboutUsIcon, ContactUsIcon } from "@/../../public/icons/Icons";
 import Burger from "@/../../public/images/HeaderBurger.png";
+import Salade from "@/../../public/images/salade.png";
+import Pizza from "@/../../public/images/pizza.png";
 import { Link } from "@inertiajs/react";
 import { Link as ScrollLink } from "react-scroll";
 import BrowseRecipesButton from "../ui/BrowseRecipesButton";
-// Import shadow background animation
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel";
 import "@/../css/ShadowBackground-animation.css";
 
 export default function Header() {
@@ -15,9 +21,60 @@ export default function Header() {
     const [smoothPos, setSmoothPos] = useState({ x: 0, y: 0 });
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const carouselRef = useRef(null);
+    const [api, setApi] = useState(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    // Define your slides with images
+    const slides = [
+        { id: 1, image: Burger, alt: "Delicious Burger" },
+        { id: 2, image: Salade, alt: "Fresh Salad" },
+        { id: 2, image: Pizza, alt: "Pizza" },
+    ];
+    const totalSlides = slides.length;
+
     // Access the authenticated user data
     const { auth } = usePage().props;
     const userName = auth.user ? `${auth.user.lastName}` : null;
+
+    // Auto-scroll effect with infinite loop
+    useEffect(() => {
+        if (!api || isPaused) return;
+
+        const interval = setInterval(() => {
+            if (currentSlide === totalSlides - 1) {
+                api.scrollTo(0);
+                setCurrentSlide(0);
+            } else {
+                api.scrollNext();
+                setCurrentSlide((prev) => (prev + 1) % totalSlides);
+            }
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [api, isPaused, currentSlide, totalSlides]);
+
+    // Initialize carousel API and set up scroll listener
+    useEffect(() => {
+        if (!api) return;
+
+        const handleScroll = () => {
+            const scrollSnaps = api.scrollSnapList();
+            const newIndex = scrollSnaps.findIndex(
+                (snap) => Math.abs(snap - api.scrollProgress()) < 1e-5
+            );
+            if (newIndex !== -1) {
+                setCurrentSlide(newIndex);
+            }
+        };
+
+        api.on("scroll", handleScroll);
+        return () => {
+            api.off("scroll", handleScroll);
+        };
+    }, [api]);
+
     const handleMouseMove = (e) => {
         const { clientX, clientY, currentTarget } = e;
         const { width, height, left, top } =
@@ -27,13 +84,18 @@ export default function Header() {
         setPos({ x, y });
         setMousePos({ x: clientX, y: clientY });
     };
+
     const handleMouseEnter = () => {
         setIsHovering(true);
+        setIsPaused(true);
     };
+
     const handleMouseLeave = () => {
         setPos({ x: 0, y: 0 });
         setIsHovering(false);
+        setIsPaused(false);
     };
+
     useEffect(() => {
         let animationFrameId;
         const smoothMove = () => {
@@ -46,6 +108,7 @@ export default function Header() {
         smoothMove();
         return () => cancelAnimationFrame(animationFrameId);
     }, [pos]);
+
     // Hide the default cursor when hovering
     useEffect(() => {
         if (isHovering) {
@@ -81,9 +144,7 @@ export default function Header() {
                                 <ContactUsIcon size="size-4.5" />
                             </span>
                         </div>
-                        <p className="hidden md:block text-xs">
-                            Contact Us
-                        </p>
+                        <p className="hidden md:block text-xs">Contact Us</p>
                     </div>
                 </ScrollLink>
                 <Link href="/aboutUs">
@@ -110,9 +171,9 @@ export default function Header() {
                     <Logo color="black" size={45} className="block!" />
                 </h1>
                 <p className="text-second text-xl md:text-lg sm:pr-16">
-                    Your way to discover variety of meals from different
-                    places cultures and occasion to share your own
-                    throughout a strong food lovers community
+                    Your way to discover variety of meals from different places
+                    cultures and occasion to share your own throughout a strong
+                    food lovers community
                 </p>
                 <Link href="/meals">
                     <BrowseRecipesButton label="Browse Recipes" />
@@ -121,7 +182,7 @@ export default function Header() {
 
             {/* Content */}
             <div
-                className="relative flexy text-center h-full text-white"
+                className="relative flex items-center justify-center h-full text-white"
                 onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -129,19 +190,41 @@ export default function Header() {
                 <div
                     className="pulse-radius absolute rounded-full w-[60%] md:h-[60%] aspect-square bg-10 blur-2xl opacity-40 brightness-90"
                     style={{
-                        transform: `translate(${-smoothPos.x * 25}px, ${-smoothPos.y * 25
-                            }px)`,
+                        transform: `translate(${-smoothPos.x * 25}px, ${
+                            -smoothPos.y * 25
+                        }px)`,
                     }}
                 />
-                <img
-                    src={Burger}
-                    alt="Burger"
-                    className="absolute left-1/2 transform -translate-x-1/2 max-sm:w-[65%] max-md:w-[60%] max-lg:w-[75%] max-xl:w-[60%] max-2xl:w-[55%] aspect-square z-0 brightness-[90%]"
-                    style={{
-                        transform: `translate(${-smoothPos.x * 30}px, ${-smoothPos.y * 30
-                            }px)`,
+
+                <Carousel
+                    className="w-full max-w-[80%] h-[400px]"
+                    ref={carouselRef}
+                    setApi={setApi}
+                    opts={{
+                        loop: true,
+                        align: "center",
                     }}
-                />
+                >
+                    <CarouselContent>
+                        {slides.map((slide) => (
+                            <CarouselItem
+                                key={slide.id}
+                                className="flex items-center justify-center"
+                            >
+                                <img
+                                    src={slide.image}
+                                    alt={slide.alt}
+                                    className="w-[80%] max-w-[400px] aspect-square brightness-[90%] object-contain"
+                                    style={{
+                                        transform: `translate(${
+                                            -smoothPos.x * 30
+                                        }px, ${-smoothPos.y * 30}px)`,
+                                    }}
+                                />
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                </Carousel>
             </div>
         </div>
     );

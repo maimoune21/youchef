@@ -82,7 +82,7 @@ const Favorites = ({ favoriteMeals, categories, Kitchen, thisUser }) => {
                                         <div className="relative flexy max-sm:order-3">
                                             <input
                                                 type="text"
-                                                className="px-8 py-2 pl-11 w-[100%] rounded-sm bg-white font-semibold"
+                                                className="px-8 py-3 pl-11 w-[100%] rounded-sm bg-white font-semibold"
                                                 placeholder="Search in favorite meals..."
                                                 onChange={(e) =>
                                                     setSearch(e.target.value)
