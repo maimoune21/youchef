@@ -7,6 +7,7 @@ use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class HomeController extends Controller
 {
@@ -27,14 +28,15 @@ class HomeController extends Controller
             ->get();
         $categories = Category::all();
         $Kitchen = DB::table("kitchens")->get();
-        
+
         $thisUser = Auth::user();
-        if (!$thisUser) {
-            return false;
+        $mealsfav = collect();
+
+        if ($thisUser) {
+            $mealsfav = DB::table('user__meal__favorite')
+                ->where('idUser', $thisUser->idUser)
+                ->pluck('idMeal');
         }
-        $mealsfav = DB::table('user__meal__favorite')
-            ->where('idUser', $thisUser->idUser)
-            ->pluck('idMeal');
 
         $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
             ->whereIn('meals.idMeal', $mealsfav)

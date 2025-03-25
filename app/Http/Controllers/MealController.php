@@ -31,13 +31,16 @@ class MealController extends Controller
         $kitchenSelected = $request->query('kitchen');
 
         $thisUser = Auth::user();
+        $mealsfav = collect();
 
-        $meals = DB::table('user__meal__favorite')
-            ->where('idUser', $thisUser->idUser)
-            ->pluck('idMeal');
+        if ($thisUser) {
+            $mealsfav = DB::table('user__meal__favorite')
+                ->where('idUser', $thisUser->idUser)
+                ->pluck('idMeal');
+        }
 
         $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
-            ->whereIn('meals.idMeal', $meals)
+            ->whereIn('meals.idMeal', $mealsfav)
             ->select(
                 'meals.*',
                 'users.idUser as idUser',
@@ -106,22 +109,26 @@ class MealController extends Controller
             ->orderBy('comments.created_at', 'desc')
             ->get();
 
-        $thisUser = Auth::user();
-        $mealsfav = DB::table('user__meal__favorite')
-            ->where('idUser', $thisUser->idUser)
-            ->pluck('idMeal');
-
-        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
-            ->whereIn('meals.idMeal', $mealsfav)
-            ->select(
-                'meals.*',
-                'users.idUser as idUser',
-                'users.firstName as userFName',
-                'users.lastName as userLName',
-                'users.profile_img as userImage'
-            )
-            ->orderBy('meals.views', 'desc')
-            ->get();
+            $thisUser = Auth::user();
+            $mealsfav = collect();
+    
+            if ($thisUser) {
+                $mealsfav = DB::table('user__meal__favorite')
+                    ->where('idUser', $thisUser->idUser)
+                    ->pluck('idMeal');
+            }
+    
+            $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+                ->whereIn('meals.idMeal', $mealsfav)
+                ->select(
+                    'meals.*',
+                    'users.idUser as idUser',
+                    'users.firstName as userFName',
+                    'users.lastName as userLName',
+                    'users.profile_img as userImage'
+                )
+                ->orderBy('meals.views', 'desc')
+                ->get();
 
         // Passing data to the view :
         return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals'));
