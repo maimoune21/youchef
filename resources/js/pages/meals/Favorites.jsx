@@ -37,7 +37,7 @@ const Favorites = ({ favoriteMeals, categories, Kitchen, thisUser }) => {
 
     return (
         <section className="w-full flex flex-col gap-2 border-b-2">
-            <div>
+            <div className="-mt-32">
                 <div className="flexy bg-banner w-full">
                     <h1 className="text-3xl p-5 text-green font-bold">
                         Favorites
