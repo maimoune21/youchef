@@ -282,7 +282,6 @@ body {
   }
 }
 
-
 .checkmark.active{
     animation: checkmark 300ms ease-out forwards;
 }

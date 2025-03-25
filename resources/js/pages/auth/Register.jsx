@@ -144,18 +144,19 @@ export const Register = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2}>
+                                    <td colSpan={2} className='text-sm flex items-center gap-1'>
                                         {errors.password && (
                                             <b className="text-red-500 text-sm">
                                                 {errors.password}
                                                 <br />
                                             </b>
                                         )}
+                                        <h1>Already have an account?</h1>
                                         <Link
                                             href="/login"
-                                            className="text-xs text-green-600 font-bold hover:text-gray-500"
+                                            className=" text-green-600 font-bold hover:text-gray-500"
                                         >
-                                            Already Have An Account?
+                                            Log in
                                         </Link>
                                     </td>
                                 </tr>

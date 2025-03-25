@@ -4,7 +4,9 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Profile from "@/../../public/images/Profile.png";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import TextAreaGroup from "@/components/ui/TextAreaGroup";
-import { PencilIcon } from "@/../../public/icons/Icons";
+import { PencilIcon, TrashIcon } from "@/../../public/icons/Icons";
+import ButtonProfilePicture from "../ui/ButtonAddProfilePicture";
+import ButtonAddProfilePicture from "../ui/ButtonAddProfilePicture";
 
 export function UpdateProfile({
     user,
@@ -13,13 +15,14 @@ export function UpdateProfile({
     ...props
 }) {
     const [data, setData] = useState({
-        fname: "",
-        lname: "",
-        bio: "",
-        email: "",
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profile_img: user.profile_img,
+        bio: user.bio,
+        email: user.email,
         password: "",
+        password_confirmation: "",
     });
-    console.log(user);
     const HData = (e) => {
         const { name, value } = e.target;
         setData((prev) => ({ ...prev, [name]: value }));
@@ -63,10 +66,9 @@ export function UpdateProfile({
                                 </span>
                             )}
                             <span className="flex flex-col gap-2">
-                                <button className="button">
-                                    Change Picture
-                                </button>
-                                <button className="button">
+                                <ButtonAddProfilePicture />
+                                <button className="button bg-red-700! flexy gap-">
+                                    <TrashIcon />
                                     Remove Picture
                                 </button>
                             </span>
@@ -79,10 +81,10 @@ export function UpdateProfile({
                                             <td>
                                                 <TextInputGroup
                                                     label="First Name"
-                                                    id="fname"
-                                                    name="fname"
+                                                    id="firstName"
+                                                    name="firstName"
                                                     placeholder="Your First Name Here..."
-                                                    value={user.firstName}
+                                                    value={data.firstName}
                                                     onChange={HData}
                                                     classLabel="font-bold text-sm"
                                                 />
@@ -90,10 +92,10 @@ export function UpdateProfile({
                                             <td>
                                                 <TextInputGroup
                                                     label="Last Name"
-                                                    id="lname"
-                                                    name="lname"
+                                                    id="lastName"
+                                                    name="lastName"
                                                     placeholder="Your Last Name Here..."
-                                                    value={user.lastName}
+                                                    value={data.lastName}
                                                     onChange={HData}
                                                     classLabel="font-bold text-sm"
                                                 />
@@ -103,10 +105,10 @@ export function UpdateProfile({
                                             <td colSpan="2">
                                                 <TextAreaGroup
                                                     label="Bio"
-                                                    id="message"
-                                                    name="message"
+                                                    id="bio"
+                                                    name="bio"
                                                     placeholder="Your Message Here..."
-                                                    value={user.bio}
+                                                    value={data.bio}
                                                     onChange={HData}
                                                     classLabel="font-bold text-sm"
                                                     rows="6"
@@ -121,7 +123,7 @@ export function UpdateProfile({
                                                     id="email"
                                                     name="email"
                                                     placeholder="Your Email Here..."
-                                                    value={user.email}
+                                                    value={data.email}
                                                     onChange={HData}
                                                     classLabel="font-bold text-sm"
                                                 />
@@ -130,12 +132,28 @@ export function UpdateProfile({
                                         <tr>
                                             <td colSpan="2">
                                                 <TextInputGroup
-                                                    label="Password"
-                                                    type="password"
+                                                    label="New Password"
+                                                    type="text"
                                                     id="password"
                                                     name="password"
                                                     placeholder="Your Password Here..."
-                                                    value=""
+                                                    value={data.password}
+                                                    onChange={HData}
+                                                    classLabel="font-bold text-sm"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan="2">
+                                                <TextInputGroup
+                                                    label="Confirm Password"
+                                                    type="text"
+                                                    id="password_confirmation"
+                                                    name="password_confirmation"
+                                                    placeholder="Your Password Here..."
+                                                    value={
+                                                        data.password_confirmation
+                                                    }
                                                     onChange={HData}
                                                     classLabel="font-bold text-sm"
                                                 />

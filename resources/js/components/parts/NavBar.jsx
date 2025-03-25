@@ -10,6 +10,7 @@ import {
 } from "@/../../public/icons/Icons";
 import Logo from "../ui/Logo";
 import { Link } from "@inertiajs/react";
+import SearchBar from "../ui/SearchButton";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -44,7 +45,7 @@ const Navbar = () => {
             : []),
         {
             path: isAuthenticated ? "/privateProfile" : "/login",
-            label: isAuthenticated? 'Profile': 'Login',
+            label: isAuthenticated ? "Profile" : "Login",
             icon: (props) =>
                 isAuthenticated ? (
                     auth.user.profile_img ? (
@@ -55,7 +56,9 @@ const Navbar = () => {
                             {...props}
                         />
                     ) : (
-                        <span className="bg-soft mx-1 text-black font-bold text-base p-0.5 aspect-square rounded-full flexy">{auth.user.lastName.charAt(0)}</span>
+                        <span className="bg-soft mx-1 text-black font-bold text-base p-0.5 aspect-square rounded-full flexy">
+                            {auth.user.lastName.charAt(0)}
+                        </span>
                     )
                 ) : (
                     <ProfileIcon {...props} />
@@ -78,7 +81,7 @@ const Navbar = () => {
                     isScrolled ? "py-0" : "py-2"
                 }`}
             >
-                <div className="w-full max-w-6xl bg-30 rounded-full flex shadow-md items-center justify-between px-8 py-2">
+                <div className="relative w-full max-w-6xl bg-30 rounded-full flex shadow-md items-center justify-between px-8 py-2">
                     {/* Logo */}
                     <Link href="/">
                         <div className="flex items-center">
@@ -105,43 +108,14 @@ const Navbar = () => {
                     </div>
 
                     {/* Search Icon (Desktop) */}
-                    <div className="hidden md:block">
-                        <button className="bg-10 p-2 rounded-full text-first">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </button>
+                    <div className="hidden md:block absolute right-5! top-2.5!">
+                        <SearchBar CustumClass="" />
                     </div>
+                    <div></div>
 
                     {/* Search Icon (Mobile) */}
                     <div className="md:hidden">
-                        <button className="bg-10 p-2 rounded-full text-first">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </button>
+                        <SearchBar CustumClass="w-full!" />
                     </div>
                 </div>
             </header>

@@ -40,12 +40,16 @@ class ProfileController extends Controller
 
         $posts = DB::table('meals')
             ->join('users', 'meals.idUser', '=', 'users.idUser')
+            ->leftJoin('categories', 'meals.idCategory', '=', 'categories.idCategory')
+            ->leftJoin('kitchens', 'meals.idKitchen', '=', 'kitchens.idKitchen')
             ->where('meals.idUser', $user->idUser)
             ->select(
                 'meals.*',
                 'users.firstName as userFName',
                 'users.lastName as userLName',
-                'users.profile_img as userImage'
+                'users.profile_img as userImage',
+                'categories.name as categoryName',
+                'kitchens.name as kitchenName'
             )
             ->get();
 
@@ -54,13 +58,17 @@ class ProfileController extends Controller
             ->pluck('idMeal');
 
         $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->leftJoin('categories', 'meals.idCategory', '=', 'categories.idCategory')
+            ->leftJoin('kitchens', 'meals.idKitchen', '=', 'kitchens.idKitchen')
             ->whereIn('meals.idMeal', $meals)
             ->select(
                 'meals.*',
                 'users.idUser as idUser',
                 'users.firstName as userFName',
                 'users.lastName as userLName',
-                'users.profile_img as userImage'
+                'users.profile_img as userImage',
+                'categories.name as categoryName',
+                'kitchens.name as kitchenName'
             )
             ->orderBy('meals.views', 'desc')
             ->get();
