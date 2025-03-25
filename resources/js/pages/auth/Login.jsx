@@ -80,18 +80,19 @@ export const Login = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2}>
+                                    <td colSpan={2} className='flex items-center gap-1 text-sm'>
                                         {flash.failed && (
                                             <b className="text-red-500 text-sm">
                                                 {flash.failed}
                                                 <br />
                                             </b>
                                         )}
+                                        <h1>New to YouChef?</h1>
                                         <Link
                                             href="/register"
-                                            className="text-xs text-green-600 font-bold hover:text-gray-500"
+                                            className="text-green-600 font-bold hover:text-gray-500"
                                         >
-                                            Create An Account !
+                                            Sign up
                                         </Link>
                                     </td>
                                 </tr>

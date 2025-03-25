@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
 import {
-    SignalIcon,
-    TimeIcon,
-    DotsIcon,
-    EyeIcon,
-} from "@/../../public/icons/Icons";
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
+import React, { useEffect, useState } from "react";
+import { SignalIcon, TimeIcon, EyeIcon } from "@/../../public/icons/Icons";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { Link } from "@inertiajs/react";
 import FavoriteButton from "./favoriteButton";
@@ -158,13 +163,34 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
                             buttonStyles="rounded-lg! flexy"
                             meal={meal}
                         />
-                        <Button
-                            className="text-lg font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
-                            onClick={() => handleDelete(meal.idMeal)}
-                        >
-                            Delete
-                            <TrashIcon size="size-5 md:size-6" />
-                        </Button>
+                        <Drawer>
+                            <DrawerTrigger>
+                                <Button
+                                    className="text-lg font-bold md:p-5 bg-red-500 hover:bg-red-600 transition duration-200 cursor-pointer"
+                                >
+                                    Delete
+                                    <TrashIcon size="size-5 md:size-6" />
+                                </Button>
+                            </DrawerTrigger>
+                            <DrawerContent>
+                                <DrawerHeader>
+                                    <DrawerTitle>
+                                        Are you absolutely sure?
+                                    </DrawerTitle>
+                                    <DrawerDescription className='text-black'>
+                                        {`This action cannot be undone. This will permanently delete your Meal ${meal.title}`}
+                                    </DrawerDescription>
+                                </DrawerHeader>
+                                <DrawerFooter className='flex-row'>
+                                    <DrawerClose className='w-fit!!'>
+                                        <Button variant="outline" className='cursor-pointer'>
+                                            Cancel
+                                        </Button>
+                                    </DrawerClose>
+                                    <Button onClick={() => handleDelete(meal.idMeal)} className='bg-red-700 w-fit! cursor-pointer'>Delete</Button>
+                                </DrawerFooter>
+                            </DrawerContent>
+                        </Drawer>
                     </div>
                 ) : null}
             </div>
