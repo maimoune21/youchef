@@ -1,3 +1,14 @@
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import React, { useState } from "react";
 import { UpdateProfile } from "@/components/models/UpdateProfile";
 import { Button } from "@/components/ui/button";
@@ -86,15 +97,34 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                 </div>
                 <div className="md:w-fit flex md:flex-col justify-center gap-3">
                     <UpdateProfile user={user} />
-                    <form onSubmit={HLogOut}>
-                        <Button
-                            type="submit"
-                            className="bg-red-500 font-bold cursor-pointer hover:bg-red-600 transition duration-200 flex justify-evenly w-full"
-                        >
-                            <span>Log Out</span>
-                            <LogOut />
-                        </Button>
-                    </form>
+                    <AlertDialog>
+                        <AlertDialogTrigger>
+                            <Button className="bg-red-500 font-bold cursor-pointer hover:bg-red-600 transition duration-200 flex justify-evenly w-full">
+                                <span>Log Out</span>
+                                <LogOut />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you sure you want to logout ?
+                                </AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
+                                <AlertDialogAction className="bg-red-600 hover:bg-red-700 cursor-pointer">
+                                    <form onSubmit={HLogOut}>
+                                        <button
+                                            type="submit"
+                                            className="cursor-pointer"
+                                        >
+                                            Continue
+                                        </button>
+                                    </form>
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </div>
             </div>
             <div className="mt-6 pt-2 pb-1.5 flex justify-around border-b-2 border-gray-300">
