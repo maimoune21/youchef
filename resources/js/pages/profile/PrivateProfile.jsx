@@ -1,8 +1,3 @@
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
 import React, { useState } from "react";
 import { UpdateProfile } from "@/components/models/UpdateProfile";
 import { Button } from "@/components/ui/button";
@@ -91,8 +86,6 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                         )}
                     </div>
                 </div>
-
-                {/* Update And LogOut Buttons */}
                 <div className="md:w-fit flex md:flex-col justify-center gap-3">
                     <UpdateProfile user={user} />
                     <form onSubmit={HLogOut}>
@@ -106,8 +99,6 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                     </form>
                 </div>
             </div>
-
-            {/* Meals And Favorites Navigation */}
             <div className="mt-6 pt-2 pb-1.5 flex justify-around border-b-2 border-gray-300">
                 <div className="relative w-[65%] md:w-[55%] flex justify-between">
                     <button href={"/profile/meals"}>
