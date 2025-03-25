@@ -17,7 +17,7 @@ import { TrashIcon } from "@/../../public/icons/Icons";
 import { UpdateMeal } from "@/components/models/UpdateMeal";
 import { Button } from "@/components/ui/button";
 
-const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false }) => {
+const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}) => {
     const [status, setStatus] = useState("");
 
     useEffect(() => {

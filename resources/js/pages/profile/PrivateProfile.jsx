@@ -21,17 +21,15 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
     const [flashMsg, setFlashMsg] = useState("showed");
 
     const handleDelete = (idMeal) => {
-        if (confirm("Are you sure you want to delete this meal?")) {
-            router.delete(`/meals/${idMeal}`, {
-                onSuccess: () => {
-                    setmessageDeleted("Meal deleted successfully!");
-                    setFlashMsg("showed");
-                },
-            });
-            setTimeout(() => {
-                setFlashMsg("hidden");
-            }, 5000);
-        }
+        router.delete(`/meals/${idMeal}`, {
+            onSuccess: () => {
+                setmessageDeleted("Meal deleted successfully!");
+                setFlashMsg("showed");
+            },
+        });
+        setTimeout(() => {
+            setFlashMsg("hidden");
+        }, 3000);
     };
 
     return (
@@ -41,7 +39,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                 <div
                     className={`fixed top-20 z-40 -right-50 ${
                         flashMsg == "showed" ? "right-6" : "-right-50"
-                    } bg-red-500 transition-all duration-500 p-2 rounded-md shadow-lg text-sm text-white`}
+                    } bg-green-600 transition-all duration-500 px-3 py-2 rounded-md shadow-lg text-sm text-white`}
                 >
                     {messageDeleted}
                 </div>
@@ -169,6 +167,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                                         key={post.idMeal}
                                         meal={post}
                                         mypost={true}
+                                        handleDelete={handleDelete}
                                     />
                                 </div>
                             ))}
@@ -186,6 +185,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                                 meal={favorite}
                                 thisUser={user}
                                 favoriteMeals={favoriteMeals}
+                                handleDelete={handleDelete}
                             />
                         ))}
                     </div>
