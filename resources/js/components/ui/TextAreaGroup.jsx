@@ -6,11 +6,12 @@ export const TextAreaGroup = ({
   name,
   placeholder,
   value,
-  onChange,
+  onChange = undefined,
   classLabel,
   className,
   rows,
   cols,
+  readOnly = false
 }) => {
   return (
     <>
@@ -18,11 +19,12 @@ export const TextAreaGroup = ({
         {label}
       </label>
       <textarea
+        readOnly={readOnly}
         name={name}
         id={id}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={readOnly ? undefined : onChange}
         className={`TextAreaInput scrollbar ${className}`}
         required
         rows={rows}

@@ -5,6 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/images/YouChef-Icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouChef | Recipes Sharing Platform</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @viteReactRefresh
     @vite('resources/js/app.jsx')
     @inertiaHead

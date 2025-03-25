@@ -68,17 +68,44 @@ class MealController extends Controller
      */
     public function create()
     {
-        //
+      $Kitchens = DB::table("kitchens")->get();
+      $dataCategories = Category::all();
+      return inertia("meals/postMeal", compact("Kitchens", "dataCategories"));
     }
 
     /**
      * Store a newly created Meal in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+{
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'idKitchen' => 'required|exists:kitchens,idKitchen',
+            'idCategory' => 'required|exists:categories,idCategory',
+            'meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'duration' => 'required|integer|min:1',
+            'ingredients' => 'required|array|min:1',
+            'ingredients.*' => 'required|string|min:2',
+            'instructions' => 'required|array|min:1',
+            'instructions.*' => 'required|string|min:2',
+        ]);
 
+        if ($request->hasFile('meal_img')) {
+            $path = $request->file('meal_img')->store('meals', 'public');
+            $validated['meal_img'] = $path;
+        }
+        $validated['ingredients'] = json_encode(array_values(array_filter($validated['ingredients'])));
+        $validated['instructions'] = json_encode(array_values(array_filter($validated['instructions'])));
+        $validated['idUser'] = Auth::id();
+        $hours = floor($request->duration / 60);
+        $minutes = $request->duration % 60;
+        $validated['duration'] = sprintf('%02d:%02d:00', $hours, $minutes);
+
+        Meal::create($validated);
+
+        return redirect()->route('meals')->with('success', 'Meal created successfully!');
+}
     /**
      * Display the specified Meal.
      */
