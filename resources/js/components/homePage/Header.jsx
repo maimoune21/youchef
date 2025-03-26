@@ -3,9 +3,11 @@ import { usePage } from "@inertiajs/react";
 import Logo from "../ui/Logo";
 import CustomCursor from "../ui/custom-cursor";
 import { AboutUsIcon, ContactUsIcon } from "@/../../public/icons/Icons";
-import Burger from "@/../../public/images/HeaderBurger.png";
-import Salade from "@/../../public/images/salade.png";
-import Pizza from "@/../../public/images/pizza.png";
+import Burger from "@/../../public/images/header/HeaderBurger.png";
+import Salade from "@/../../public/images/header/salade.png";
+import Pizza from "@/../../public/images/header/pizza.png";
+import test1 from "@/../../public/images/header/test_1.png";
+import test2 from "@/../../public/images/header/test_2.png";
 import { Link } from "@inertiajs/react";
 import { Link as ScrollLink } from "react-scroll";
 import BrowseRecipesButton from "../ui/BrowseRecipesButton";
@@ -14,6 +16,7 @@ import {
     CarouselContent,
     CarouselItem,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import "@/../css/ShadowBackground-animation.css";
 
 export default function Header() {
@@ -24,56 +27,17 @@ export default function Header() {
     const [isPaused, setIsPaused] = useState(false);
     const carouselRef = useRef(null);
     const [api, setApi] = useState(null);
-    const [currentSlide, setCurrentSlide] = useState(0);
 
-    // Define your slides with images
     const slides = [
         { id: 1, image: Burger, alt: "Delicious Burger" },
         { id: 2, image: Salade, alt: "Fresh Salad" },
-        { id: 2, image: Pizza, alt: "Pizza" },
+        { id: 3, image: Pizza, alt: "Pizza" },
+        { id: 4, image: test1, alt: "Pizza" },
+        { id: 5, image: test2, alt: "Pizza" },
     ];
-    const totalSlides = slides.length;
 
-    // Access the authenticated user data
     const { auth } = usePage().props;
     const userName = auth.user ? `${auth.user.lastName}` : null;
-
-    // Auto-scroll effect with infinite loop
-    useEffect(() => {
-        if (!api || isPaused) return;
-
-        const interval = setInterval(() => {
-            if (currentSlide === totalSlides - 1) {
-                api.scrollTo(0);
-                setCurrentSlide(0);
-            } else {
-                api.scrollNext();
-                setCurrentSlide((prev) => (prev + 1) % totalSlides);
-            }
-        }, 4000);
-
-        return () => clearInterval(interval);
-    }, [api, isPaused, currentSlide, totalSlides]);
-
-    // Initialize carousel API and set up scroll listener
-    useEffect(() => {
-        if (!api) return;
-
-        const handleScroll = () => {
-            const scrollSnaps = api.scrollSnapList();
-            const newIndex = scrollSnaps.findIndex(
-                (snap) => Math.abs(snap - api.scrollProgress()) < 1e-5
-            );
-            if (newIndex !== -1) {
-                setCurrentSlide(newIndex);
-            }
-        };
-
-        api.on("scroll", handleScroll);
-        return () => {
-            api.off("scroll", handleScroll);
-        };
-    }, [api]);
 
     const handleMouseMove = (e) => {
         const { clientX, clientY, currentTarget } = e;
@@ -109,7 +73,6 @@ export default function Header() {
         return () => cancelAnimationFrame(animationFrameId);
     }, [pos]);
 
-    // Hide the default cursor when hovering
     useEffect(() => {
         if (isHovering) {
             document.body.classList.add("cursor-none");
@@ -180,9 +143,8 @@ export default function Header() {
                 </Link>
             </div>
 
-            {/* Content */}
             <div
-                className="relative flex items-center justify-center h-full text-white"
+                className="relative flex items-center justify-center h-full text-white select-none"
                 onMouseMove={handleMouseMove}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -202,8 +164,15 @@ export default function Header() {
                     setApi={setApi}
                     opts={{
                         loop: true,
-                        align: "center",
+                        dragFree: false,
+                        containScroll: "trimSnaps",
+                        watchDrag: false,
                     }}
+                    plugins={[
+                        Autoplay({
+                            delay: 3000,
+                        }),
+                    ]}
                 >
                     <CarouselContent>
                         {slides.map((slide) => (
