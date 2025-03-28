@@ -109,6 +109,11 @@ body {
   overflow-x: hidden;
 }
 
+::selection {
+  background: var(--bg-10);
+  color: white;
+}
+
 .navbaranim{
   animation: show 500ms ease-in-out forwards;
 }
