@@ -9,6 +9,7 @@ import Stepper from './PostMeal/Stepper';
 import { useForm } from '@inertiajs/react';
 
 const PostMeal = ({ Kitchens, dataCategories }) => {
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
   const [step, setStep] = useState(1);
@@ -224,6 +225,8 @@ const PostMeal = ({ Kitchens, dataCategories }) => {
             <PostShow
               animationProps={animationProps}
               data={data}
+              dataCategories={dataCategories}
+              Kitchens={Kitchens}
               PostMeal={PostHandleMeal}
               prevStep={prevStep}
               isSubmitting={isSubmitting}

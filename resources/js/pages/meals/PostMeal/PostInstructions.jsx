@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import TextInputGroup from '@/components/ui/TextInputGroup';
 import { PostIcon, XCircleIcon } from "/public/icons/Icons";
 
-const PostInstructions = ({ handleChange, animationProps, data, setData, nextStep, prevStep ,message }) => {
+const PostInstructions = ({ handleChange, animationProps, data, setData, nextStep, prevStep, message }) => {
   const addInstruction = () => {
     setData('instructions', [...data.instructions, '']);
   };

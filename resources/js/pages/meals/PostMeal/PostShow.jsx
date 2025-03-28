@@ -7,7 +7,8 @@ import TextAreaGroup from "@/components/ui/TextAreaGroup";
 import { CheckIcon } from "/public/icons/Icons";
 import { StepBack } from "lucide-react";
 
-const PostShow = ({ animationProps, prevStep, data, PostMeal, isSubmitting}) => {
+const PostShow = ({ animationProps, prevStep, data, PostMeal, isSubmitting, dataCategories, Kitchens}) => {
+  
   return (
     <motion.div
       {...animationProps}
@@ -43,8 +44,8 @@ const PostShow = ({ animationProps, prevStep, data, PostMeal, isSubmitting}) => 
         </div>
 
         <div className="flex flex-col gap-2">
-          <TextInputGroup label="Categorie" value={data.idCategory} />
-          <TextInputGroup label="kitchen" value={data.idKitchen} />
+          <TextInputGroup label="Categorie" value={dataCategories.find(cat=>cat.idCategory == data.idCategory).name} />
+          <TextInputGroup label="kitchen" value={Kitchens.find(cat=>cat.idKitchen == data.idKitchen).name} />
           <TextInputGroup label="Duration" value={data.duration} />
           {data.ingredients[0] ? (
             <TextAreaGroup
