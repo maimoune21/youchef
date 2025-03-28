@@ -6,6 +6,7 @@
     use App\Http\Controllers\FavoriteController;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\MealController;
+    use App\Http\Controllers\MessageController;
     use App\Http\Controllers\ProfileController;
     use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
@@ -21,6 +22,7 @@
     Route::get("/mealDetails/{id}", [MealController::class, "show"]);
     Route::get("/publicProfile/{id}", [ProfileController::class, "show"]);
     Route::get('/categories', [CategoryController::class, 'index']);
+    Route::post('/contact/store', [MessageController::class, 'store'])->name('contact.store');
 
     // Guest Pages :
     Route::middleware('guest')->group(function () {
@@ -54,7 +56,9 @@
         Route::get('/dashboard', function () {
             return redirect('/dashboard/reportedMeals');
         });
-        Route::get('/dashboard/{location}', [AdminController::class, 'userAccounts']);
+        Route::get('/dashboard/{location?}', [AdminController::class, 'userAccounts']);
+        Route::delete('/admin/messages/{id}', [AdminController::class, 'deleteMessage']);
+
     });
 
     // NotFound Page :
