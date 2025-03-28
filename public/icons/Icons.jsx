@@ -450,11 +450,11 @@ export const LogoutIcon = ({ size = "size-6" }) => {
   );
 };
 
-export const TrashIcon = ({ style = "size-6" }) => {
+export const TrashIcon = ({ size = "size-6" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={style}
+      className={size}
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"

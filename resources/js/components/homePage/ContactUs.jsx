@@ -10,7 +10,8 @@ const ContactUs = () => {
     lname: "",
     email: "",
     phone: "",
-    message: "",
+    subject: "",
+    content: "",
   });
 
   const HData = (e) => {
@@ -43,7 +44,7 @@ const ContactUs = () => {
                     label="First Name"
                     id="fname"
                     name="fname"
-                    placeholder="Your First Name Here..."
+                    placeholder="Enter your First Name..."
                     value={data.fname}
                     onChange={HData}
                     classLabel="font-bold text-sm"
@@ -54,7 +55,7 @@ const ContactUs = () => {
                     label="Last Name"
                     id="lname"
                     name="lname"
-                    placeholder="Your Last Name Here..."
+                    placeholder="Enter your Last Name..."
                     value={data.lname}
                     onChange={HData}
                     classLabel="font-bold text-sm"
@@ -68,7 +69,7 @@ const ContactUs = () => {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="Your Email Here..."
+                    placeholder="Enter your Email..."
                     value={data.email}
                     onChange={HData}
                     classLabel="font-bold text-sm"
@@ -82,7 +83,7 @@ const ContactUs = () => {
                     type="text"
                     id="phone"
                     name="phone"
-                    placeholder="Your Phone Number Here..."
+                    placeholder="Enter your Phone Number..."
                     value={data.phone}
                     onChange={HData}
                     classLabel="font-bold text-sm"
@@ -91,12 +92,26 @@ const ContactUs = () => {
               </tr>
               <tr>
                 <td colSpan="2">
+                  <TextInputGroup
+                    label="Subject"
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Enter your Subject Title..."
+                    value={data.subject}
+                    onChange={HData}
+                    classLabel="font-bold text-sm"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2">
                   <TextAreaGroup
-                    label="Message Text"
-                    id="message"
-                    name="message"
-                    placeholder="Your Message Here..."
-                    value={data.message}
+                    label="Content"
+                    id="content"
+                    name="content"
+                    placeholder="Enter your Message Here..."
+                    value={data.content}
                     onChange={HData}
                     classLabel="font-bold text-sm"
                     rows="6"
