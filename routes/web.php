@@ -58,7 +58,8 @@
         });
         Route::get('/dashboard/{location?}', [AdminController::class, 'userAccounts']);
         Route::delete('/admin/messages/{id}', [AdminController::class, 'deleteMessage']);
-
+        Route::delete('/admin/meals/{idMeal}', [AdminController::class, 'deleteMeal'])->name('admin.meals.destroy');
+        Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.destroy');
     });
 
     // NotFound Page :

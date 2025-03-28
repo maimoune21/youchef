@@ -8,12 +8,15 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FilterIcon, UserIcon } from "@/../../public/icons/Icons";
 import React from "react";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import { UpdateProfile } from "@/components/models/UpdateProfile";
 import { CircleChevronRight, Trash2Icon } from "lucide-react";
+import { Link } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
 export const UserAccounts = ({ users }) => {
     return (
@@ -89,14 +92,15 @@ export const UserAccounts = ({ users }) => {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div className="flexy flex-row gap-2">
-                                            <span className="flexy gap-1.5 bg-gray-300 px-4 py-1.5 rounded-md cursor-pointer">
-                                                <b className="text-white text-sm">
-                                                    View
-                                                </b>
-                                                <CircleChevronRight className="size-5 text-white" />
-                                            </span>
-                                            <div className='flex flex-col gap-2'>
+                                        <div className="flexy flex-row gap-4">
+                                            <Link
+                                                href={`/publicProfile/${user.idUser}`}
+                                            >
+                                                <span className="flexy gap-1.5 p-1 bg-gray-300 rounded-full cursor-pointer">
+                                                    <CircleChevronRight className="size-8 text-white" />
+                                                </span>
+                                            </Link>
+                                            <div className="flex flex-col gap-2">
                                                 <span className="flexy">
                                                     <UpdateProfile
                                                         buttonContent="Edit"
@@ -124,9 +128,6 @@ export const UserAccounts = ({ users }) => {
                                                             </DrawerDescription>
                                                         </DrawerHeader>
                                                         <DrawerFooter className="flex-row!">
-                                                            <Button className="cursor-pointer bg-red-600 hover:bg-red-800">
-                                                                Delete
-                                                            </Button>
                                                             <DrawerClose>
                                                                 <Button
                                                                     variant="outline"
@@ -134,6 +135,27 @@ export const UserAccounts = ({ users }) => {
                                                                 >
                                                                     Cancel
                                                                 </Button>
+                                                            </DrawerClose>
+                                                            <DrawerClose
+                                                                onClick={() => {
+                                                                    router.delete(
+                                                                        `/admin/users/${user.idUser}`,
+                                                                        {
+                                                                            onSuccess:
+                                                                                () => {
+                                                                                    toast.success(
+                                                                                        `deleted successfully`,
+                                                                                        {
+                                                                                            duration: 2000,
+                                                                                        }
+                                                                                    );
+                                                                                },
+                                                                        }
+                                                                    );
+                                                                }}
+                                                                className="cursor-pointer rounded-md text-sm w-20 bg-red-600 hover:bg-red-800"
+                                                            >
+                                                                Delete
                                                             </DrawerClose>
                                                         </DrawerFooter>
                                                     </DrawerContent>

@@ -4,6 +4,7 @@ import TextInputGroup from "../ui/TextInputGroup";
 import TextAreaGroup from "../ui/TextAreaGroup";
 import Logo from "../ui/Logo";
 import { Element } from "react-scroll";
+import { toast } from "sonner";
 
 const ContactUs = () => {
     const { flash } = usePage().props;
@@ -27,10 +28,9 @@ const ContactUs = () => {
         post("/contact/store", {
             onSuccess: () => {
                 reset();
-                setFlashMsg("showed");
-                setTimeout(() => {
-                    setFlashMsg("hidden");
-                }, 2000);
+                toast.success(`Sent successfully`, {
+                    duration: 2000,
+                });
             },
             preserveScroll: true,
         });
@@ -79,7 +79,12 @@ const ContactUs = () => {
                                         placeholder="Enter your First Name..."
                                         value={data.fname}
                                         classLabel="font-bold text-sm"
-                                        onChange={(e) => handleChange("fname", e.target.value)}
+                                        onChange={(e) =>
+                                            handleChange(
+                                                "fname",
+                                                e.target.value
+                                            )
+                                        }
                                         error={errors.fname}
                                     />
                                 </td>
@@ -91,7 +96,12 @@ const ContactUs = () => {
                                         placeholder="Enter your Last Name..."
                                         value={data.lname}
                                         classLabel="font-bold text-sm"
-                                        onChange={(e) => handleChange("lname", e.target.value)}
+                                        onChange={(e) =>
+                                            handleChange(
+                                                "lname",
+                                                e.target.value
+                                            )
+                                        }
                                         error={errors.lname}
                                     />
                                 </td>
@@ -106,7 +116,12 @@ const ContactUs = () => {
                                         placeholder="Enter your Email..."
                                         value={data.email}
                                         classLabel="font-bold text-sm"
-                                        onChange={(e) => handleChange("email", e.target.value)}
+                                        onChange={(e) =>
+                                            handleChange(
+                                                "email",
+                                                e.target.value
+                                            )
+                                        }
                                         error={errors.email}
                                     />
                                 </td>
@@ -121,7 +136,12 @@ const ContactUs = () => {
                                         placeholder="Enter your Phone Number..."
                                         value={data.phone}
                                         classLabel="font-bold text-sm"
-                                        onChange={(e) => handleChange("phone", e.target.value)}
+                                        onChange={(e) =>
+                                            handleChange(
+                                                "phone",
+                                                e.target.value
+                                            )
+                                        }
                                         error={errors.phone}
                                     />
                                 </td>
@@ -136,7 +156,12 @@ const ContactUs = () => {
                                         placeholder="Enter your Subject..."
                                         value={data.subject}
                                         classLabel="font-bold text-sm"
-                                        onChange={(e) => handleChange("subject", e.target.value)}
+                                        onChange={(e) =>
+                                            handleChange(
+                                                "subject",
+                                                e.target.value
+                                            )
+                                        }
                                         error={errors.subject}
                                     />
                                 </td>
@@ -150,7 +175,12 @@ const ContactUs = () => {
                                         placeholder="Enter your Message..."
                                         value={data.content}
                                         classLabel="font-bold text-sm"
-                                        onChange={(e) => handleChange("content", e.target.value)}
+                                        onChange={(e) =>
+                                            handleChange(
+                                                "content",
+                                                e.target.value
+                                            )
+                                        }
                                         rows="6"
                                         error={errors.content}
                                     />

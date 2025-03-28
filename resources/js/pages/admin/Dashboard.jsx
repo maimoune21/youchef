@@ -33,7 +33,7 @@ import { UserAccounts } from "./UserAccounts";
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 
-const Dashboard = ({ location = 'reportedMeals', users, usersMessages }) => {
+const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  }) => {
     const [activeTeam, setActiveTeam] = useState({});
     const { auth } = usePage().props;
     const user = auth.user;
@@ -42,7 +42,7 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages }) => {
     const renderContent = () => {
         switch (location) {
             case "reportedMeals":
-                return <ReportedMeals />;
+                return <ReportedMeals meals={meals} />;
             case "userAccounts":
                 return <UserAccounts users={users} />;
             case "userMessages":
@@ -162,7 +162,7 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages }) => {
                 : "fill-black text-black";
         };
         return (
-            <SidebarGroup className="pl-0 h-full mt-5">
+            <SidebarGroup className="pl-0 h-full">
                 <SidebarMenu className="flex gap-8 h-full mt-6">
                     <SidebarMenuItem>
                         <Link href="/dashboard/reportedMeals">

@@ -106,7 +106,6 @@ const Navbar = () => {
                             ))}
                         </div>
                     </div>
-
                     {/* Search Icon */}
                     <SearchBar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
 
