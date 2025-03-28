@@ -41,7 +41,7 @@ export const UserMessages = ({ usersMessages }) => {
                             <div className="border-b-1 border-gray-400 py-2 sm:px-6">
                                 <div className="grid grid-cols-1 gap-6">
                                     <div className="flex gap-4">
-                                        <table className="mx-1!">
+                                        <table className="mx-1! w-full">
                                             <tbody>
                                                 <div className="grid grid-cols-[2fr_0.5fr]">
                                                     <span className="flex items-center gap-4">
