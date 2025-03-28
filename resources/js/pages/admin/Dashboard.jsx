@@ -33,7 +33,7 @@ import { UserAccounts } from "./UserAccounts";
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 
-const Dashboard = ({ location = 'reportedMeals', users }) => {
+const Dashboard = ({ location = 'reportedMeals', users, usersMessages }) => {
     const [activeTeam, setActiveTeam] = useState({});
     const { auth } = usePage().props;
     const user = auth.user;
@@ -46,7 +46,7 @@ const Dashboard = ({ location = 'reportedMeals', users }) => {
             case "userAccounts":
                 return <UserAccounts users={users} />;
             case "userMessages":
-                return <UserMessages />;
+                return <UserMessages usersMessages={usersMessages} />;
             default:
                 return <ReportedMeals />;
         }
