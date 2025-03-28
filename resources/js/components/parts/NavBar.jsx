@@ -118,7 +118,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Search Icon */}
-                    <SearchBar isExpanded={isExpanded} setIsExpanded={setIsExpanded} setSearchedInput={setSearchedInput} handleKeyDown={handleKeyDown} />
+                    <SearchBar isExpanded={isExpanded} setIsExpanded={setIsExpanded} searchedInput={searchedInput} setSearchedInput={setSearchedInput} handleKeyDown={handleKeyDown} />
 
                     {
                         SearchedMeals && searchedInput &&
