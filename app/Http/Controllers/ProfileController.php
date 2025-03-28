@@ -89,9 +89,8 @@ class ProfileController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         if ($request->hasFile('profile_img')) {
             if ($user->profile_img) {
@@ -110,7 +109,6 @@ class ProfileController extends Controller
             $user->password = bcrypt($request->password);
         }
         $user->save();
-
-        return back()->with('success', 'Profile updated successfully!');
+        return redirect()->back()->with('success', 'Profile updated successfully!');
     }
 }

@@ -51,9 +51,15 @@ export function UpdateProfile({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('profile.update'), {
+        post(route("profile.update"), {
             preserveScroll: true,
-            onSuccess: () => reset('password', 'password_confirmation'),
+            onSuccess: () => {
+                console.log("Profile updated successfully");
+                reset("password", "password_confirmation");
+            },
+            onError: (errors) => {
+                console.log("Errors:", errors);
+            },
         });
     };
 
@@ -61,7 +67,7 @@ export function UpdateProfile({
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    className={`bg-10 font-bold cursor-pointer ${buttonClassName} hover:bg-green-600! transition duration-200`}
+                    className={`bg-10 font-bold cursor-pointer ${buttonClassName} hover:bg-green-600 transition duration-200`}
                     {...props}
                 >
                     {buttonContent}
@@ -108,7 +114,9 @@ export function UpdateProfile({
                                     className="button cursor-pointer flexy gap-2"
                                 >
                                     <PencilIcon size="size-4" />
-                                    {selectedImage ? "Change Picture" : "Add Picture"}
+                                    {selectedImage
+                                        ? "Change Picture"
+                                        : "Add Picture"}
                                 </label>
                                 {imagePreview && (
                                     <button
@@ -121,12 +129,18 @@ export function UpdateProfile({
                                     </button>
                                 )}
                                 {errors.profile_img && (
-                                    <p className="text-red-500 text-sm">{errors.profile_img}</p>
+                                    <p className="text-red-500 text-sm">
+                                        {errors.profile_img}
+                                    </p>
                                 )}
                             </span>
                         </div>
                         <div>
-                            <form onSubmit={handleSubmit} className="gird place-items-center py-4">
+                            <form
+                                onSubmit={handleSubmit}
+                                className="gird place-items-center py-4"
+                                encType="multipart/form-data"
+                            >
                                 <table className="w-full border-separate border-spacing-x-2 border-spacing-y-2">
                                     <tbody>
                                         <tr>
@@ -208,10 +222,14 @@ export function UpdateProfile({
                                                     id="password_confirmation"
                                                     name="password_confirmation"
                                                     placeholder="Your Password Here..."
-                                                    value={data.password_confirmation}
+                                                    value={
+                                                        data.password_confirmation
+                                                    }
                                                     onChange={handleChange}
                                                     classLabel="font-bold text-sm"
-                                                    error={errors.password_confirmation}
+                                                    error={
+                                                        errors.password_confirmation
+                                                    }
                                                 />
                                             </td>
                                         </tr>
@@ -225,7 +243,9 @@ export function UpdateProfile({
                                                     className="button py-2! mt-4! text-base! w-52!"
                                                     disabled={processing}
                                                 >
-                                                    {processing ? 'Updating...' : 'Update'}
+                                                    {processing
+                                                        ? "Updating..."
+                                                        : "Update"}
                                                 </button>
                                             </td>
                                         </tr>

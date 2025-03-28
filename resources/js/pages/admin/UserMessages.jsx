@@ -37,7 +37,7 @@ export const UserMessages = () => {
         "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
     },
     {
-      id: 3,
+      id: 4,
       img: Profile,
       fname: "Mohamed",
       lname: "Maimoune",
@@ -47,7 +47,7 @@ export const UserMessages = () => {
         "Description Ipsum is simply dummy text of the printing and typesetting industry. ",
     },
     {
-      id: 3,
+      id: 5,
       img: Profile,
       fname: "Mohamed",
       lname: "Maimoune",

@@ -8,8 +8,6 @@ import {
     RepportIcon,
     UserIcon,
 } from "@/../../public/icons/Icons";
-import YouchefIcon from "@/../../public/images/YouChef-Icon.svg";
-import Logo from "@/components/ui/Logo";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
     DropdownMenu,
@@ -20,7 +18,6 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarGroupLabel,
     SidebarHeader,
     SidebarInset,
     SidebarMenu,
@@ -36,7 +33,7 @@ import { UserAccounts } from "./UserAccounts";
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 
-const Dashboard = ({ location }) => {
+const Dashboard = ({ location = 'reportedMeals', users }) => {
     const [activeTeam, setActiveTeam] = useState({});
     const { auth } = usePage().props;
     const user = auth.user;
@@ -46,10 +43,10 @@ const Dashboard = ({ location }) => {
         switch (location) {
             case "reportedMeals":
                 return <ReportedMeals />;
+            case "userAccounts":
+                return <UserAccounts users={users} />;
             case "userMessages":
                 return <UserMessages />;
-            case "userAccounts":
-                return <UserAccounts />;
             default:
                 return <ReportedMeals />;
         }
@@ -76,17 +73,13 @@ const Dashboard = ({ location }) => {
                                 }`}
                             >
                                 <div
-                                    className={`flex aspect-square size-8 items-center justify-center bg-white! rounded-full! border-1 border-[var(--bg-10)] ${
+                                    className={`flex aspect-square size-8 items-center justify-center bg-white! rounded-full! ${
                                         state === "collapsed"
                                             ? "ml-2"
                                             : "hidden"
                                     }`}
                                 >
-                                    <img
-                                        src={YouchefIcon}
-                                        className="w-full p-1"
-                                        alt="logo"
-                                    />
+                                    <ManageIcon size="size-7.5! text-green" />
                                 </div>
                                 <div className="grid text-left text-sm leading-tight">
                                     <span
@@ -96,7 +89,10 @@ const Dashboard = ({ location }) => {
                                                 : ""
                                         }`}
                                     >
-                                        <Logo size="20" />
+                                        <span className="flexy gap-2 border-b-1 rounded-none">
+                                            <ManageIcon size="size-6.5! text-green" />
+                                            <p className="text-lg">Managing</p>
+                                        </span>
                                     </span>
                                 </div>
                             </SidebarMenuButton>
@@ -133,7 +129,11 @@ const Dashboard = ({ location }) => {
                                 <div>
                                     <Avatar className="rounded-lg h-8 w-8">
                                         <AvatarImage
-                                            src={user.profile_img ? `/uploads/users/${user.profile_img}` : BlankProfile}
+                                            src={
+                                                user.profile_img
+                                                    ? `/uploads/users/${user.profile_img}`
+                                                    : BlankProfile
+                                            }
                                             alt="profile"
                                             className="rounded-full"
                                         />
@@ -163,10 +163,6 @@ const Dashboard = ({ location }) => {
         };
         return (
             <SidebarGroup className="pl-0 h-full mt-5">
-                <SidebarGroupLabel className="flexy gap-2 border-b-1 rounded-none pb-2 mt-4">
-                    <ManageIcon size="size-6!" />
-                    <b className="text-lg">Manage</b>
-                </SidebarGroupLabel>
                 <SidebarMenu className="flex gap-8 h-full mt-6">
                     <SidebarMenuItem>
                         <Link href="/dashboard/reportedMeals">

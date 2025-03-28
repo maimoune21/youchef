@@ -9,7 +9,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import React, { useEffect, useState } from "react";
-import { SignalIcon, TimeIcon, EyeIcon } from "@/../../public/icons/Icons";
+import { SignalIcon, TimeIcon } from "@/../../public/icons/Icons";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
 import { Link } from "@inertiajs/react";
 import FavoriteButton from "./favoriteButton";

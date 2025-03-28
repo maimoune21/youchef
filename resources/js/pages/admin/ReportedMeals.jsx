@@ -9,11 +9,11 @@ import { RepportIcon } from "@/../../public/icons/Icons";
 export const ReportedMeals = () => {
   const reportedMeals = [
     {id: 1, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
-    {id: 1, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
-    {id: 1, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
-    {id: 1, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
-    {id: 1, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
-    {id: 1, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,}
+    {id: 2, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 3, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 4, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 5, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,},
+    {id: 6, img: BlankMeal, title: "Traditional Moroccan Chicken BlankMeal", chef: "Fatima El Fassi", views: 215, day: "3", description: "Description Ipsum is simply dummy text of the printing and typesetting industry.", repports: 100,}
   ];
   return (
     <div className="mt-4 max-md:mb-20 overflow-hidden">

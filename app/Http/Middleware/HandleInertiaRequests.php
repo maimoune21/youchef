@@ -42,17 +42,17 @@ class HandleInertiaRequests extends Middleware
                     'firstName' => $request->user()->firstName,
                     'lastName' => $request->user()->lastName,
                     'email' => $request->user()->email,
-                    'password' => $request->user()->password,
                     'profile_img' => $request->user()->profile_img,
                     'bio' => $request->user()->bio,
                     'idRole' => $request->user()->idRole,
                 ] : null,
             ],
-            'errors' => session('errors')
-                ? session('errors')->getBag('default')->getMessages()
+            'errors' => fn() => $request->session()->get('errors')
+                ? $request->session()->get('errors')->getBag('default')->getMessages()
                 : (object) [],
             'flash' => [
-                'failed' => session('failed')
+                'success' => fn() => $request->session()->get('success'),
+                'failed' => fn() => $request->session()->get('failed'),
             ],
         ]);
     }
