@@ -114,6 +114,11 @@ body {
   color: white;
 }
 
+.green-bg-selection::selection {
+  background: color-mix(in srgb, var(--bg-10) 20%, white 80%);
+  color: var(--text-green);
+}
+
 .navbaranim{
   animation: show 500ms ease-in-out forwards;
 }

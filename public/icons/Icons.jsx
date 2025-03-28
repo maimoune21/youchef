@@ -148,11 +148,11 @@ export const ManageIcon = ({ size = "size-7.5" }) => {
   );
 };
 
-export const SearchIcon = ({ size = "size-6" }) => {
+export const SearchIcon = ({ size = "size-6", className}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={size}
+      className={size+" "+className}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -327,11 +327,11 @@ export const DotsIcon = ({ size = "size-6 cursor-pointer" }) => {
   );
 };
 
-export const XCancelIcon = ({ size = "size-6" }) => {
+export const XCancelIcon = ({ size = "size-6",className }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={size}
+      className={size+" "+className}
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth="1.5"

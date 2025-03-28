@@ -10,10 +10,11 @@ import {
 } from "@/../../public/icons/Icons";
 import Logo from "../ui/Logo";
 import { Link } from "@inertiajs/react";
-import SearchBar from "../ui/SearchButton";
+import SearchBar from "../ui/SearchBar";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
     // Access the authenticated user data
     const { auth } = usePage().props;
     const isAuthenticated = !!auth.user;
@@ -74,6 +75,7 @@ const Navbar = () => {
               ]
             : []),
     ];
+
     return (
         <>
             <header
@@ -83,14 +85,12 @@ const Navbar = () => {
             >
                 <div className="relative w-full max-w-6xl bg-30 rounded-full flex shadow-md items-center justify-between px-8 py-2">
                     {/* Logo */}
-                    <Link href="/">
-                        <div className="flex items-center">
+                    <Link href="/" className={`flex items-center ${isExpanded ? "hidden!" : ""}`}>
                             <Logo />
-                        </div>
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex">
+                    <div className={`hidden md:flex ${isExpanded ? "hidden!" : ""}`}>
                         <div className="bg-10 rounded-full px-5 py-1.5 flexy space-x-6 relative gap-6">
                             {navLinks.map((navLink, index) => (
                                 <Link
@@ -107,16 +107,9 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Search Icon (Desktop) */}
-                    <div className="hidden md:block absolute right-5! top-2.5!">
-                        <SearchBar CustumClass="" />
-                    </div>
-                    <div></div>
+                    {/* Search Icon */}
+                    <SearchBar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
 
-                    {/* Search Icon (Mobile) */}
-                    <div className="md:hidden">
-                        <SearchBar CustumClass="w-full!" />
-                    </div>
                 </div>
             </header>
 
