@@ -36,8 +36,9 @@ class FavoriteController extends Controller
             )
             ->orderBy('meals.views', 'desc')
             ->get();
+        $SearchedMeals = Meal::latest()->get();
 
-        return inertia('meals/Favorites', compact('favoriteMeals', 'categories', 'Kitchen', 'thisUser'));
+        return inertia('meals/Favorites', compact('favoriteMeals', 'categories', 'Kitchen', 'thisUser', 'SearchedMeals'));
     }
 
     /**

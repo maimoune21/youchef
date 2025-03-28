@@ -34,8 +34,11 @@ class ProfileController extends Controller
             )
             ->get();
 
+        $SearchedMeals = Meal::latest()->get();
+
+
         // Passing data to the view :
-        return inertia('profile/PublicProfile', compact('user', 'meals'));
+        return inertia('profile/PublicProfile', compact('user', 'meals', 'SearchedMeals'));
     }
     public function privateShow()
     {
@@ -76,7 +79,10 @@ class ProfileController extends Controller
             ->orderBy('meals.views', 'desc')
             ->get();
 
-        return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));
+        $SearchedMeals = Meal::latest()->get();
+
+
+        return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals', 'SearchedMeals'));
     }
     public function update(Request $request)
     {

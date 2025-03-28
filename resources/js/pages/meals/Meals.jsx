@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/accordion";
 import MealCard from "@/components/ui/MealCard";
 
-const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSelected, thisUser, favoriteMeals }) => {
+const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSelected, thisUser, favoriteMeals, search }) => {
   const [meals, setMeals] = useState([]);
   const Categories = [
     { name: 'All' ,picture: "all.png" },
@@ -50,10 +50,12 @@ const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSe
         const isCategoryMatch = categorieSelected ? meal.idCategory == categorieSelected : true;
         const isCountryMatch = countries ? meal.idKitchen == countries : true;
         const isDifficultyMatch = difficulty == "hard"? totalMinutes > 20 : difficulty == "normal" ? totalMinutes >= 10 && totalMinutes <= 20 : difficulty == "easy" ? totalMinutes < 10 : true;
-        return isCategoryMatch && isCountryMatch && isDifficultyMatch;
+        const isSearchMatch = search ? meal.title.toLowerCase().includes(search.toLowerCase()) : true;
+
+        return isCategoryMatch && isCountryMatch && isDifficultyMatch && isSearchMatch;
       })
     );
-  }, [categorieSelected, countries, difficulty, dataMeals]);
+  }, [categorieSelected, countries, difficulty, dataMeals, search]);
   
   const [activeTeam, setActiveTeam] = useState({});
   // Compagy Component

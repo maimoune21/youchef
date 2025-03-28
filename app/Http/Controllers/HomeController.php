@@ -50,7 +50,9 @@ class HomeController extends Controller
             ->orderBy('meals.views', 'desc')
             ->get();
 
-        return inertia("general/Home", compact("meals", "categories", "Kitchen", "thisUser", "favoriteMeals"));
+        $SearchedMeals = Meal::latest()->get();
+
+        return inertia("general/Home", compact("meals", "categories", "Kitchen", "thisUser", "favoriteMeals", "SearchedMeals"));
     }
 
     /**

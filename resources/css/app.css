@@ -17,6 +17,7 @@
   --bg-60: #f6f9f6;
   --bg-30: #fff;
   --bg-10: #21b76e;
+  --bg-gray: hsl(0, 0%, 85%);
 
   --first: #fff;
   --second: #000;
@@ -79,8 +80,14 @@
 .bg-soft {
   background-color: var(--soft-bg);
 }
+.bg-soft-blue {
+  background-color: var(--soft-blue);
+}
 .bg-banner {
   background-color: var(--banner);
+}
+.bg-gray {
+  background-color: var(--bg-gray);
 }
 
 /* Text Color Class */

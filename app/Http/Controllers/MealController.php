@@ -29,6 +29,7 @@ class MealController extends Controller
         $dataCategories = Category::all();
         $categorySelected = $request->query('category');
         $kitchenSelected = $request->query('kitchen');
+        $search = $request->query('search');
 
         $thisUser = Auth::user();
         $mealsfav = collect();
@@ -50,8 +51,10 @@ class MealController extends Controller
             )
             ->orderBy('meals.views', 'desc')
             ->get();
+        
+        $SearchedMeals = Meal::latest()->get();
 
-        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals"));
+        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals", "search", "SearchedMeals"));
     }
 
     /**

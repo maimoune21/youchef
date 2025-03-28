@@ -2,13 +2,14 @@ import { XCancelIcon } from "@/../../public/icons/Icons";
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 
-const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
+const SearchBar = ({ CustumClass, isExpanded, setIsExpanded, searchedInput, setSearchedInput, handleKeyDown }) => {
     const inputRef = useRef(null);
     const GrowRef = useRef(null);
     const toggleExpand = (e) => {
         e.stopPropagation();
         setIsExpanded((prev) => !prev);
         if (!isExpanded) inputRef.current.focus();
+        setSearchedInput("")
     };
 
     useEffect(() => {
@@ -28,7 +29,10 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
                 className={`input green-bg-selection ${CustumClass}`}
                 placeholder="Type to search..."
                 ref={inputRef}
+                value={searchedInput}
                 onClick={(e) => e.stopPropagation()}
+                onChange={e=>setSearchedInput(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <div className="icon left-0" onClick={toggleExpand}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512">
