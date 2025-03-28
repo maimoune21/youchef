@@ -106,6 +106,14 @@ export const UserMessages = () => {
                             <p className="text-[15px]">{user.message}</p>
                           </td>
                         </tr>
+                        <tr>
+                          <td>
+                            <b className="text-[15px]">date: </b>
+                          </td>
+                          <td>
+                            <p className="text-[15px]"></p>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

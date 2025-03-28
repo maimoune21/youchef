@@ -162,6 +162,10 @@ const MealDetails = ({
     }, [favoriteMeals, meal.idMeal]);
 
     const handleFavoriteClick = () => {
+        if (!activUser) {
+            router.visit("/login");
+            return;
+        }
         router.post(
             "/favorite",
             { idMeal: meal.idMeal, idUser: thisUser.idUser },

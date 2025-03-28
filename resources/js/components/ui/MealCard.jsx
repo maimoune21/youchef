@@ -16,6 +16,7 @@ import FavoriteButton from "./favoriteButton";
 import { TrashIcon } from "@/../../public/icons/Icons";
 import { UpdateMeal } from "@/components/models/UpdateMeal";
 import { Button } from "@/components/ui/button";
+import { CircleChevronRight } from "lucide-react";
 
 const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}) => {
     const [status, setStatus] = useState("");
@@ -97,10 +98,10 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
                     </div>
                 </div>
             </div>
-            <div className="w-full p-3 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="w-full p-3 pt-1 flex flex-col gap-2 whitespace-nowrap overflow-hidden text-ellipsis">
                 <div className="flex flex-col">
                     <div className="flexy justify-between!">
-                        <h3 className="font-bold text-2xl max-sm:text-xl truncate hover:underline">
+                        <h3 className="font-bold text-xl max-sm:text-xl truncate hover:underline">
                             <Link href={`/mealDetails/${meal.idMeal}`}>
                                 {meal.title}
                             </Link>
@@ -149,9 +150,9 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
                             </div>
                         </Link>
                         <div className="flex items-center justify-end">
-                            <span className="rounded-full border-1 p-1.5 border-[var(--bg-10)] bg-[var(--bg-10)] hover:scale-96">
+                            <span className="rounded-full pr- hover:scale-96">
                                 <Link href={`/mealDetails/${meal.idMeal}`}>
-                                    <EyeIcon style="size-5.5 text-black cursor-pointer" />
+                                    <CircleChevronRight className="size-8 text-green cursor-pointer" />
                                 </Link>
                             </span>
                         </div>

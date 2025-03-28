@@ -42,21 +42,23 @@ const FavoriteButton = ({
     };
 
     return (
-        <button
-            className={`p-1 pr-1.5 transition-all duration-200 ${buttonClass} ${
-                isLoading ? "opacity-70" : ""
-            }`}
-            onClick={handleFavoriteClick}
-            disabled={isLoading}
-        >
-            <HeartIcon
-                className={`cursor-pointer transition-colors duration-200 ${
-                    isFavorited
-                        ? "fill-green-600 text-green-600"
-                        : "fill-white stroke-green-600 stroke-2"
-                } ${iconClass || ""}`}
-            />
-        </button>
+        thisUser && (
+            <button
+                className={`p-1 pr-1.5 transition-all duration-200 ${buttonClass} ${
+                    isLoading ? "opacity-70" : ""
+                }`}
+                onClick={handleFavoriteClick}
+                disabled={isLoading}
+            >
+                <HeartIcon
+                    className={`cursor-pointer transition-colors duration-200 ${
+                        isFavorited
+                            ? "fill-green-600 text-green-600"
+                            : "fill-white stroke-green-600 stroke-2"
+                    } ${iconClass || ""}`}
+                />
+            </button>
+        )
     );
 };
 

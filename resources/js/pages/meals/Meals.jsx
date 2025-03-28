@@ -243,7 +243,7 @@ const Meals = ({ dataMeals, Kitchen, dataCategories, categorySelected, kitchenSe
         </header>
         <div className="flex-1 flex-col gap-4 p-4 max-sm:p-0 px-0 pt-0">
           <div className="h-auto overflow-hidden">
-            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-tn:grid-cols-1! max-tn:pb-5! max-sm:pb-10! max-md:pb-20! gap-x-3 gap-y-4 px-2 h-auto pb-10 max-h-[85vh] overflow-y-auto scrollbar">
+            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-tn:grid-cols-1! max-tn:pb-5! max-sm:pb-10! max-md:pb-20! gap-x-5.5 gap-y-5 px-6 h-auto pb-10 max-h-[85vh] overflow-y-auto scrollbar">
               {meals.map((meal) => (
                 <MealCard key={meal.id} meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
               ))}

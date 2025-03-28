@@ -41,6 +41,7 @@
       Route::get('/favorites', [FavoriteController::class,'index']);
       Route::post('/favorite', [FavoriteController::class,'store']);
       // Private Profile
+      Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
       Route::get('/privateProfile', [ProfileController::class,'privateShow']);
       Route::delete('/meals/{idMeal}', [MealController::class, 'destroy'])->name('meals.destroy');
       // Logout :

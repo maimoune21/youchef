@@ -15,7 +15,7 @@ export const Login = () => {
             delete errors[e.target.name];
             flash.failed = null;
         }
-        setError((prevState) => ({...prevState,[e.target.name]: "" }));
+        setError((prevState) => ({ ...prevState, [e.target.name]: "" }));
         if (flash.failed) {
             flash.failed = null;
         }
@@ -23,9 +23,9 @@ export const Login = () => {
     const HSubmit = (e) => {
         e.preventDefault();
         const newErrors = {};
-        if(!data.email){
+        if (!data.email) {
             newErrors.email = "Email is required.";
-        } else if (!data.password){
+        } else if (!data.password) {
             newErrors.password = "Password is required.";
         }
         if (Object.keys(newErrors).length) {
@@ -80,20 +80,25 @@ export const Login = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} className='flex items-center gap-1 text-sm'>
+                                    <td
+                                        colSpan={2}
+                                        className="flex flex-col gap-1 text-sm"
+                                    >
                                         {flash.failed && (
                                             <b className="text-red-500 text-sm">
                                                 {flash.failed}
                                                 <br />
                                             </b>
                                         )}
-                                        <h1>New to YouChef?</h1>
-                                        <Link
-                                            href="/register"
-                                            className="text-green-600 font-bold hover:text-gray-500"
-                                        >
-                                            Sign up
-                                        </Link>
+                                        <span className='flex gap-1'>
+                                            <h1>New to YouChef ?</h1>
+                                            <Link
+                                                href="/register"
+                                                className="text-green-600 font-bold hover:text-gray-500"
+                                            >
+                                                Sign up
+                                            </Link>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>

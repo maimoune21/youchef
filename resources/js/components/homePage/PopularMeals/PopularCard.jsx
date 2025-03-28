@@ -101,14 +101,16 @@ const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
                                     {meal.title}
                                 </Link>
                             </h3>
-                            <div className="bg-white p-2 mr-3 flexy rounded-full">
-                                <FavoriteButton
-                                    meal={meal}
-                                    thisUser={thisUser}
-                                    favoriteMeals={favoriteMeals}
-                                    buttonClass="p-0! text-black! fill-black!"
-                                />
-                            </div>
+                            {thisUser && (
+                                <div className="bg-white p-2 mr-3 flexy rounded-full">
+                                    <FavoriteButton
+                                        meal={meal}
+                                        thisUser={thisUser}
+                                        favoriteMeals={favoriteMeals}
+                                        buttonClass="p-0! text-black! fill-black!"
+                                    />
+                                </div>
+                            )}
                         </div>
                         <div className="text-sm flexy justify-start! gap-1 md:text-base">
                             {meal.views} views

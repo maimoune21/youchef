@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import Profile from "@/../../public/images/Profile.png";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import TextAreaGroup from "@/components/ui/TextAreaGroup";
 import { PencilIcon, TrashIcon } from "@/../../public/icons/Icons";
-import ButtonProfilePicture from "../ui/ButtonAddProfilePicture";
 import ButtonAddProfilePicture from "../ui/ButtonAddProfilePicture";
+import { useForm, usePage } from "@inertiajs/react";
 
 export function UpdateProfile({
     user,
@@ -14,18 +13,48 @@ export function UpdateProfile({
     buttonClassName = "",
     ...props
 }) {
-    const [data, setData] = useState({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        profile_img: user.profile_img,
-        bio: user.bio,
-        email: user.email,
+    const { errors } = usePage().props;
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(
+        user.profile_img ? `/uploads/users/${user.profile_img}` : null
+    );
+
+    const { data, setData, post, processing, reset } = useForm({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        profile_img: null,
+        bio: user.bio || "",
+        email: user.email || "",
         password: "",
         password_confirmation: "",
     });
-    const HData = (e) => {
+
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        setData((prev) => ({ ...prev, [name]: value }));
+        setData(name, value);
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setData("profile_img", file);
+            setSelectedImage(file);
+            setImagePreview(URL.createObjectURL(file));
+        }
+    };
+
+    const removeImage = () => {
+        setData("profile_img", null);
+        setSelectedImage(null);
+        setImagePreview(null);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('profile.update'), {
+            preserveScroll: true,
+            onSuccess: () => reset('password', 'password_confirmation'),
+        });
     };
 
     return (
@@ -54,27 +83,50 @@ export function UpdateProfile({
                     <div className="px-10 flex flex-col gap-2">
                         <h3 className="text-base font-bold">Profile Picture</h3>
                         <div className="max-tn:flex-col flexy gap-12">
-                            {user.profile_img ? (
+                            {imagePreview ? (
                                 <img
-                                    src={`/uploads/users/${user.profile_img}`}
-                                    className="w-32 rounded-full"
-                                    alt="test"
+                                    src={imagePreview}
+                                    className="w-32 h-32 object-cover rounded-full"
+                                    alt="Profile"
                                 />
                             ) : (
-                                <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">
+                                <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-32 w-32 aspect-square rounded-full flexy">
                                     {user.lastName.charAt(0)}
                                 </span>
                             )}
                             <span className="flex flex-col gap-2">
-                                <ButtonAddProfilePicture />
-                                <button className="button bg-red-700! flexy gap-">
-                                    <TrashIcon />
-                                    Remove Picture
-                                </button>
+                                <input
+                                    type="file"
+                                    id="profile_img"
+                                    name="profile_img"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                />
+                                <label
+                                    htmlFor="profile_img"
+                                    className="button cursor-pointer flexy gap-2"
+                                >
+                                    <PencilIcon size="size-4" />
+                                    {selectedImage ? "Change Picture" : "Add Picture"}
+                                </label>
+                                {imagePreview && (
+                                    <button
+                                        type="button"
+                                        onClick={removeImage}
+                                        className="button bg-red-700! flexy gap-2"
+                                    >
+                                        <TrashIcon />
+                                        Remove Picture
+                                    </button>
+                                )}
+                                {errors.profile_img && (
+                                    <p className="text-red-500 text-sm">{errors.profile_img}</p>
+                                )}
                             </span>
                         </div>
                         <div>
-                            <form className="gird place-items-center py-4">
+                            <form onSubmit={handleSubmit} className="gird place-items-center py-4">
                                 <table className="w-full border-separate border-spacing-x-2 border-spacing-y-2">
                                     <tbody>
                                         <tr>
@@ -85,8 +137,9 @@ export function UpdateProfile({
                                                     name="firstName"
                                                     placeholder="Your First Name Here..."
                                                     value={data.firstName}
-                                                    onChange={HData}
+                                                    onChange={handleChange}
                                                     classLabel="font-bold text-sm"
+                                                    error={errors.firstName}
                                                 />
                                             </td>
                                             <td>
@@ -96,8 +149,9 @@ export function UpdateProfile({
                                                     name="lastName"
                                                     placeholder="Your Last Name Here..."
                                                     value={data.lastName}
-                                                    onChange={HData}
+                                                    onChange={handleChange}
                                                     classLabel="font-bold text-sm"
+                                                    error={errors.lastName}
                                                 />
                                             </td>
                                         </tr>
@@ -109,9 +163,10 @@ export function UpdateProfile({
                                                     name="bio"
                                                     placeholder="Your Message Here..."
                                                     value={data.bio}
-                                                    onChange={HData}
+                                                    onChange={handleChange}
                                                     classLabel="font-bold text-sm"
                                                     rows="6"
+                                                    error={errors.bio}
                                                 />
                                             </td>
                                         </tr>
@@ -124,8 +179,9 @@ export function UpdateProfile({
                                                     name="email"
                                                     placeholder="Your Email Here..."
                                                     value={data.email}
-                                                    onChange={HData}
+                                                    onChange={handleChange}
                                                     classLabel="font-bold text-sm"
+                                                    error={errors.email}
                                                 />
                                             </td>
                                         </tr>
@@ -133,13 +189,14 @@ export function UpdateProfile({
                                             <td colSpan="2">
                                                 <TextInputGroup
                                                     label="New Password"
-                                                    type="text"
+                                                    type="password"
                                                     id="password"
                                                     name="password"
                                                     placeholder="Your Password Here..."
                                                     value={data.password}
-                                                    onChange={HData}
+                                                    onChange={handleChange}
                                                     classLabel="font-bold text-sm"
+                                                    error={errors.password}
                                                 />
                                             </td>
                                         </tr>
@@ -147,15 +204,14 @@ export function UpdateProfile({
                                             <td colSpan="2">
                                                 <TextInputGroup
                                                     label="Confirm Password"
-                                                    type="text"
+                                                    type="password"
                                                     id="password_confirmation"
                                                     name="password_confirmation"
                                                     placeholder="Your Password Here..."
-                                                    value={
-                                                        data.password_confirmation
-                                                    }
-                                                    onChange={HData}
+                                                    value={data.password_confirmation}
+                                                    onChange={handleChange}
                                                     classLabel="font-bold text-sm"
+                                                    error={errors.password_confirmation}
                                                 />
                                             </td>
                                         </tr>
@@ -167,8 +223,9 @@ export function UpdateProfile({
                                                 <button
                                                     type="submit"
                                                     className="button py-2! mt-4! text-base! w-52!"
+                                                    disabled={processing}
                                                 >
-                                                    Update
+                                                    {processing ? 'Updating...' : 'Update'}
                                                 </button>
                                             </td>
                                         </tr>

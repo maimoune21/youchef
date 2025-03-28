@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { RepportIcon } from "@/../../public/icons/Icons";
 import { useState } from "react";
 import TextAreaGroup from "@/components/ui/TextAreaGroup";
+import { Flag } from "lucide-react";
 
 export function ReportMeal({meal}) {
   const [data, setData] = useState({
@@ -15,8 +16,8 @@ export function ReportMeal({meal}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <span className="border-1 border-black rounded-full p-1.5 c-p cursor-pointer">
-          <RepportIcon style="size-5.5!" />
+        <span className="border-1 border-black rounded-full p-[6.3px] c-p cursor-pointer">
+          <Flag />
         </span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-w-2xl! p-4 pt-12  rounded-sm">

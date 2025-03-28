@@ -6,8 +6,8 @@ import { AboutUsIcon, ContactUsIcon } from "@/../../public/icons/Icons";
 import Burger from "@/../../public/images/header/HeaderBurger.png";
 import Salade from "@/../../public/images/header/salade.png";
 import Pizza from "@/../../public/images/header/pizza.png";
-import test1 from "@/../../public/images/header/test_1.png";
-import test2 from "@/../../public/images/header/test_2.png";
+import Spagetti from "@/../../public/images/header/spagetti.png";
+import Vegetables from "@/../../public/images/header/vegetables.png";
 import { Link } from "@inertiajs/react";
 import { Link as ScrollLink } from "react-scroll";
 import BrowseRecipesButton from "../ui/BrowseRecipesButton";
@@ -29,11 +29,11 @@ export default function Header() {
     const [api, setApi] = useState(null);
 
     const slides = [
-        { id: 1, image: Burger, alt: "Delicious Burger" },
-        { id: 2, image: Salade, alt: "Fresh Salad" },
-        { id: 3, image: Pizza, alt: "Pizza" },
-        { id: 4, image: test1, alt: "Pizza" },
-        { id: 5, image: test2, alt: "Pizza" },
+        { id: 1, image: Vegetables, alt: "Vegetables" },
+        { id: 2, image: Pizza, alt: "Pizza" },
+        { id: 3, image: Burger, alt: "Delicious Burger" },
+        { id: 4, image: Salade, alt: "Fresh Salad" },
+        { id: 5, image: Spagetti, alt: "Spagetti" },
     ];
 
     const { auth } = usePage().props;

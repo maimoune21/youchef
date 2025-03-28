@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meal;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -74,5 +77,40 @@ class ProfileController extends Controller
             ->get();
 
         return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));
+    }
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->idUser . ',idUser',
+            'bio' => 'nullable|string|max:500',
+            'password' => 'nullable|string|min:8|confirmed',
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        if ($request->hasFile('profile_img')) {
+            if ($user->profile_img) {
+                Storage::delete('public/uploads/users/' . $user->profile_img);
+            }
+            $image = $request->file('profile_img');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/uploads/users', $imageName);
+            $user->profile_img = $imageName;
+        }
+        $user->firstName = $request->firstName;
+        $user->lastName = $request->lastName;
+        $user->email = $request->email;
+        $user->bio = $request->bio;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        return back()->with('success', 'Profile updated successfully!');
     }
 }
