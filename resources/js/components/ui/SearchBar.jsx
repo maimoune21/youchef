@@ -2,7 +2,7 @@ import { XCancelIcon } from "@/../../public/icons/Icons";
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 
-const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
+const SearchBar = ({ CustumClass, isExpanded, setIsExpanded, setSearchedInput, handleKeyDown }) => {
     const inputRef = useRef(null);
     const GrowRef = useRef(null);
     const toggleExpand = (e) => {
@@ -29,6 +29,8 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
                 placeholder="Type to search..."
                 ref={inputRef}
                 onClick={(e) => e.stopPropagation()}
+                onChange={e=>setSearchedInput(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <div className="icon left-0" onClick={toggleExpand}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512">
