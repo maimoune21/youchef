@@ -51,7 +51,7 @@ class MealController extends Controller
             )
             ->orderBy('meals.views', 'desc')
             ->get();
-        
+
         $SearchedMeals = Meal::latest()->get();
 
         return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals", "search", "SearchedMeals"));
@@ -71,16 +71,16 @@ class MealController extends Controller
      */
     public function create()
     {
-      $Kitchens = DB::table("kitchens")->get();
-      $dataCategories = Category::all();
-      return inertia("meals/postMeal", compact("Kitchens", "dataCategories"));
+        $Kitchens = DB::table("kitchens")->get();
+        $dataCategories = Category::all();
+        return inertia("meals/postMeal", compact("Kitchens", "dataCategories"));
     }
 
     /**
      * Store a newly created Meal in storage.
      */
     public function store(Request $request)
-{
+    {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -108,7 +108,7 @@ class MealController extends Controller
         Meal::create($validated);
 
         return redirect()->route('meals')->with('success', 'Meal created successfully!');
-}
+    }
     /**
      * Display the specified Meal.
      */
@@ -139,29 +139,30 @@ class MealController extends Controller
             ->orderBy('comments.created_at', 'desc')
             ->get();
 
-            $thisUser = Auth::user();
-            $mealsfav = collect();
-    
-            if ($thisUser) {
-                $mealsfav = DB::table('user__meal__favorite')
-                    ->where('idUser', $thisUser->idUser)
-                    ->pluck('idMeal');
-            }
-    
-            $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
-                ->whereIn('meals.idMeal', $mealsfav)
-                ->select(
-                    'meals.*',
-                    'users.idUser as idUser',
-                    'users.firstName as userFName',
-                    'users.lastName as userLName',
-                    'users.profile_img as userImage'
-                )
-                ->orderBy('meals.views', 'desc')
-                ->get();
+        $thisUser = Auth::user();
+        $mealsfav = collect();
+
+        if ($thisUser) {
+            $mealsfav = DB::table('user__meal__favorite')
+                ->where('idUser', $thisUser->idUser)
+                ->pluck('idMeal');
+        }
+
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->whereIn('meals.idMeal', $mealsfav)
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->orderBy('meals.views', 'desc')
+            ->get();
+        $SearchedMeals = Meal::latest()->get();
 
         // Passing data to the view :
-        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals'));
+        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals', 'SearchedMeals'));
     }
 
     /**
