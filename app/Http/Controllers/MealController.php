@@ -123,7 +123,7 @@ class MealController extends Controller
           $meal->save();
       }
     
-      return redirect()->route('meals')->with('success', 'Meal created successfully!');
+      return redirect()->route('meals');
     }
 
     /**

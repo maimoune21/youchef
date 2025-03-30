@@ -100,7 +100,7 @@ const PostMeal = ({ Kitchens, dataCategories }) => {
 
       await post('/postMeal', {
         data: formData,
-        onSuccess: () => {window.location.href = '/meals';},
+        onSuccess: () => {return;},
         onError: (errors) => {
           console.log('Full error response:', errors);
           // Laravel validation errors
