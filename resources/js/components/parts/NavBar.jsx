@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import Meal from "@/../../public/images/BlankMeal.png";
-import { router, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import {
     HomeIcon,
     MealsIcon,
@@ -8,7 +7,6 @@ import {
     ProfileIcon,
     ManageIcon,
     HeartIcon,
-    ArrowIcon,
 } from "@/../../public/icons/Icons";
 import Logo from "../ui/Logo";
 import { Link } from "@inertiajs/react";
@@ -80,12 +78,6 @@ const Navbar = () => {
             : []),
     ];
 
-    const handleKeyDown = (event) => {
-        if (event.key === "Enter") {
-            router.get(`/meals?search=${searchedInput}`);
-        }
-    };
-
     return (
         <>
             <header
@@ -116,40 +108,8 @@ const Navbar = () => {
                         </div>
                     </div>
                     {/* Search Icon */}
-                    <SearchBar isExpanded={isExpanded} setIsExpanded={setIsExpanded} searchedInput={searchedInput} setSearchedInput={setSearchedInput} handleKeyDown={handleKeyDown} />
+                    <SearchBar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
 
-                    {
-                        SearchedMeals && searchedInput &&
-                        <div className="absolute top-[110%] left-1/2 overflow-y-scroll scrollbar -translate-x-1/2 rounded-xl w-[90%] p-5 bg-30 custom-shadow max-h-[70vh]">
-                            <div className="flex flex-col gap-2">
-                                {
-                                    SearchedMeals.slice(0, 10).filter(meal => meal.title.toLowerCase().includes(searchedInput.toLowerCase())).map(meal =>
-                                        <Link href={`/mealDetails/${meal.idMeal}`} className="hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg flex items-center gap-2" onClick={e=>e.stopPropagation()}>
-                                            <div className="w-30 flexy">
-                                                <img
-                                                    src={
-                                                        meal.meal_img
-                                                            ? `/uploads/meals/${meal.meal_img}`
-                                                            : `${Meal}`
-                                                    }
-                                                    alt={meal.title}
-                                                    className="w-full aspect-video rounded-lg"
-                                                />
-                                            </div>
-                                            <p className="text-xl">{meal.title}</p>
-                                        </Link>
-                                    )
-                                }
-                                <Link href={`/meals?search=${searchedInput}`} className="flexy group hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg" onClick={e=>e.stopPropagation()}>
-                                    <div className="w-fit flexy relative">
-                                        See All
-                                        <ArrowIcon className="size-4 ml-1 group-hover:ml-2 transition-all" />
-                                        <span className="bg-black group-hover:opacity-100 opacity-0 h-0.5 w-full absolute bottom-0.5"></span>
-                                    </div>
-                                </Link>
-                            </div>
-                        </div>
-                    }
                 </div>
             </header>
 

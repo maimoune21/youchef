@@ -7,6 +7,7 @@ use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Storage;
 
 class MealController extends Controller
 {
@@ -51,7 +52,7 @@ class MealController extends Controller
             )
             ->orderBy('meals.views', 'desc')
             ->get();
-        
+
         $SearchedMeals = Meal::latest()->get();
 
         return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals", "search", "SearchedMeals"));
@@ -71,44 +72,60 @@ class MealController extends Controller
      */
     public function create()
     {
-      $Kitchens = DB::table("kitchens")->get();
-      $dataCategories = Category::all();
-      return inertia("meals/postMeal", compact("Kitchens", "dataCategories"));
+        $Kitchens = DB::table("kitchens")->get();
+        $dataCategories = Category::all();
+        return inertia("meals/postMeal", compact("Kitchens", "dataCategories"));
     }
 
     /**
      * Store a newly created Meal in storage.
      */
+
     public function store(Request $request)
-{
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'idKitchen' => 'required|exists:kitchens,idKitchen',
-            'idCategory' => 'required|exists:categories,idCategory',
-            'meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'duration' => 'required|integer|min:1',
-            'ingredients' => 'required|array|min:1',
-            'ingredients.*' => 'required|string|min:2',
-            'instructions' => 'required|array|min:1',
-            'instructions.*' => 'required|string|min:2',
-        ]);
+    {
+      $validated = $request->validate([
+          'title' => 'required|string|max:255',
+          'description' => 'required|string',
+          'idKitchen' => 'required|exists:kitchens,idKitchen',
+          'idCategory' => 'required|exists:categories,idCategory',
+          'meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+          'hours' => 'required|integer|min:0|max:23',
+          'minutes' => 'required|integer|min:0|max:59',
+          'ingredients' => 'required|array|min:1',
+          // for validate all ingredients must be required and string and minimum 1 letters: 
+          'ingredients.*' => 'required|string|min:1',
+          'instructions' => 'required|array|min:1',
+          // 7ta instructions: 
+          'instructions.*' => 'required|string|min:1',
+      ]);
+    
+      $meal = new Meal();
+      $meal->title = $validated['title'];
+      $meal->description = $validated['description'];
+      $meal->idKitchen = $validated['idKitchen'];
+      $meal->idCategory = $validated['idCategory'];
+      $meal->duration = sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']);
+      // json_encode converts the php array to json string for storage in database
+      // array_values for organisation index(keys) of array values after json_encode
+      // array_filter remove from array all values : ''  /  null  /  empty  / false 
+      $meal->ingredients = json_encode(array_values(array_filter($validated['ingredients'])));
+      $meal->instructions = json_encode(array_values(array_filter($validated['instructions'])));
+      $meal->idUser = Auth::id();
+      $meal->save();
+    
+      // image upload in public after meal is created
+      if ($request->hasFile('meal_img')) {
+          $extension = $request->file('meal_img')->getClientOriginalExtension();
+          $filename = 'Meal' . $meal->idMeal . '.' . $extension;
+      
+          $path = $request->file('meal_img')->storeAs('meals', $filename, 'public');
+          $meal->meal_img = $path;
+          $meal->save();
+      }
+    
+      return redirect()->route('meals');
+    }
 
-        if ($request->hasFile('meal_img')) {
-            $path = $request->file('meal_img')->store('meals', 'public');
-            $validated['meal_img'] = $path;
-        }
-        $validated['ingredients'] = json_encode(array_values(array_filter($validated['ingredients'])));
-        $validated['instructions'] = json_encode(array_values(array_filter($validated['instructions'])));
-        $validated['idUser'] = Auth::id();
-        $hours = floor($request->duration / 60);
-        $minutes = $request->duration % 60;
-        $validated['duration'] = sprintf('%02d:%02d:00', $hours, $minutes);
-
-        Meal::create($validated);
-
-        return redirect()->route('meals')->with('success', 'Meal created successfully!');
-}
     /**
      * Display the specified Meal.
      */
@@ -139,29 +156,30 @@ class MealController extends Controller
             ->orderBy('comments.created_at', 'desc')
             ->get();
 
-            $thisUser = Auth::user();
-            $mealsfav = collect();
-    
-            if ($thisUser) {
-                $mealsfav = DB::table('user__meal__favorite')
-                    ->where('idUser', $thisUser->idUser)
-                    ->pluck('idMeal');
-            }
-    
-            $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
-                ->whereIn('meals.idMeal', $mealsfav)
-                ->select(
-                    'meals.*',
-                    'users.idUser as idUser',
-                    'users.firstName as userFName',
-                    'users.lastName as userLName',
-                    'users.profile_img as userImage'
-                )
-                ->orderBy('meals.views', 'desc')
-                ->get();
+        $thisUser = Auth::user();
+        $mealsfav = collect();
+
+        if ($thisUser) {
+            $mealsfav = DB::table('user__meal__favorite')
+                ->where('idUser', $thisUser->idUser)
+                ->pluck('idMeal');
+        }
+
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->whereIn('meals.idMeal', $mealsfav)
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage'
+            )
+            ->orderBy('meals.views', 'desc')
+            ->get();
+        $SearchedMeals = Meal::latest()->get();
 
         // Passing data to the view :
-        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals'));
+        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals', 'SearchedMeals'));
     }
 
     /**
@@ -175,10 +193,52 @@ class MealController extends Controller
     /**
      * Update the specified Meal in storage.
      */
-    public function update(Request $request, Meal $meal)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    $meal = Meal::findOrFail($id);
+    
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'category' => 'required|string',
+        'kitchen' => 'required|string',
+        'duration' => 'required|string',
+        'ingredients' => 'required|array|min:1',
+        'ingredients.*' => 'required|string|min:2',
+        'instructions' => 'required|array|min:1',
+        'instructions.*' => 'required|string|min:2',
+    ]);
+
+    // Convert category and kitchen names to IDs
+    $category = Category::where('name', $validated['category'])->first();
+    $kitchen = DB::table('kitchens')->where('name', $validated['kitchen'])->first();
+
+    if (!$category || !$kitchen) {
+        return response()->json(['error' => 'Invalid category or kitchen'], 400);
     }
+
+    $meal->title = $validated['title'];
+    $meal->description = $validated['description'];
+    $meal->idCategory = $category->idCategory;
+    $meal->idKitchen = $kitchen->idKitchen;
+    $meal->duration = $validated['duration'];
+    $meal->ingredients = json_encode($validated['ingredients']);
+    $meal->instructions = json_encode($validated['instructions']);
+
+    if ($request->hasFile('meal_img')) {
+      // Delete old image if it exists
+      if ($meal->meal_img) {
+          Storage::disk('public')->delete($meal->meal_img);
+      }
+      
+      $path = $request->file('meal_img')->store('meals', 'public');
+      $meal->meal_img = $path;
+  }
+    
+    $meal->save();
+
+    return response()->json(['message' => 'Meal updated successfully!']);
+}
 
     /**
      * Increment the likes count for a meal.

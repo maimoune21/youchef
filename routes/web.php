@@ -41,6 +41,7 @@
         Route::post('/meals/{id}/comment', [MealController::class, 'addComment']);
         Route::get('/postMeal', [MealController::class, 'create']);
         Route::post('/postMeal', [MealController::class, 'store']);
+        Route::put('/meals/{id}', [MealController::class, 'update']);
         Route::get('/favorites', [FavoriteController::class, 'index']);
         Route::post('/favorite', [FavoriteController::class, 'store']);
         // Private Profile
