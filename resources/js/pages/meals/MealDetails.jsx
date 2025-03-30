@@ -185,15 +185,18 @@ const MealDetails = ({
         <div className="tn:max-w-[28rem] lg:max-w-[52rem] md:max-w-[40rem] sm:max-w-[35rem] max-w-[22rem] m-auto mb-20">
             <div>
                 <div className="bg-30 custom-shadow rounded-t-3xl rounded-b-2xl mb-3 overflow-hidden">
-                    <img
-                        src={
-                            meal.meal_img
-                                ? `/uploads/meals/${meal.meal_img}`
-                                : `${Meal}`
-                        }
-                        className="w-full max-h-[60vh] rounded-t-3xl border-b-2"
-                        alt="test"
-                    />
+                <img
+                  src={
+                      meal.meal_img
+                          ? `/storage/${meal.meal_img}`
+                          : Meal
+                  }
+                  className="w-full max-h-[60vh] rounded-t-3xl border-b-2"
+                  alt={meal.title}
+                  onError={(e) => {
+                      e.target.src = Meal;
+                  }}
+                />
                     <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 text-black rounded-b-3xl">
                         {meal.title}
                     </h1>

@@ -70,14 +70,17 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
     };
 
     return (
-        <div className="custom-shadow bg-60 rounded-xl flex flex-col transition duration-900 group overflow-hidden select-none">
+        <div className="custom-shadow bg-60 rounded-xl grid grid-rows-[1fr_auto] h-full transition duration-900 group overflow-hidden select-none">
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
-                    <img
-                        src={BlankMeal}
-                        alt={meal.title}
-                        className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
-                    />
+                <img
+                  src={meal.meal_img ? `/storage/${meal.meal_img}` : BlankMeal}
+                  alt={meal.title}
+                  className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
+                  onError={(e) => {
+                    e.target.src = BlankMeal;
+                  }}        
+                />
                 </Link>
                 <div className="absolute bottom-2 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
                     <TimeIcon className="w-6 h-6" />
