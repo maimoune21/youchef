@@ -43,10 +43,11 @@ const PostMeal = ({ Kitchens, dataCategories }) => {
                                 return true;};
   const validateStep3 = () => { if (data.instructions.length === 0 || data.instructions.every(i => !i.trim())) {setMessage({ text: 'At least one instruction is required',  type: 'error' });return false;}
                                 if (data.instructions.some(inst => !inst.trim()))                              {setMessage({ text: 'Please fill all instruction fields',    type: 'error' });return false;}
-                                if (data.hours === undefined || data.minutes === undefined)                    {setMessage({ text: 'Duration is required',                  type: 'error' });return false;}
-                                if (data.hours < 0 || data.hours > 23)                                         {setMessage({ text: 'Hours must be between 0-23',            type: 'error' });return false;}
+                                if (data.hours < 0   || data.hours > 23)                                       {setMessage({ text: 'Hours must be between 0-23',            type: 'error' });return false;}
                                 if (data.minutes < 0 || data.minutes > 59)                                     {setMessage({ text: 'Minutes must be between 0-59',          type: 'error' });return false;}
-                                if (data.minutes  === 0)                                                       {setMessage({ text: 'Duration must be at least 1 minute',    type: 'error' });return false;}
+                                if (data.minutes == null || data.minutes === '' || 
+                                    data.minutes <= 0  || data.minutes === undefined )                         {setMessage({ text: 'Duration must be at least 1 minute',    type: 'error' });return false;}
+                                if (data.hours  === ('')  )                                                    {setMessage({ text: 'hours is required',                     type: 'error' });return false;}
                                 return true;};
 
   const nextStep = () => {

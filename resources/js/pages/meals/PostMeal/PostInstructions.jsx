@@ -30,8 +30,8 @@ const PostInstructions = ({ handleChange, animationProps, data, setData, nextSte
         <div className='flex flex-col gap-1'>
           <h4 className='font-bold'>Duration (HH:MM)</h4>
           <div className='flex items-center w-full gap-2'>
-            <input type="number" name="hours"   min="0" max="23" placeholder="hours"   value={data.hours}   onChange={handleChange} className="w-16 p-2 border rounded" /><span className='font-bold'>:</span>
-            <input type="number" name="minutes" min="0" max="59" placeholder="minutes" value={data.minutes} onChange={handleChange} className="w-16 p-2 border rounded" />
+            <input type="number" name="hours"   value={data.hours}   onChange={handleChange} className="w-16 p-2 border rounded" /><span className='font-bold'>:</span>
+            <input type="number" name="minutes" value={data.minutes} onChange={handleChange} className="w-16 p-2 border rounded" />
           </div>
         </div>
       </div>
