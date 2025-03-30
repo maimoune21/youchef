@@ -53,9 +53,7 @@ class MealController extends Controller
             ->orderBy('meals.views', 'desc')
             ->get();
 
-        $SearchedMeals = Meal::latest()->get();
-
-        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals", "search", "SearchedMeals"));
+        return inertia("meals/Meals", compact("dataMeals", "Kitchen", "dataCategories", "categorySelected", "kitchenSelected", "thisUser", "favoriteMeals", "search"));
     }
 
     /**
@@ -176,10 +174,9 @@ class MealController extends Controller
             )
             ->orderBy('meals.views', 'desc')
             ->get();
-        $SearchedMeals = Meal::latest()->get();
 
         // Passing data to the view :
-        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals', 'SearchedMeals'));
+        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals'));
     }
 
     /**

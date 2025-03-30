@@ -15,8 +15,6 @@ import SearchBar from "../ui/SearchBar";
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [searchedInput, setSearchedInput] = useState("");
-    const { SearchedMeals } = usePage().props
     // Access the authenticated user data
     const { auth } = usePage().props;
     const isAuthenticated = !!auth.user;
