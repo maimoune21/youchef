@@ -63,7 +63,7 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
                         <div className="flex flex-col gap-2">
                             {
                                 searchedMeals.slice(0, 10).filter(meal => meal.title.toLowerCase().includes(searchedInput.toLowerCase())).map(meal =>
-                                    <Link href={`/mealDetails/${meal.idMeal}`} className="hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                                    <Link href={`/mealDetails/${meal.idMeal}`} className="hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg flex items-center gap-2" onClick={e => {e.stopPropagation();setIsExpanded(false);setSearchedInput("")}}>
                                         <div className="w-30 flexy">
                                             <img
                                                 src={
