@@ -19,7 +19,6 @@ const Navbar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [searchedInput, setSearchedInput] = useState("");
     const { SearchedMeals } = usePage().props
-    console.log(SearchedMeals)
     // Access the authenticated user data
     const { auth } = usePage().props;
     const isAuthenticated = !!auth.user;
