@@ -82,7 +82,7 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
                                     </Link>
                                 )
                             }
-                            <Link href={`/meals?search=${searchedInput}`} className="flexy group hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg" onClick={e => e.stopPropagation()}>
+                            <Link href={`/meals?search=${searchedInput}`} className="flexy group hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg" onClick={e => {e.stopPropagation();setIsExpanded(false);setSearchedInput("")}}>
                                 <div className="w-fit flexy relative">
                                     See All
                                     <ArrowIcon className="size-4 ml-1 group-hover:ml-2 transition-all" />
