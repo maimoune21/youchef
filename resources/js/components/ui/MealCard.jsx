@@ -18,7 +18,7 @@ import { UpdateMeal } from "@/components/models/UpdateMeal";
 import { Button } from "@/components/ui/button";
 import { CircleChevronRight } from "lucide-react";
 
-const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}) => {
+const MealCard = ({ meal, thisUser, mypost = false, handleDelete}) => {
     const [status, setStatus] = useState("");
 
     useEffect(() => {
@@ -110,11 +110,10 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
                             </Link>
                         </h3>
                         <div className="flexy bg-gray-100 p-1 rounded-full mr-0.5">
-                            {mypost ? null : (
+                            {!mypost && (
                                 <FavoriteButton
                                     meal={meal}
                                     thisUser={thisUser}
-                                    favoriteMeals={favoriteMeals}
                                     buttonClass="p-0!"
                                     iconClass="size-6!"
                                 />
@@ -123,12 +122,11 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
                     </div>
                     <div className="text-sm max-sm:text-xs flexy justify-start! gap-1">
                         {meal.views} views
-                        {console.log(meal.views)}
                         <div className="h-1.5 w-1.5 text-sm max-sm:text-xs rounded-full bg-gray-700 m-0.5"></div>
                         {calculateDaysDifference()}
                     </div>
                 </div>
-                {mypost ? null : (
+                {!mypost && (
                     <div className="grid grid-cols-[2fr_1fr]">
                         <Link
                             href={`/publicProfile/${meal.idUser}`}

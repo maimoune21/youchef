@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { HeartIcon } from "@/../../public/icons/Icons";
 
 const FavoriteButton = ({
     meal,
     thisUser,
-    favoriteMeals,
     buttonClass,
     iconClass,
 }) => {
+    const { favoriteMeals } = usePage().props
     const [isFavorited, setIsFavorited] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 

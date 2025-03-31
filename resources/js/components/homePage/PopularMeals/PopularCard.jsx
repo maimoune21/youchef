@@ -5,9 +5,8 @@ import { Link, usePage } from "@inertiajs/react";
 import FavoriteButton from "../../ui/favoriteButton";
 
 const PopularCard = ({ meal }) => {
-    const { favoriteMeals, thisUser } = usePage().props
+    const { thisUser } = usePage().props
     const [status, setStatus] = useState("");
-    const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
         const [hours, minutes, seconds] = meal.duration.split(":").map(Number);
@@ -21,13 +20,6 @@ const PopularCard = ({ meal }) => {
             setStatus("easy");
         }
     }, [meal.duration]);
-
-    useEffect(() => {
-        const mealExists = favoriteMeals.find(
-            (fav) => fav.idMeal === meal.idMeal
-        );
-        setIsFavorited(!!mealExists);
-    }, [favoriteMeals, meal.idMeal]);
 
     const calculateDaysDifference = () => {
         const today = new Date(meal.created_at);
@@ -107,7 +99,6 @@ const PopularCard = ({ meal }) => {
                                     <FavoriteButton
                                         meal={meal}
                                         thisUser={thisUser}
-                                        favoriteMeals={favoriteMeals}
                                         buttonClass="p-0! text-black! fill-black!"
                                     />
                                 </div>

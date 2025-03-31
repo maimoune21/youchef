@@ -41,8 +41,30 @@ class ProfileController extends Controller
                 return $meal;
             });
 
+        $userlogin = Auth::user();
+
+        $mealfav = DB::table('user__meal__favorite')
+            ->where('idUser', $userlogin->idUser)
+            ->pluck('idMeal');
+
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->leftJoin('categories', 'meals.idCategory', '=', 'categories.idCategory')
+            ->leftJoin('kitchens', 'meals.idKitchen', '=', 'kitchens.idKitchen')
+            ->whereIn('meals.idMeal', $mealfav)
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage',
+                'categories.name as categoryName',
+                'kitchens.name as kitchenName'
+            )
+            ->latest()
+            ->get();
+
         // Passing data to the view :
-        return inertia('profile/PublicProfile', compact('user', 'meals'));
+        return inertia('profile/PublicProfile', compact('user', 'meals', 'favoriteMeals'));
     }
     public function privateShow()
     {

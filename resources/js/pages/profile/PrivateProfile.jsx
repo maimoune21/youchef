@@ -47,9 +47,8 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
             {/* Post Deleted Message */}
             {messageDeleted && (
                 <div
-                    className={`fixed top-20 z-40 -right-50 ${
-                        flashMsg == "showed" ? "right-6" : "-right-50"
-                    } bg-green-600 transition-all duration-500 px-3 py-2 rounded-md shadow-lg text-sm text-white`}
+                    className={`fixed top-20 z-40 -right-50 ${flashMsg == "showed" ? "right-6" : "-right-50"
+                        } bg-green-600 transition-all duration-500 px-3 py-2 rounded-md shadow-lg text-sm text-white`}
                 >
                     {messageDeleted}
                 </div>
@@ -130,11 +129,10 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                 <div className="relative w-[65%] md:w-[55%] flex justify-between">
                     <button href={"/profile/meals"}>
                         <button
-                            className={`cursor-pointer  ${
-                                status == "meals"
+                            className={`cursor-pointer  ${status == "meals"
                                     ? "text-green"
                                     : "text-gray-600"
-                            } transition duration-300 hover:text-green font-semibold`}
+                                } transition duration-300 hover:text-green font-semibold`}
                             onMouseEnter={() =>
                                 status == "favorites"
                                     ? setIsMealssHovered(true)
@@ -149,11 +147,10 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
 
                     <button href={"/profile/favorites"}>
                         <button
-                            className={`cursor-pointer ${
-                                status == "favorites"
+                            className={`cursor-pointer ${status == "favorites"
                                     ? "text-green"
                                     : "text-gray-600"
-                            } transition duration-300 hover:text-green font-semibold`}
+                                } transition duration-300 hover:text-green font-semibold`}
                             onMouseEnter={() =>
                                 status == "meals"
                                     ? setIsFavoritesHovered(true)
@@ -167,16 +164,14 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                     </button>
 
                     <span
-                        className={`absolute -bottom-[0.4rem] h-1 bg-10 rounded-t-full transition-all transition[left_400ms_cubic-bezier(0.175, 0.885, 0.32, 1.275)] duration-300 ${
-                            status == "meals"
+                        className={`absolute -bottom-[0.4rem] h-1 bg-10 rounded-t-full transition-all transition[left_400ms_cubic-bezier(0.175, 0.885, 0.32, 1.275)] duration-300 ${status == "meals"
                                 ? "origin-left -left-4 w-20"
                                 : "origin-right left-[calc(100%-90px)] w-28"
-                        } ${
-                            (isMealssHovered && status == "favorites") ||
-                            (isFavoritesHovered && status == "meals")
+                            } ${(isMealssHovered && status == "favorites") ||
+                                (isFavoritesHovered && status == "meals")
                                 ? "scale-x-125"
                                 : ""
-                        }
+                            }
                               `}
                     ></span>
                 </div>
@@ -191,14 +186,12 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                     ) : (
                         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
                             {posts.map((post) => (
-                                <div>
-                                    <MealCard
-                                        key={post.idMeal}
-                                        meal={post}
-                                        mypost={true}
-                                        handleDelete={handleDelete}
-                                    />
-                                </div>
+                                <MealCard
+                                    key={post.idMeal}
+                                    meal={post}
+                                    mypost={true}
+                                    handleDelete={handleDelete}
+                                />
                             ))}
                         </div>
                     )
@@ -208,13 +201,11 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                     </h1>
                 ) : (
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9">
-                        {favoriteMeals.map((favorite) => (
+                        {favoriteMeals.map(favorite => (
                             <MealCard
                                 key={favorite.id}
                                 meal={favorite}
                                 thisUser={user}
-                                favoriteMeals={favoriteMeals}
-                                handleDelete={handleDelete}
                             />
                         ))}
                     </div>

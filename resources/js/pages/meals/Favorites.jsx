@@ -10,9 +10,10 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FilterIcon } from "/public/icons/Icons";
+import { usePage } from "@inertiajs/react";
 
-const Favorites = ({ favoriteMeals, categories, Kitchen, thisUser }) => {
-    console.log(favoriteMeals);
+const Favorites = ({ thisUser }) => {
+    const { favoriteMeals, categories, Kitchen } = usePage().props
     const [meals, setMeals] = useState([]);
     const [categorie, setCategorie] = useState("");
     const [countries, setCountries] = useState("");
