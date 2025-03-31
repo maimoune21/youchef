@@ -123,6 +123,7 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
                     </div>
                     <div className="text-sm max-sm:text-xs flexy justify-start! gap-1">
                         {meal.views} views
+                        {console.log(meal.views)}
                         <div className="h-1.5 w-1.5 text-sm max-sm:text-xs rounded-full bg-gray-700 m-0.5"></div>
                         {calculateDaysDifference()}
                     </div>

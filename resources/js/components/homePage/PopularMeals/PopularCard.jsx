@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
-import { SignalIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
-import { Link } from "@inertiajs/react";
+import { SignalIcon, TimeIcon } from "/public/icons/Icons";
+import { Link, usePage } from "@inertiajs/react";
 import FavoriteButton from "../../ui/favoriteButton";
 
-const PopularCard = ({ meal, thisUser, favoriteMeals }) => {
+const PopularCard = ({ meal }) => {
+    const { favoriteMeals, thisUser } = usePage().props
     const [status, setStatus] = useState("");
     const [isFavorited, setIsFavorited] = useState(false);
 

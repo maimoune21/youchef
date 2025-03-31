@@ -32,7 +32,14 @@ class ProfileController extends Controller
                 'users.lastName as userLName',
                 'users.profile_img as userImage'
             )
-            ->get();
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
 
         // Passing data to the view :
         return inertia('profile/PublicProfile', compact('user', 'meals'));
@@ -73,8 +80,14 @@ class ProfileController extends Controller
                 'categories.name as categoryName',
                 'kitchens.name as kitchenName'
             )
-            ->orderBy('meals.views', 'desc')
-            ->get();
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
 
         return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals'));
     }

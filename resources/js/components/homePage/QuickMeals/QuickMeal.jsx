@@ -12,7 +12,7 @@ import {
 import { Link } from "@inertiajs/react";
 import SeeAllButton from "../../ui/SeeAllButton";
 
-const QuickMeal = ({ categorie, meals, thisUser, favoriteMeals }) => {
+const QuickMeal = ({ categorie, meals }) => {
     return (
         <div className="w-[90%] lg:w-[90%] xl:w-[85%] mx-auto rounded-xl flex flex-col py-5 pb-8 gap-4 bg-30 custom-shadow">
             <div className="px-9 flexy justify-between!">
@@ -58,8 +58,6 @@ const QuickMeal = ({ categorie, meals, thisUser, favoriteMeals }) => {
                                 >
                                     <QuickCard
                                         meal={card}
-                                        thisUser={thisUser}
-                                        favoriteMeals={favoriteMeals}
                                     />
                                 </CarouselItem>
                             ))

@@ -1,10 +1,11 @@
-import { SignalIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
+import { SignalIcon, TimeIcon } from "/public/icons/Icons";
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import FavoriteButton from "../../ui/favoriteButton";
 
-const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
+const QuickCard = ({ meal }) => {
+    const { thisUser, favoriteMeals } = usePage().props
     const [status, setStatus] = useState("");
     const [isFavorited, setIsFavorited] = useState(false);
 

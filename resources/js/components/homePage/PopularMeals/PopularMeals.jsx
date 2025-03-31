@@ -10,7 +10,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { LeftArrowIcon, RightArrowIcon } from "../../../../../public/icons/Icons";
 
-const PopularMeals = ({ popularMeals, thisUser, favoriteMeals }) => {
+const PopularMeals = ({ popularMeals }) => {
     return (
         <div
             id="PopularMeals"
@@ -39,7 +39,7 @@ const PopularMeals = ({ popularMeals, thisUser, favoriteMeals }) => {
                                     key={index}
                                     className="basis-full bg-transparent px-3"
                                 >
-                                    <PopularCard meal={meal} thisUser={thisUser} favoriteMeals={favoriteMeals} />
+                                    <PopularCard meal={meal} />
                                 </CarouselItem>
                             ))}
                         </CarouselContent>

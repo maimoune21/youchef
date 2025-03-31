@@ -34,8 +34,14 @@ class FavoriteController extends Controller
                 'users.lastName as userLName',
                 'users.profile_img as userImage'
             )
-            ->orderBy('meals.views', 'desc')
-            ->get();
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
 
         return inertia('meals/Favorites', compact('favoriteMeals', 'categories', 'Kitchen', 'thisUser'));
     }

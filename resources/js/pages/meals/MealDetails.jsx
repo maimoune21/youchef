@@ -18,6 +18,7 @@ const MealDetails = ({
     comments,
     thisUser,
     favoriteMeals,
+    viewsCount
 }) => {
     // Meal Comments :
     const MealComments = comments;
@@ -267,7 +268,7 @@ const MealDetails = ({
                         <div className="flex flex-col gap-1">
                             <div>
                                 <p className="text-sm">
-                                    {meal.views} views • {daysAgo}
+                                    {viewsCount} views • {daysAgo}
                                 </p>
                             </div>
                             <div className="flex items-center gap-2 mt-1">
