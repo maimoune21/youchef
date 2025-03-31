@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('idUser')->constrained('users', 'idUser')->onDelete('cascade');
             $table->foreignId('idMeal')->constrained('meals', 'idMeal')->onDelete('cascade');
             $table->primary(['idUser', 'idMeal']);
+            $table->string('status');
         });
     }
 

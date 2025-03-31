@@ -36,8 +36,7 @@
 
     // User Pages :
     Route::middleware('auth')->group(function () {
-        Route::post('/meals/{id}/like', [MealController::class, 'like']);
-        Route::post('/meals/{id}/dislike', [MealController::class, 'dislike']);
+        Route::post('/meal/like', [MealController::class, 'likeMeal']);
         Route::post('/meals/{id}/comment', [MealController::class, 'addComment']);
         Route::get('/postMeal', [MealController::class, 'create']);
         Route::post('/postMeal', [MealController::class, 'store']);

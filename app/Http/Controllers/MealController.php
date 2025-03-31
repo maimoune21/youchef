@@ -205,8 +205,42 @@ class MealController extends Controller
             ->where('idMeal', $meal->idMeal)
             ->count();
 
+        $likesCount = DB::table('user_meal_likes')
+            ->where('idMeal', $meal->idMeal)
+            ->where('status', 'liked')
+            ->count();
+
+        $dislikesCount = DB::table('user_meal_likes')
+            ->where('idMeal', $meal->idMeal)
+            ->where('status', 'disliked')
+            ->count();
+
         // Passing data to the view :
-        return inertia('meals/MealDetails', compact('meal', 'user', 'categoryName', 'kitchenName', 'comments', 'thisUser', 'favoriteMeals', 'viewsCount'));
+        $userId = Auth::id();
+        $userHadLiked = DB::table('user_meal_likes')
+            ->where('idUser', $userId)
+            ->where('idMeal', $meal->idMeal)
+            ->value('status');  // 'liked', 'unliked', or 'disliked'
+
+        // Set flags based on the user's interaction with the meal
+        $userHasLiked = $userHadLiked === 'liked';    // true if liked
+        $userHasDisliked = $userHadLiked === 'disliked'; // true if disliked
+
+        // Passing data to the view
+        return inertia('meals/MealDetails', compact(
+            'meal',
+            'user',
+            'categoryName',
+            'kitchenName',
+            'comments',
+            'thisUser',
+            'favoriteMeals',
+            'viewsCount',
+            'likesCount',
+            'dislikesCount',
+            'userHasLiked',
+            'userHasDisliked'
+        ));
     }
 
     /**
@@ -267,25 +301,31 @@ class MealController extends Controller
         return response()->json(['message' => 'Meal updated successfully!']);
     }
 
-    /**
-     * Increment the likes count for a meal.
-     */
-    public function like($id)
+    public function likeMeal(Request $request)
     {
-        $meal = Meal::find($id);
-        if ($meal) {
-            $meal->increment('likes');
-        }
-    }
+        $userId = Auth::id();  // Assuming the user is authenticated
+        $mealId = $request->input('idMeal');
+        $status = $request->input('status'); // 'liked', 'unliked', 'disliked'
 
-    /**
-     * Decrement the likes count for a meal.
-     */
-    public function dislike($id)
-    {
-        $meal = Meal::find($id);
-        if ($meal && $meal->likes > 0) {
-            $meal->decrement('likes');
+        // Check if the user already has a record in the 'user_meal_likes' table
+        $existingLike = DB::table('user_meal_likes')
+            ->where('idUser', $userId)
+            ->where('idMeal', $mealId)
+            ->first();
+
+        // If the user has already liked or disliked the meal, update the status
+        if ($existingLike) {
+            DB::table('user_meal_likes')
+                ->where('idUser', $userId)
+                ->where('idMeal', $mealId)
+                ->update(['status' => $status]);  // Update the existing record
+        } else {
+            // If the user has not interacted with the meal yet, create a new entry
+            DB::table('user_meal_likes')->insert([
+                'idUser' => $userId,
+                'idMeal' => $mealId,
+                'status' => $status,
+            ]);
         }
     }
 

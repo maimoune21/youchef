@@ -66,7 +66,6 @@ class MealsSeeder extends Seeder
                     fake()->randomElements(['Salt', 'Pepper', 'Oil', 'Herbs'], rand(1, 3))
                 )),
                 'instructions' => json_encode(array_map(fn($s) => ucfirst($s), fake()->sentences(rand(3, 5)))),
-                'likes' => rand(0, 100),
                 'idCategory' => $categoryIds[$category],
                 'idKitchen' => $kitchenIds[$country],
                 'idUser' => rand(1, 9),
