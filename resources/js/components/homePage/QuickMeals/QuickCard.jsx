@@ -44,9 +44,8 @@ const QuickCard = ({ meal }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${
-                differenceInDays !== 1 ? "s" : ""
-            } ago`;
+            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
+                } ago`;
         }
     };
 
@@ -54,9 +53,8 @@ const QuickCard = ({ meal }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${
-                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-            }`;
+            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+                }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -69,9 +67,12 @@ const QuickCard = ({ meal }) => {
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                     <img
-                        src={BlankMeal}
+                        src={meal.meal_img ? `/storage/${meal.meal_img}` : BlankMeal}
                         alt={meal.title}
-                        className="w-full h-full rounded-t-3xl object-cover group-hover:scale-105 transition duration-300"
+                        className="w-full h-full rounded-t-3xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
+                        onError={(e) => {
+                            e.target.src = BlankMeal;
+                        }}
                     />
                 </Link>
                 <div className="absolute bottom-1 text-xs left-3 bg-30 flexy rounded-full p-1 gap-1">
@@ -79,13 +80,12 @@ const QuickCard = ({ meal }) => {
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute bottom-1 text-xs right-3 bg-30 flexy rounded-full py-1 px-1 pt-0.5 ${
-                        status === "hard"
+                    className={`absolute bottom-1 text-xs right-3 bg-30 flexy rounded-full py-1 px-1 pt-0.5 ${status === "hard"
                             ? "text-red-500"
                             : status === "medium"
-                            ? "text-orange-500"
-                            : "text-green-500"
-                    }`}
+                                ? "text-orange-500"
+                                : "text-green-500"
+                        }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-5.5 pb-0.5" />

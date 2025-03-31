@@ -189,7 +189,7 @@ const MealDetails = ({
                     <img
                         src={
                             meal.meal_img
-                                ? `/uploads/${meal.meal_img}`
+                                ? `/storage/${meal.meal_img}`
                                 : Meal
                         }
                         className="w-full max-h-[60vh] rounded-t-3xl border-b-2"
@@ -198,6 +198,7 @@ const MealDetails = ({
                             e.target.src = Meal;
                         }}
                     />
+                    { console.log(meal.meal_img)}
                     <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 text-black rounded-b-3xl">
                         {meal.title}
                     </h1>
