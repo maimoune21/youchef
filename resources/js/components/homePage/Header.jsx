@@ -29,10 +29,10 @@ export default function Header() {
     const [api, setApi] = useState(null);
 
     const slides = [
-        { id: 1, image: Vegetables, alt: "Vegetables" },
+        { id: 1, image: Salade, alt: "Fresh Salad" },
         { id: 2, image: Pizza, alt: "Pizza" },
-        { id: 3, image: Burger, alt: "Delicious Burger" },
-        { id: 4, image: Salade, alt: "Fresh Salad" },
+        { id: 3, image: Vegetables, alt: "Vegetables" },
+        { id: 4, image: Burger, alt: "Delicious Burger" },
         { id: 5, image: Spagetti, alt: "Spagetti" },
     ];
 
