@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
         $userlogin = Auth::user();
 
-        $mealfav = DB::table('user__meal__favorite')
+        $mealfav = DB::table('user_meal_favorites')
             ->where('idUser', $userlogin->idUser)
             ->pluck('idMeal');
 
@@ -86,7 +86,7 @@ class ProfileController extends Controller
             )
             ->get();
 
-        $meals = DB::table('user__meal__favorite')
+        $meals = DB::table('user_meal_favorites')
             ->where('idUser', $user->idUser)
             ->pluck('idMeal');
 

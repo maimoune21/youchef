@@ -43,6 +43,6 @@ class UserMealFavoriteSeeder extends Seeder
         ];
 
         // Insert predefined favorite meals
-        DB::table('user__meal__favorite')->insert($favorites);
+        DB::table('user_meal_favorites')->insert($favorites);
     }
 }

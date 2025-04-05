@@ -55,7 +55,7 @@ export const Register = () => {
 
     return (
         <>
-            <section className="w-full grid place-items-center">
+            <section className="w-full grid place-items-center mt-5">
                 <div className="w-[90%] max-w-lg bg-white rounded-2xl flex flex-col pt-8 pb-3 shadow-xl">
                     <div className="relative flex justify-center items-center h-11 text-xl font-bold">
                         <div className="absolute inset-0 bg-10 opacity-15 z-0"></div>

@@ -21,7 +21,7 @@ class FavoriteController extends Controller
         $categories = Category::all();
         $Kitchen = DB::table("kitchens")->get();
 
-        $meals = DB::table('user__meal__favorite')
+        $meals = DB::table('user_meal_favorites')
             ->where('idUser', $thisUser->idUser)
             ->pluck('idMeal');
 
@@ -64,14 +64,14 @@ class FavoriteController extends Controller
         $idUser = $request->input('idUser');
 
         // Check if the meal is already in the favorites
-        $existing = DB::table('user__meal__favorite')
+        $existing = DB::table('user_meal_favorites')
             ->where('idMeal', $idMeal)
             ->where('idUser', $idUser)
             ->first();
 
         if ($existing) {
             // If the meal exists, remove it
-            DB::table('user__meal__favorite')
+            DB::table('user_meal_favorites')
                 ->where('idMeal', $idMeal)
                 ->where('idUser', $idUser)
                 ->delete();
@@ -79,7 +79,7 @@ class FavoriteController extends Controller
             return Redirect::back()->with('success', 'Meal removed from favorites!');
         } else {
             // If the meal does not exist, add it
-            DB::table('user__meal__favorite')->insert([
+            DB::table('user_meal_favorites')->insert([
                 'idMeal' => $idMeal,
                 'idUser' => $idUser
             ]);
