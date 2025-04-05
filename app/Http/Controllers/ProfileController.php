@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,9 +81,10 @@ class ProfileController extends Controller
             ->get();
 
         $SearchedMeals = Meal::latest()->get();
+        $dataKitchens = DB::table("kitchens")->get();
+        $dataCategories = Category::all();
 
-
-        return inertia('profile/PrivateProfile', compact('user', 'posts', 'favoriteMeals', 'SearchedMeals'));
+        return inertia('profile/PrivateProfile', compact('user', 'posts',"dataKitchens", "dataCategories" ,'favoriteMeals', 'SearchedMeals'));
     }
     public function update(Request $request)
     {

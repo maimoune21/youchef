@@ -15,12 +15,14 @@ import MealCard from "@/components/ui/MealCard";
 import { router, useForm } from "@inertiajs/react";
 import { LogOut } from "lucide-react";
 
-const PrivateProfile = ({ user, posts, favoriteMeals }) => {
+const PrivateProfile = ({ user, posts, favoriteMeals , dataCategories, dataKitchens}) => {
     const [isFavoritesHovered, setIsFavoritesHovered] = useState(false);
     const [isMealssHovered, setIsMealssHovered] = useState(false);
     const [status, setStatus] = useState("meals");
     const [messageDeleted, setmessageDeleted] = useState("");
 
+    // console.log(dataCategories)
+    // console.log(dataKicthens)
     // Logout :
     const { post } = useForm();
     const HLogOut = (e) => {
@@ -197,6 +199,8 @@ const PrivateProfile = ({ user, posts, favoriteMeals }) => {
                                         meal={post}
                                         mypost={true}
                                         handleDelete={handleDelete}
+                                        dataCategories={dataCategories} 
+                                        dataKitchens={dataKitchens}
                                     />
                                 </div>
                             ))}

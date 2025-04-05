@@ -18,7 +18,8 @@ import { UpdateMeal } from "@/components/models/UpdateMeal";
 import { Button } from "@/components/ui/button";
 import { CircleChevronRight } from "lucide-react";
 
-const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}) => {
+const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete , dataCategories, dataKitchens}) => {
+    console.log(meal.meal_img)
     const [status, setStatus] = useState("");
 
     useEffect(() => {
@@ -74,12 +75,12 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                 <img
-                  src={meal.meal_img ? `/storage/${meal.meal_img}` : BlankMeal}
+                  src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
                   alt={meal.title}
                   className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
                   onError={(e) => {
                     e.target.src = BlankMeal;
-                  }}        
+                  }}
                 />
                 </Link>
                 <div className="absolute bottom-2 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
@@ -166,6 +167,8 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete}
                         <UpdateMeal
                             buttonStyles="rounded-lg! flexy"
                             meal={meal}
+                            dataCategories={dataCategories} 
+                            dataKitchens={dataKitchens}
                         />
                         <Drawer>
                             <DrawerTrigger>

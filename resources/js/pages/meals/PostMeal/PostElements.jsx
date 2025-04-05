@@ -12,7 +12,7 @@ const PostElements = ({ handleChange, handleFileChange, animationProps, data, ne
           <h2>Meal image</h2>
           {data.meal_img ? (<div className="flexy flex-col gap-1"><img src={URL.createObjectURL(data.meal_img)} alt="hello" className="w-full h-[150px] rounded-3xl object-cover" />
             <label htmlFor='fileRef' className="button">change picture</label></div>) 
-                         : (<div onClick={() => fileInputRef.current.click()} className="border w-[180px] h-[120px] rounded-xl flex items-center justify-center flex-col gap-3 cursor-pointer bg-white hover:bg-gray-50 transition-colors"><ImageUpIcon /><h4>Upload Image</h4></div>)}
+                         : (<div className="border w-[180px] h-[120px] rounded-xl flex items-center justify-center flex-col gap-3 cursor-pointer bg-white hover:bg-gray-50 transition-colors"><ImageUpIcon /><h4>Upload Image</h4></div>)}
         </label>
         <input type="file" id='fileRef' onChange={(e) => handleFileChange(e.target.files[0])} className="hidden"/>
         <div className="flex flex-col justify-start">
