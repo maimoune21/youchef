@@ -57,7 +57,7 @@ const PopularCard = ({ meal }) => {
     return (
         <div className="w-full bg-soft relative custom-shadow rounded-xl overflow-hidden my-2 max-h-[60vh] md:max-h-[75vh]">
             <img
-                src={meal.meal_img ? `/storage/${meal.meal_img}` : BlankMeal}
+                src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
                 alt={meal.image}
                 className=" w-full max-sm:h-64 aspect-[4/2]"
                 onError={(e) => {

@@ -169,7 +169,7 @@ class MealController extends Controller
         $mealsfav = collect();
 
         if ($thisUser) {
-            $mealsfav = DB::table('user_meal_favorite')
+            $mealsfav = DB::table('user_meal_favorites')
                 ->where('idUser', $thisUser->idUser)
                 ->pluck('idMeal');
         }

@@ -59,7 +59,7 @@ const QuickCard = ({ meal }) => {
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                     <img
-                        src={meal.meal_img ? `/storage/${meal.meal_img}` : BlankMeal}
+                        src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
                         alt={meal.title}
                         className="w-full h-full rounded-t-3xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
                         onError={(e) => {
