@@ -1,7 +1,9 @@
 import React from 'react';
 import MealCard from '@/components/ui/MealCard';
+import { usePage } from '@inertiajs/react';
 
 const PublicProfile = ({ user, meals }) => {
+    const { user:authUser } = usePage().props.auth
     return (
         <div className="mx-auto bg-30 custom-shadow rounded-lg sm:p-6 w-[95%]">
             {/* Profile Header */}
@@ -38,7 +40,11 @@ const PublicProfile = ({ user, meals }) => {
 
                 <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-9'>
                     {meals.map(post =>
-                        <MealCard key={post.id} meal={post} />
+                        <MealCard
+                            key={post.id}
+                            meal={post}
+                            thisUser={authUser}
+                        />
                     )}
                 </div>
             </div>

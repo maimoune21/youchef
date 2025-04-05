@@ -1,12 +1,12 @@
-import { SignalIcon, TimeIcon, DotsIcon } from "/public/icons/Icons";
+import { SignalIcon, TimeIcon } from "/public/icons/Icons";
 import React, { useEffect, useState } from "react";
 import BlankMeal from "@/../../public/images/BlankMeal.png";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import FavoriteButton from "../../ui/favoriteButton";
 
-const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
+const QuickCard = ({ meal }) => {
+    const { thisUser } = usePage().props
     const [status, setStatus] = useState("");
-    const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
         const [hours, minutes, seconds] = meal.duration.split(":").map(Number);
@@ -20,13 +20,6 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
             setStatus("easy");
         }
     }, [meal.duration]);
-
-    useEffect(() => {
-        const mealExists =
-            favoriteMeals &&
-            favoriteMeals.find((fav) => fav.idMeal === meal.idMeal);
-        setIsFavorited(!!mealExists); // Convert to boolean
-    }, [favoriteMeals, meal.idMeal]);
 
     const calculateDaysDifference = () => {
         const today = new Date(meal.created_at);
@@ -43,9 +36,8 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${
-                differenceInDays !== 1 ? "s" : ""
-            } ago`;
+            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
+                } ago`;
         }
     };
 
@@ -53,9 +45,8 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${
-                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-            }`;
+            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+                }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -68,9 +59,12 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                     <img
-                        src={BlankMeal}
+                        src={meal.meal_img ? `/storage/${meal.meal_img}` : BlankMeal}
                         alt={meal.title}
-                        className="w-full h-full rounded-t-3xl object-cover group-hover:scale-105 transition duration-300"
+                        className="w-full h-full rounded-t-3xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
+                        onError={(e) => {
+                            e.target.src = BlankMeal;
+                        }}
                     />
                 </Link>
                 <div className="absolute bottom-1 text-xs left-3 bg-30 flexy rounded-full p-1 gap-1">
@@ -78,13 +72,12 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute bottom-1 text-xs right-3 bg-30 flexy rounded-full py-1 px-1 pt-0.5 ${
-                        status === "hard"
+                    className={`absolute bottom-1 text-xs right-3 bg-30 flexy rounded-full py-1 px-1 pt-0.5 ${status === "hard"
                             ? "text-red-500"
                             : status === "medium"
-                            ? "text-orange-500"
-                            : "text-green-500"
-                    }`}
+                                ? "text-orange-500"
+                                : "text-green-500"
+                        }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-5.5 pb-0.5" />
@@ -106,7 +99,6 @@ const QuickCard = ({ meal, thisUser, favoriteMeals }) => {
                         <FavoriteButton
                             meal={meal}
                             thisUser={thisUser}
-                            favoriteMeals={favoriteMeals}
                             buttonClass="p-0!"
                             iconClass='size-6!'
                         />

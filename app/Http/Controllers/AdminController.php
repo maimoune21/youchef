@@ -34,6 +34,9 @@ class AdminController extends Controller
             )
             ->get()
             ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
                 return (array) $meal;
             });
 

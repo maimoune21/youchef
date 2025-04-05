@@ -24,8 +24,14 @@ class HomeController extends Controller
                 'users.lastName as userFName',
                 'users.profile_img as userImage'
             )
-            ->orderBy('meals.views', 'desc')
-            ->get();
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
         $categories = Category::all();
         $Kitchen = DB::table("kitchens")->get();
 
@@ -47,12 +53,16 @@ class HomeController extends Controller
                 'users.lastName as userLName',
                 'users.profile_img as userImage'
             )
-            ->orderBy('meals.views', 'desc')
-            ->get();
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
 
-        $SearchedMeals = Meal::latest()->get();
-
-        return inertia("general/Home", compact("meals", "categories", "Kitchen", "thisUser", "favoriteMeals", "SearchedMeals"));
+        return inertia("general/Home", compact("meals", "categories", "Kitchen", "thisUser", "favoriteMeals"));
     }
 
     /**

@@ -33,13 +33,39 @@ class ProfileController extends Controller
                 'users.lastName as userLName',
                 'users.profile_img as userImage'
             )
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
+
+        $userlogin = Auth::user();
+
+        $mealfav = DB::table('user__meal__favorite')
+            ->where('idUser', $userlogin->idUser)
+            ->pluck('idMeal');
+
+        $favoriteMeals = Meal::join('users', 'meals.idUser', '=', 'users.idUser')
+            ->leftJoin('categories', 'meals.idCategory', '=', 'categories.idCategory')
+            ->leftJoin('kitchens', 'meals.idKitchen', '=', 'kitchens.idKitchen')
+            ->whereIn('meals.idMeal', $mealfav)
+            ->select(
+                'meals.*',
+                'users.idUser as idUser',
+                'users.firstName as userFName',
+                'users.lastName as userLName',
+                'users.profile_img as userImage',
+                'categories.name as categoryName',
+                'kitchens.name as kitchenName'
+            )
+            ->latest()
             ->get();
 
-        $SearchedMeals = Meal::latest()->get();
-
-
         // Passing data to the view :
-        return inertia('profile/PublicProfile', compact('user', 'meals', 'SearchedMeals'));
+        return inertia('profile/PublicProfile', compact('user', 'meals', 'favoriteMeals'));
     }
     public function privateShow()
     {
@@ -77,9 +103,15 @@ class ProfileController extends Controller
                 'categories.name as categoryName',
                 'kitchens.name as kitchenName'
             )
-            ->orderBy('meals.views', 'desc')
-            ->get();
-
+            ->latest()
+            ->get()
+            ->map(function ($meal) {
+                $meal->views = DB::table('user_meal_views')
+                    ->where('idMeal', $meal->idMeal)
+                    ->count();
+                return $meal;
+            });
+            
         $SearchedMeals = Meal::latest()->get();
         $dataKitchens = DB::table("kitchens")->get();
         $dataCategories = Category::all();

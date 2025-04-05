@@ -216,6 +216,12 @@ body {
   @apply relative flex border-b-2 rounded-r-full py-7 pr-2 justify-between cursor-pointer w-[80%];
 }
 
+.word-wrap {
+  word-break: break-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
 /************************************************************************/
 /* Shadcn Ui Custom */
 .dark {

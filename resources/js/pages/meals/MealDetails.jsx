@@ -18,6 +18,11 @@ const MealDetails = ({
     comments,
     thisUser,
     favoriteMeals,
+    viewsCount,
+    likesCount,
+    dislikesCount,
+    userHasLiked,
+    userHasDisliked,
 }) => {
     // Meal Comments :
     const MealComments = comments;
@@ -51,45 +56,44 @@ const MealDetails = ({
     const daysAgo = getDaysAgo(meal.updated_at);
 
     // Like and Dislike Logic:
-    const [likes, setLikes] = useState(meal.likes);
+    const [likes, setLikes] = useState(likesCount);
+    const [dislikes, setDislikes] = useState(dislikesCount);
     const [userAction, setUserAction] = useState({
-        liked: meal.user_has_liked || false,
-        disliked: meal.user_has_disliked || false,
+        liked: userHasLiked || false,
+        disliked: userHasDisliked || false,
     });
+
     const handleLike = () => {
         if (!activUser) {
             router.visit("/login");
             return;
         }
-        if (userAction.liked) return;
-        const newState = {
+        if (userAction.liked) return handleUnlike();
+        setUserAction({
             liked: true,
             disliked: false,
-        };
-        setUserAction(newState);
-        setLikes((prev) => {
-            if (userAction.disliked) {
-                return prev + 1;
-            }
-            return prev + 1;
         });
-        router.post(
-            `/meals/${meal.idMeal}/like`,
-            {
-                action: "like",
-                wasDisliked: userAction.disliked,
-            },
-            {
-                onError: () => {
-                    setUserAction({
-                        liked: false,
-                        disliked: userAction.disliked,
-                    });
-                    setLikes((prev) => prev - 1);
-                },
-                preserveScroll: true,
-            }
-        );
+        router.post("/meal/like", {
+            idUser: activUser.id,
+            idMeal: meal.idMeal,
+            status: "liked",
+        }, { preserveScroll: true });
+    };
+
+    const handleUnlike = () => {
+        if (!activUser) {
+            router.visit("/login");
+            return;
+        }
+        setUserAction({
+            liked: false,
+            disliked: false,
+        });
+        router.post("/meal/like", {
+            idUser: activUser.id,
+            idMeal: meal.idMeal,
+            status: "unliked",
+        }, { preserveScroll: true });
     };
 
     const handleDislike = () => {
@@ -97,39 +101,17 @@ const MealDetails = ({
             router.visit("/login");
             return;
         }
-        if (userAction.disliked) return;
-        const newState = {
+        if (userAction.disliked) return handleUnlike();
+        setUserAction({
             liked: false,
             disliked: true,
-        };
-        setUserAction(newState);
-        setLikes((prev) => {
-            if (userAction.liked) {
-                return prev - 1;
-            }
-            return prev;
         });
-
-        router.post(
-            `/meals/${meal.idMeal}/dislike`,
-            {
-                action: "dislike",
-                wasLiked: userAction.liked,
-            },
-            {
-                onError: () => {
-                    setUserAction({
-                        liked: userAction.liked,
-                        disliked: false,
-                    });
-                    if (userAction.liked) {
-                        setLikes((prev) => prev + 1);
-                    }
-                },
-                preserveScroll: true,
-            }
-        );
-    };
+        router.post("/meal/like", {
+            idUser: activUser.id,
+            idMeal: meal.idMeal,
+            status: "disliked",
+        }, { preserveScroll: true });
+    }
 
     // Commenting :
     const [newComment, setNewComment] = useState("");
@@ -197,6 +179,7 @@ const MealDetails = ({
                   onError={(e) => {
                       e.target.src = Meal;
                     }}
+
                     />
                     <h1 className="text-2xl font-bold pt-1.5 pb-2 px-4 text-black rounded-b-3xl">
                         {meal.title}
@@ -230,24 +213,24 @@ const MealDetails = ({
                             </div>
                         </Link>
                         <div className="flexy gap-2">
-                            <span className="rounded-full border-1 border-black flexy gap-2 px-2 py-1">
+                            <span className="rounded-full border-1 border-black flexy overflow-hidden">
                                 <span
-                                    className="flexy cursor-pointer select-none"
+                                    className="flexy gap-0.5 pl-2.5 pr-2 py-1.5 hover:bg-gray-300 cursor-pointer select-none"
                                     onClick={handleLike}
                                 >
                                     <LikeIcon
-                                        size={`size-5.5 ${
-                                            userAction.liked ? "fill-black" : ""
-                                        }`}
+                                        size={`size-5.5 ${userAction.liked ? "fill-black" : ""
+                                            }`}
                                     />
                                     <b className="text-sm">{likes}</b>
                                 </span>
                                 <span className="h-6.5 w-px bg-black rounded-full"></span>
                                 <span
-                                    className="cursor-pointer select-none"
+                                    className="flexy gap-0.5 pr-2.5 pl-2 py-1.5 hover:bg-gray-300 cursor-pointer select-none"
                                     onClick={handleDislike}
                                 >
-                                    <DislikeIcon size={`size-5.5`} />
+                                    <DislikeIcon size={`size-5.5 ${userAction.disliked ? "fill-black" : ""}`} />
+                                    <b className="text-sm">{dislikes}</b>
                                 </span>
                             </span>
                             <button
@@ -256,11 +239,10 @@ const MealDetails = ({
                             >
                                 <HeartIcon
                                     size="size-5.5"
-                                    className={`${
-                                        isFavorited
-                                            ? "fill-[var(--bg-10)] text-[var(--bg-10)]"
-                                            : "fill-none text-black fill:[var(--bg-10)] stroke-2"
-                                    }`}
+                                    className={`${isFavorited
+                                        ? "fill-[var(--bg-10)] text-[var(--bg-10)]"
+                                        : "fill-none text-black fill:[var(--bg-10)] stroke-2"
+                                        }`}
                                 />
                             </button>
                             <ReportMeal meal={meal.title} />
@@ -270,7 +252,7 @@ const MealDetails = ({
                         <div className="flex flex-col gap-1">
                             <div>
                                 <p className="text-sm">
-                                    {meal.views} views • {daysAgo}
+                                    {viewsCount} views • {daysAgo}
                                 </p>
                             </div>
                             <div className="flex items-center gap-2 mt-1">

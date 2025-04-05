@@ -1,8 +1,10 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import worldicon from "/public/images/worldicon.svg";
 import React from "react";
 
-const WorldMeals = ({ Kitchen }) => {
+const WorldMeals = () => {
+  const { Kitchen } = usePage().props;
+  
   return (
     <div className="flex flex-col w-full">
       <div className="text-center bg-soft pb-20 sm:pb-30 md:pb-40">

@@ -5,7 +5,7 @@ import { Link, router, usePage } from "@inertiajs/react";
 import styled from "styled-components";
 
 const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
-    const { SearchedMeals } = usePage().props
+    const { searchedMeals } = usePage().props
     const [searchedInput, setSearchedInput] = useState("");
     const inputRef = useRef(null);
     const GrowRef = useRef(null);
@@ -30,6 +30,8 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
             router.get(`/meals?search=${searchedInput}`);
+            setIsExpanded(false);
+            setSearchedInput("")
         }
     };
 
@@ -56,31 +58,33 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
                     <XCancelIcon />
                 </div>
                 {
-                    SearchedMeals && searchedInput &&
+                    searchedMeals && searchedInput &&
                     <div className="absolute top-[110%] text-black left-1/2 overflow-y-scroll scrollbar -translate-x-1/2 rounded-xl w-[90%] p-5 bg-30 custom-shadow max-h-[70vh]">
                         <div className="flex flex-col gap-2">
                             {
-                                SearchedMeals.slice(0, 10).filter(meal => meal.title.toLowerCase().includes(searchedInput.toLowerCase())).map(meal =>
-                                    <Link href={`/mealDetails/${meal.idMeal}`} className="hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg flex items-center gap-2" onClick={e => e.stopPropagation()}>
-                                        <div className="w-30 flexy">
+                                searchedMeals.slice(0, 10).filter(meal => meal.title.toLowerCase().includes(searchedInput.toLowerCase())).map(meal =>
+                                    <Link href={`/mealDetails/${meal.idMeal}`} className="hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg grid grid-cols-[auto_1fr] max-tn:grid-cols-2 items-center gap-2" onClick={e => { e.stopPropagation(); setIsExpanded(false); setSearchedInput("") }}>
+                                        <div className="w-full max-w-30 flexy">
                                             <img
                                                 src={
                                                     meal.meal_img
-                                                        ? `/uploads/meals/${meal.meal_img}`
-                                                        : `${Meal}`
+                                                        ? `/storage/${meal.meal_img}`
+                                                        : Meal
                                                 }
                                                 alt={meal.title}
                                                 className="w-full aspect-video rounded-lg"
+                                                onError={(e) => {
+                                                    e.target.src = Meal;
+                                                }}
                                             />
                                         </div>
                                         <div>
-                                            <p className="text-xl">{meal.title}</p>
-
+                                            <p className="text-xl max-sm:text-base max-tn:text-sm word-wrap">{meal.title}</p>
                                         </div>
                                     </Link>
                                 )
                             }
-                            <Link href={`/meals?search=${searchedInput}`} className="flexy group hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg" onClick={e => e.stopPropagation()}>
+                            <Link href={`/meals?search=${searchedInput}`} className="flexy group hover:bg-[var(--wave-2)] px-2 py-4 rounded-lg" onClick={e => { e.stopPropagation(); setIsExpanded(false); setSearchedInput("") }}>
                                 <div className="w-fit flexy relative">
                                     See All
                                     <ArrowIcon className="size-4 ml-1 group-hover:ml-2 transition-all" />

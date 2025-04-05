@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Meal;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -47,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                     'idRole' => $request->user()->idRole,
                 ] : null,
             ],
+            'searchedMeals' => Meal::latest()->get(),
             'errors' => fn() => $request->session()->get('errors')
                 ? $request->session()->get('errors')->getBag('default')->getMessages()
                 : (object) [],

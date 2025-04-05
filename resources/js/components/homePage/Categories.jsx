@@ -8,12 +8,14 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
-export default function SectionCategories({ data }) {
+export default function SectionCategories() {
+    const { categories } = usePage().props
+
     const Categories = [
         { name: 'All' ,picture: "all.png" },
-        ...data
+        ...categories
       ];
 
     return (

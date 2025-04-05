@@ -77,7 +77,7 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                 <img
                   src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
                   alt={meal.title}
-                  className="w-full h-full rounded-t-xl object-cover group-hover:scale-105 transition duration-300"
+                  className="w-full h-full rounded-t-xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
                   onError={(e) => {
                     e.target.src = BlankMeal;
                   }}
@@ -111,11 +111,10 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                             </Link>
                         </h3>
                         <div className="flexy bg-gray-100 p-1 rounded-full mr-0.5">
-                            {mypost ? null : (
+                            {!mypost && (
                                 <FavoriteButton
                                     meal={meal}
                                     thisUser={thisUser}
-                                    favoriteMeals={favoriteMeals}
                                     buttonClass="p-0!"
                                     iconClass="size-6!"
                                 />
@@ -128,7 +127,7 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                         {calculateDaysDifference()}
                     </div>
                 </div>
-                {mypost ? null : (
+                {!mypost && (
                     <div className="grid grid-cols-[2fr_1fr]">
                         <Link
                             href={`/publicProfile/${meal.idUser}`}
