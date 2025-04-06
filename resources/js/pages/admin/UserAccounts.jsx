@@ -51,12 +51,12 @@ export const UserAccounts = ({ users }) => {
                                 <div key={user.id}>
                                     <div className="border-b-1 border-gray-400 py-4 px-2">
                                         <div className="grid gap-0 sm:grid-cols-[5fr_0.5fr] max-lg:grid-cols-[1fr]!">
-                                            <div className="flex gap-8 max-sm:gap-2 max-sm:items-center max-sm:flex-col">
+                                            <div className="grid grid-cols-[1fr_16fr] gap-8 max-sm:gap-2 max-sm:items-center max-sm:flex-col">
                                                 <div className="w-20">
                                                     {user.profile_img ? (
                                                         <img
                                                             src={`/uploads/users/${user.profile_img}`}
-                                                            className="rounded-full w-full"
+                                                            className="rounded-full w-20"
                                                             alt={`${user.firstName} ${user.lastName}`}
                                                         />
                                                     ) : (

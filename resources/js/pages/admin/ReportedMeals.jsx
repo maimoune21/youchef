@@ -73,14 +73,12 @@ export const ReportedMeals = ({ meals }) => {
                             <div key={meal.idMeal}>
                                 <div className="border-b-1 border-gray-400 py-2.5 px-2">
                                     <div className="grid lg:grid-cols-[2fr_0.5fr]">
-                                        <div className="flexy sm:justify-start! flex-col sm:flex-row gap-4">
-                                            <div className="w-64 flexy">
+                                        <div className="grid grid-cols-[1fr_3fr] sm:justify-start! flex-col sm:flex-row gap-4">
+                                            <div className="w-full flexy">
                                                 <img
-                                                    src={
-                                                        meal.meal_img ||
-                                                        BlankMeal
+                                                    src={meal.meal_img ? `/storage/meals/${meal.meal_img}`: BlankMeal
                                                     }
-                                                    className="w-full rounded-2xl"
+                                                    className="aspect-[2/1] rounded-2xl"
                                                     alt={meal.title}
                                                 />
                                             </div>
