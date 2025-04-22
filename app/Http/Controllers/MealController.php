@@ -132,7 +132,7 @@ class MealController extends Controller
          $meal->meal_img = $filename;
          $meal->save();
        }
-   
+
        return redirect()->route('meals');
      }
 
@@ -292,7 +292,6 @@ class MealController extends Controller
     //   $meal->title = 'fromimage';
     //   $meal->update(['title' => $request->title ?? "ddd",]);
     // }
-
 
     // Just for testing: update image only (and any other data you want)
     if ($request->hasFile('meal_img')) {

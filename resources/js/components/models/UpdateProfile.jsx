@@ -4,12 +4,12 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import TextAreaGroup from "@/components/ui/TextAreaGroup";
 import { PencilIcon, TrashIcon } from "@/../../public/icons/Icons";
-import { useForm, usePage } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 
 export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClassName = "",...props}) {
     const { errors } = usePage().props;
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(user.profile_img ? `/uploads/users/${user.profile_img}` : null);
+    const [imagePreview, setImagePreview] = useState(user.profile_img ? `/storage/users/${user.profile_img}` : null);
 
     const { data, setData, post, processing, reset } = useForm({
         firstName: user.firstName || "",
@@ -33,25 +33,42 @@ export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClas
     };
 
     const removeImage = () => {
+        if (confirm("Are you sure you want to delete your profile image?")) {
         setData("profile_img", null);
         setSelectedImage(null);
         setImagePreview(null);
+            router.delete('/profile/image-delete', {
+                onSuccess: () => {
+                    setData((prev) => ({ ...prev, profile_img: null }));
+                    setSelectedImage(null);
+                    setImagePreview(null);
+                    console.log("Profile image deleted.");
+                },
+                onError: (errors) => {
+                    console.error("Error deleting image:", errors);
+                },
+            });
+        }
     };
 
     const handleSubmit = (e) => {
-      e.preventDefault();
-      if (data.password === data.password_confirmation){
-        post(route("profile.update"), {
+        e.preventDefault();
+        if (data.password !== data.password_confirmation) {
+            alert("Passwords do not match. Please try again.");
+            return;
+        }
+    
+        post('/profileUpdate', {
             preserveScroll: true,
+            forceFormData: true, // Required for file uploads
             onSuccess: () => {
                 console.log("Profile updated successfully");
                 reset("password", "password_confirmation");
             },
-            onError: (errors) => {console.log("Errors:", errors);},
+            onError: (errors) => {
+                console.log("Errors:", errors);
+            },
         });
-      }else{
-        
-      }
     };
 
     return (
