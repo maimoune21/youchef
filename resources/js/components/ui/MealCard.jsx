@@ -142,7 +142,7 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                                         />
                                     ) : (
                                         <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">
-                                            {meal.userLName.charAt(0)}
+                                            {meal.userFName.charAt(0)}
                                         </span>
                                     )}
                                     <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">

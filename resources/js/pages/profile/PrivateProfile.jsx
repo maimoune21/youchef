@@ -67,7 +67,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals , dataCategories, dataKitch
                         />
                     ) : (
                         <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">
-                            {user.lastName.charAt(0)}
+                            {user.firstName.charAt(0)}
                         </span>
                     )}
                     <div className="space-x-4">
