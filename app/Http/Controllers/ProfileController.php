@@ -132,19 +132,10 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-        // if ($request->hasFile('profile_img')) {
-        //     if ($user->profile_img) {
-        //         Storage::delete('public/uploads/users/' . $user->profile_img);
-        //     }
-        //     $image = $request->file('profile_img');
-        //     $imageName = 'Meal' . $user->idUser . '.' . $image->getClientOriginalExtension();
-        //     $image->storeAs('public/uploads/users', $imageName);
-        //     $user->profile_img = $imageName;
-        // }
 
         if ($request->hasFile('profile_img')) {
             if ($user->profile_img) {
-                Storage::disk('public')->delete($user->profile_img);
+                Storage::disk('public')->delete('users/' . $user->profile_img);
             }
             $extension = $request->file('profile_img')->getClientOriginalExtension();
             $filename = 'User' . $user->idUser . '.' . $extension;
@@ -170,10 +161,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        dd($user->profile_img);
-
         if ($user->profile_img) {
-            Storage::disk('public')->delete($user->profile_img);
+            Storage::disk('public')->delete('users/' . $user->profile_img);
             $user->profile_img = null;
             $user->save();
         }
