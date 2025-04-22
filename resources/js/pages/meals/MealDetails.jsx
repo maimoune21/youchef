@@ -197,7 +197,7 @@ const MealDetails = ({
                                         <img
                                             src={`/storage/users/${user.profile_img}`}
                                             alt="test"
-                                            className="rounded-full w-12"
+                                            className="rounded-full w-12 aspect-square"
                                         />
                                     ) : (
                                         <span className="bg-soft transition-all text-black text-base font-bold w-12 shadow h-full aspect-square rounded-full flexy">
@@ -328,7 +328,7 @@ const MealDetails = ({
                                         <img
                                             src={`/storage/users/${activUser.profile_img}`}
                                             alt="test"
-                                            className="rounded-full w-10"
+                                            className="rounded-full w-10 aspect-square"
                                         />
                                     ) : (
                                         <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">
@@ -370,7 +370,7 @@ const MealDetails = ({
                                             <img
                                                 src={`/storage/users/${comment.profile_img}`}
                                                 alt="test"
-                                                className="rounded-full w-10"
+                                                className="rounded-full w-10 aspect-square"
                                             />
                                         ) : (
                                             <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">

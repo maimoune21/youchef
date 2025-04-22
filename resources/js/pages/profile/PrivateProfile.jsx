@@ -63,7 +63,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals , dataCategories, dataKitch
                         <img
                             src={`/storage/users/${user.profile_img}`}
                             alt="Profile"
-                            className="rounded-full size-34 max-md:m-auto"
+                            className="rounded-full w-34 aspect-square max-md:m-auto"
                         />
                     ) : (
                         <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-14 h-full aspect-square rounded-full flexy">

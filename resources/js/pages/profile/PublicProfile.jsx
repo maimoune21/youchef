@@ -10,7 +10,7 @@ const PublicProfile = ({ user, meals }) => {
             <div className='flex items-center justify-center gap-5 max-md:p-5 max-md:pt-6 max-md:flex-col max-md:text-center'>
                 {/* Avatar */}
                 {user.profile_img
-                    ? <img src={`/storage/users/${user.profile_img}`} alt="Profile" className='rounded-full size-34 max-md:m-auto' />
+                    ? <img src={`/storage/users/${user.profile_img}`} alt="Profile" className='rounded-full w-34 aspect-square max-md:m-auto' />
                     : <span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-full aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>
                 }
                 <div className="space-x-4">

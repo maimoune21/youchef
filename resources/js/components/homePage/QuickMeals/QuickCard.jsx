@@ -119,7 +119,7 @@ const QuickCard = ({ meal }) => {
                                 <img
                                     src={`/storage/users/${meal.userImage}`}
                                     alt=""
-                                    className="rounded-full w-8 object-cover"
+                                    className="rounded-full w-8 aspect-square object-cover"
                                 />
                             ) : (
                                 <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">
