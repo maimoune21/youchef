@@ -53,7 +53,7 @@ const Navbar = () => {
                         <img
                             src={`/storage/users/${auth.user.profile_img}`}
                             alt="profile"
-                            className="w-6.5 rounded-full object-cover"
+                            className="size-6.5 rounded-full object-cover"
                             {...props}
                         />
                     ) : (
