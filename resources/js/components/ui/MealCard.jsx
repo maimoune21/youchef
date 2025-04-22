@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { CircleChevronRight } from "lucide-react";
 
 const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete , dataCategories, dataKitchens}) => {
-    console.log(meal.meal_img)
     const [status, setStatus] = useState("");
 
     useEffect(() => {

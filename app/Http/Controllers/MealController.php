@@ -259,46 +259,18 @@ class MealController extends Controller
   {
     $meal = Meal::findOrFail($idmeal);
 
-    // $validated = $request->validate([
-    //     'title' => 'required|string|max:255',
-    //     'description' => 'required|string',
-    //     'idKitchen' => 'required|exists:kitchens,idKitchen',
-    //     'idCategory' => 'required|exists:categories,idCategory',
-    //     'meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     'hours' => 'required|integer|min:0|max:23',
-    //     'minutes' => 'required|integer|min:0|max:59',
-    //     'ingredients' => 'required|array|min:1',
-    //     'ingredients.*' => 'required|string|min:1',
-    //     'instructions' => 'required|array|min:1',
-    //     'instructions.*' => 'required|string|min:1',
-    // ]);
-
-    // Update basic fields
-    // $meal->update([
-    //     'title' => $validated['title'],
-    //     'description' => $validated['description'],
-    //     'idKitchen' => $validated['idKitchen'],
-    //     'idCategory' => $validated['idCategory'],
-    //     'duration' => sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']),
-    //     'ingredients' => json_encode(array_values(array_filter($validated['ingredients']))),
-    //     'instructions' => json_encode(array_values(array_filter($validated['instructions']))),
-    // ]);
+    // $validated = $request->validate(['title' => 'required|string|max:255','description' => 'required|string','idKitchen' => 'required|exists:kitchens,idKitchen','idCategory' => 'required|exists:categories,idCategory','meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048','hours' => 'required|integer|min:0|max:23','minutes' => 'required|integer|min:0|max:59','ingredients' => 'required|array|min:1','ingredients.*' => 'required|string|min:1','instructions' => 'required|array|min:1','instructions.*' => 'required|string|min:1',]);
+    // $meal->update(['title' => $validated['title'],'description' => $validated['description'],'idKitchen' => $validated['idKitchen'],'idCategory' => $validated['idCategory'],'duration' => sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']),'ingredients' => json_encode(array_values(array_filter($validated['ingredients']))),'instructions' => json_encode(array_values(array_filter($validated['instructions']))),]);
 
     $meal->update([
       'title' => $request->title ?? "ttt",
       'description' => $request->description ?? "ddddd",
       'idKitchen' => $request->idKitchen ?? 2,
       'idCategory' => $request->idCategory ?? 4,
-      'duration' => sprintf('%02d:%02d:00', 
-        $request->hours ?? 0, 
-        $request->minutes ?? 9
-      ),
+      'duration' => sprintf('%02d:%02d:00', $request->hours ?? 0, $request->minutes ?? 9),
       'ingredients' => json_encode($request->ingredients ?? ['']),
       'instructions' => json_encode($request->instructions ?? ['']),
     ]);
-
-    $meal->save();
-
 
     // if ($meal->meal_img != $request->meal_img)
     // {
@@ -310,15 +282,29 @@ class MealController extends Controller
     //   $meal->save();
     // };
 
+    
+    // if ($request->hasFile('meal_img')) {
+    //   $file = $request->file('meal_img');
+    //   $extension = $file->getClientOriginalExtension();
+    //   $filename = time() . '.' . $extension;
+    //   $file->storeAs('meals', $filename, 'public');
+    //   $meal->meal_img = $filename;
+    //   $meal->title = 'fromimage';
+    //   $meal->update(['title' => $request->title ?? "ddd",]);
+    // }
+
+
+    // Just for testing: update image only (and any other data you want)
     if ($request->hasFile('meal_img')) {
       Storage::disk('public')->delete($meal->meal_img);
       $extension = $request->file('meal_img')->getClientOriginalExtension();
       $filename = 'Meal' . $meal->idMeal . '.' . $extension;
       $request->file('meal_img')->storeAs('meals', $filename, 'public');
       $meal->meal_img = $filename;
-      $meal->save();
     }
-    $meal->save();
+
+    $meal->save();  
+    // return response()->json(['message' => 'No image uploaded']);
     return redirect()->back()->with('updated', 'Meal updated successfully!');
   }
 

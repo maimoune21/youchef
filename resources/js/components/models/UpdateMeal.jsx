@@ -5,7 +5,7 @@ import TextInputGroup from "../ui/TextInputGroup";
 import TextAreaGroup from "../ui/TextAreaGroup";
 import {useState } from "react";
 import { ChevronLeft, CirclePlus, CircleX} from "lucide-react";
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 
 
 export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitchens}) {
@@ -86,17 +86,39 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
       console.log(data)
       console.log(meal.idMeal)
 
-      put(`/meals/${meal.idMeal}`, {
-        data: data,
+      // put(`/meals/${meal.idMeal}`, {
+      //   data: data,
+      //   onSuccess: () => {
+      //     console.log('success - meal updated');
+      //   },
+      //   onError: (errors) => {
+      //     if (errors) {
+      //       console.log('error - update failed', errors);
+      //     }
+      //   }
+      // });  
+      
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((item, index) => {
+            formData.append(`${key}[${index}]`, item);
+          });
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      router.post(`/meals/${meal.idMeal}`, formData, {
+        forceFormData: true,
         onSuccess: () => {
           console.log('success - meal updated');
+          console.log(formData);
         },
         onError: (errors) => {
-          if (errors) {
-            console.log('error - update failed', errors);
-          }
-        }
-      });      
+          console.log('error - update failed', errors);
+        },
+      });
   };
 
 
@@ -120,7 +142,7 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
                                   <div className="relative custom-shadow rounded-lg">
                                       <input type="file" id='fileRef'  onChange={(e) => handleFileChange(e.target.files[0])} className="hidden"/>
                                       <label htmlFor="fileRef" className="cursor-pointer" >
-                                          <img className="w-full rounded-lg" alt="meal" src={ data.meal_img instanceof File ? URL.createObjectURL(data.meal_img) : meal.meal_img ? `/storage/meals/Meal${meal.idMeal}.${meal.meal_img.split('.').pop()}` : BlankMeal}  />
+                                          <img className="w-full rounded-lg" alt="meal" src={ data.meal_img instanceof File ? URL.createObjectURL(data.meal_img) : meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}  />
                                           <div className="absolute right-0 top-0 p-1 bg-30 text-black rounded-bl-lg rounded-tr-lg shadow-[-5px_5px_10px_hsla(0,0%,0%,0.2)]"><EditIcon /></div>
                                       </label>
                                   </div>
