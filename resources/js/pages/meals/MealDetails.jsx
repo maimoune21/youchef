@@ -195,7 +195,7 @@ const MealDetails = ({
                                 <div className="flexy gap-4">
                                     {user.profile_img ? (
                                         <img
-                                            src={`/uploads/users/${user.profile_img}`}
+                                            src={`/storage/users/${user.profile_img}`}
                                             alt="test"
                                             className="rounded-full w-12"
                                         />

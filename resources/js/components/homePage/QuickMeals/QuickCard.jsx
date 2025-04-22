@@ -117,7 +117,7 @@ const QuickCard = ({ meal }) => {
                         >
                             {meal.userImage ? (
                                 <img
-                                    src={`/uploads/users/${meal.userImage}`}
+                                    src={`/storage/users/${meal.userImage}`}
                                     alt=""
                                     className="rounded-full w-8 object-cover"
                                 />
