@@ -85,7 +85,7 @@ export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClas
                     <div className="px-10 flex flex-col gap-2">
                         <h3 className="text-base font-bold">Profile Picture</h3>
                         <div className="max-tn:flex-col flexy gap-12">
-                            {imagePreview ? (<img src={imagePreview} className="w-32 h-32 object-cover rounded-full" alt="Profile"/>)
+                            {imagePreview ? (<img src={imagePreview} className="w-32 aspect-square object-cover rounded-full" alt="Profile"/>)
                                           : (<span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-32 w-32 aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>)}
                             <span className="flex flex-col gap-2">
                                 <input type="file" id="profile_img" name="profile_img" accept="image/*" onChange={handleImageChange} className="hidden" />
