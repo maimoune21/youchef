@@ -83,9 +83,6 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
       e.preventDefault();
       // if (!validation()) {window.scrollTo({ top: 0, behavior: 'smooth' });return;}
 
-      console.log(data)
-      console.log(meal.idMeal)
-
       // put(`/meals/${meal.idMeal}`, {
       //   data: data,
       //   onSuccess: () => {
@@ -98,22 +95,21 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
       //   }
       // });  
       
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            formData.append(`${key}[${index}]`, item);
-          });
-        } else {
-          formData.append(key, value);
-        }
-      });
+      // const formData = new FormData();
+      // Object.entries(data).forEach(([key, value]) => {
+      //   if (Array.isArray(value)) {
+      //     value.forEach((item, index) => {
+      //       formData.append(`${key}[${index}]`, item);
+      //     });
+      //   } else {
+      //     formData.append(key, value);
+      //   }
+      // });
 
-      router.post(`/meals/${meal.idMeal}`, formData, {
+      router.post(`/meals/${meal.idMeal}`, data, {
         forceFormData: true,
         onSuccess: () => {
           console.log('success - meal updated');
-          console.log(formData);
         },
         onError: (errors) => {
           console.log('error - update failed', errors);
