@@ -117,9 +117,9 @@ const PopularCard = ({ meal }) => {
                         >
                             {meal.userImage ? (
                                 <img
-                                    src={`/uploads/users/${meal.userImage}`}
+                                    src={`/storage/users/${meal.userImage}`}
                                     alt="profile"
-                                    className="rounded-full w-8 object-cover md:w-12"
+                                    className="rounded-full w-8 aspect-square object-cover md:w-12"
                                 />
                             ) : (
                                 <span className="bg-soft text-black text-base md:text-xl font-bold w-8 md:w-12 h-full aspect-square rounded-full flexy">

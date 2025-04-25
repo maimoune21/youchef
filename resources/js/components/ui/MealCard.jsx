@@ -136,17 +136,17 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                                 <div className="flexy justify-start! gap-2">
                                     {meal.userImage ? (
                                         <img
-                                            src={`/uploads/users/${meal.userImage}`}
+                                            src={`/storage/users/${meal.userImage}`}
                                             alt=""
-                                            className="rounded-full w-8 object-cover"
+                                            className="rounded-full w-8 aspect-square object-cover"
                                         />
                                     ) : (
                                         <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">
-                                            {meal.userLName.charAt(0)}
+                                            {meal.userFName.charAt(0)}
                                         </span>
                                     )}
                                     <h6 className="max-sm:text-xs max-lg:text-sm group-hover/user:text-green-600 group-hover/user:underline underline-offset-2">
-                                        {meal.userLName} {meal.userFName}
+                                        {meal.userFName} {meal.userLName}
                                     </h6>
                                 </div>
                             </div>

@@ -131,7 +131,7 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
                                         <AvatarImage
                                             src={
                                                 user.profile_img
-                                                    ? `/uploads/users/${user.profile_img}`
+                                                    ? `/storage/users/${user.profile_img}`
                                                     : BlankProfile
                                             }
                                             alt="profile"

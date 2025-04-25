@@ -7,8 +7,8 @@ use App\Models\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Storage;
 
 class ProfileController extends Controller
 {
@@ -111,12 +111,12 @@ class ProfileController extends Controller
                     ->count();
                 return $meal;
             });
-            
+
         $SearchedMeals = Meal::latest()->get();
         $dataKitchens = DB::table("kitchens")->get();
         $dataCategories = Category::all();
 
-        return inertia('profile/PrivateProfile', compact('user', 'posts',"dataKitchens", "dataCategories" ,'favoriteMeals', 'SearchedMeals'));
+        return inertia('profile/PrivateProfile', compact('user', 'posts', "dataKitchens", "dataCategories", 'favoriteMeals', 'SearchedMeals'));
     }
     public function update(Request $request)
     {
@@ -132,15 +132,20 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
+
         if ($request->hasFile('profile_img')) {
             if ($user->profile_img) {
-                Storage::delete('public/uploads/users/' . $user->profile_img);
+                Storage::disk('public')->delete('users/' . $user->profile_img);
             }
-            $image = $request->file('profile_img');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/uploads/users', $imageName);
-            $user->profile_img = $imageName;
+            $extension = $request->file('profile_img')->getClientOriginalExtension();
+            $filename = 'User' . $user->idUser . '.' . $extension;
+            $request->file('profile_img')->storeAs('users', $filename, 'public');
+            $user->profile_img = $filename;
         }
+        if (!$user->profile_img) {
+            $user->profile = null;
+        }
+
         $user->firstName = $request->firstName;
         $user->lastName = $request->lastName;
         $user->email = $request->email;
@@ -150,5 +155,18 @@ class ProfileController extends Controller
         }
         $user->save();
         return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+
+    public function deleteImage()
+    {
+        $user = Auth::user();
+
+        if ($user->profile_img) {
+            Storage::disk('public')->delete('users/' . $user->profile_img);
+            $user->profile_img = null;
+            $user->save();
+        }
+
+        return back()->with('success', 'Profile image deleted successfully.');
     }
 }

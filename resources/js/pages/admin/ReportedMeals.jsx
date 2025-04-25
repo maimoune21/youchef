@@ -89,7 +89,7 @@ export const ReportedMeals = ({ meals }) => {
                                                 <h3 className="flex items-center gap-1 font-bold text-base">
                                                     {meal.profile_img ? (
                                                         <img
-                                                            src={`/uploads/users/${meal.profile_img}`}
+                                                            src={`/storage/users/${meal.profile_img}`}
                                                             alt="test"
                                                             className="w-6 h-6 rounded-full bg-red-600"
                                                         />

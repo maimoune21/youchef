@@ -4,12 +4,12 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import TextAreaGroup from "@/components/ui/TextAreaGroup";
 import { PencilIcon, TrashIcon } from "@/../../public/icons/Icons";
-import { useForm, usePage } from "@inertiajs/react";
+import { router, useForm, usePage } from "@inertiajs/react";
 
 export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClassName = "",...props}) {
     const { errors } = usePage().props;
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(user.profile_img ? `/uploads/users/${user.profile_img}` : null);
+    const [imagePreview, setImagePreview] = useState(user.profile_img ? `/storage/users/${user.profile_img}` : null);
 
     const { data, setData, post, processing, reset } = useForm({
         firstName: user.firstName || "",
@@ -33,25 +33,42 @@ export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClas
     };
 
     const removeImage = () => {
+        if (confirm("Are you sure you want to delete your profile image?")) {
         setData("profile_img", null);
         setSelectedImage(null);
         setImagePreview(null);
+            router.delete('/profile/image-delete', {
+                onSuccess: () => {
+                    setData((prev) => ({ ...prev, profile_img: null }));
+                    setSelectedImage(null);
+                    setImagePreview(null);
+                    console.log("Profile image deleted.");
+                },
+                onError: (errors) => {
+                    console.error("Error deleting image:", errors);
+                },
+            });
+        }
     };
 
     const handleSubmit = (e) => {
-      e.preventDefault();
-      if (data.password === data.password_confirmation){
-        post(route("profile.update"), {
+        e.preventDefault();
+        if (data.password !== data.password_confirmation) {
+            alert("Passwords do not match. Please try again.");
+            return;
+        }
+    
+        post('/profileUpdate', {
             preserveScroll: true,
+            forceFormData: true, // Required for file uploads
             onSuccess: () => {
                 console.log("Profile updated successfully");
                 reset("password", "password_confirmation");
             },
-            onError: (errors) => {console.log("Errors:", errors);},
+            onError: (errors) => {
+                console.log("Errors:", errors);
+            },
         });
-      }else{
-        
-      }
     };
 
     return (
@@ -68,8 +85,8 @@ export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClas
                     <div className="px-10 flex flex-col gap-2">
                         <h3 className="text-base font-bold">Profile Picture</h3>
                         <div className="max-tn:flex-col flexy gap-12">
-                            {imagePreview ? (<img src={imagePreview} className="w-32 h-32 object-cover rounded-full" alt="Profile"/>)
-                                          : (<span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-32 w-32 aspect-square rounded-full flexy">{user.lastName.charAt(0)}</span>)}
+                            {imagePreview ? (<img src={imagePreview} className="w-32 aspect-square object-cover rounded-full" alt="Profile"/>)
+                                          : (<span className="bg-soft text-black max-md:m-auto font-bold text-3xl p-13 h-32 w-32 aspect-square rounded-full flexy">{user.firstName.charAt(0)}</span>)}
                             <span className="flex flex-col gap-2">
                                 <input type="file" id="profile_img" name="profile_img" accept="image/*" onChange={handleImageChange} className="hidden" />
                                 <label htmlFor="profile_img" className="button cursor-pointer flexy gap-2" ><PencilIcon size="size-4" />{selectedImage ? "Change Picture" : "Add Picture"}</label>

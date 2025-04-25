@@ -195,18 +195,18 @@ const MealDetails = ({
                                 <div className="flexy gap-4">
                                     {user.profile_img ? (
                                         <img
-                                            src={`/uploads/users/${user.profile_img}`}
+                                            src={`/storage/users/${user.profile_img}`}
                                             alt="test"
-                                            className="rounded-full w-12"
+                                            className="rounded-full w-12 aspect-square"
                                         />
                                     ) : (
                                         <span className="bg-soft transition-all text-black text-base font-bold w-12 shadow h-full aspect-square rounded-full flexy">
-                                            {user.lastName.charAt(0)}
+                                            {user.firstName.charAt(0)}
                                         </span>
                                     )}
                                     <h3 className="font-bold text-sm sm:text-lg group-hover:underline underline-offset-2 group-hover:text-[var(--bg-10)]">
                                         {user
-                                            ? `${user.lastName} ${user.firstName}`
+                                            ? `${user.firstName} ${user.lastName}`
                                             : "No User"}
                                     </h3>
                                 </div>
@@ -326,9 +326,9 @@ const MealDetails = ({
                                 <span className="flexy">
                                     {activUser?.profile_img ? (
                                         <img
-                                            src={`/uploads/users/${activUser.profile_img}`}
+                                            src={`/storage/users/${activUser.profile_img}`}
                                             alt="test"
-                                            className="rounded-full w-10"
+                                            className="rounded-full w-10 aspect-square"
                                         />
                                     ) : (
                                         <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">
@@ -368,9 +368,9 @@ const MealDetails = ({
                                     <span className="flexy">
                                         {comment.profile_img ? (
                                             <img
-                                                src={`/uploads/users/${comment.profile_img}`}
+                                                src={`/storage/users/${comment.profile_img}`}
                                                 alt="test"
-                                                className="rounded-full w-10"
+                                                className="rounded-full w-10 aspect-square"
                                             />
                                         ) : (
                                             <span className="bg-soft text-black font-bold text-base w-10 aspect-square rounded-full flexy">

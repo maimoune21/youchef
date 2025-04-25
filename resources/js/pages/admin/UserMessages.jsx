@@ -68,7 +68,7 @@ export const UserMessages = ({ usersMessages }) => {
                                                                 <img
                                                                     src={
                                                                         message.profile_img
-                                                                            ? `/uploads/users/${message.profile_img}`
+                                                                            ? `/storage/users/${message.profile_img}`
                                                                             : Profile
                                                                     }
                                                                     className="rounded-full h-auto w-20"

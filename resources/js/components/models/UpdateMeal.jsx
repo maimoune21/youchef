@@ -94,20 +94,9 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
       //     }
       //   }
       // });  
-      
-      // const formData = new FormData();
-      // Object.entries(data).forEach(([key, value]) => {
-      //   if (Array.isArray(value)) {
-      //     value.forEach((item, index) => {
-      //       formData.append(`${key}[${index}]`, item);
-      //     });
-      //   } else {
-      //     formData.append(key, value);
-      //   }
-      // });
 
-      router.post(`/meals/${meal.idMeal}`, data, {
-        forceFormData: true,
+
+      router.post(`/meals/${meal.idMeal}`, formData, {
         onSuccess: () => {
           console.log('success - meal updated');
         },
@@ -116,8 +105,6 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
         },
       });
   };
-
-
 
     return (
         <Dialog>
@@ -218,7 +205,7 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
                                     touched[field] && <div key={index}>{error}</div>
                                   ))}
                                 </div>
-                              )}                             */}
+                              )}*/}
                           
                               <button className="Backbutton py-0.5! pr-4! pl-0!"><b><ChevronLeft className="size-8" /></b><b>Discard</b></button>
                               <button type="submit" className="Nextbutton gap-2 py-1.5! px-2! pl-4!"><b>Save</b><CheckIcon size="size-6" /></button>

@@ -117,17 +117,17 @@ const QuickCard = ({ meal }) => {
                         >
                             {meal.userImage ? (
                                 <img
-                                    src={`/uploads/users/${meal.userImage}`}
+                                    src={`/storage/users/${meal.userImage}`}
                                     alt=""
-                                    className="rounded-full w-8 object-cover"
+                                    className="rounded-full w-8 aspect-square object-cover"
                                 />
                             ) : (
                                 <span className="bg-soft text-black text-base font-bold w-8 h-full aspect-square rounded-full flexy">
-                                    {meal.userFName.charAt(0)}
+                                    {meal.userLName.charAt(0)}
                                 </span>
                             )}
                             <h6 className="md:text-lg group-hover/user:text-[var(--bg-10)] group-hover/user:underline underline-offset-3">
-                                {meal.userFName} {meal.userLName}
+                                {meal.userLName} {meal.userFName}
                             </h6>
                         </Link>
                     </div>
