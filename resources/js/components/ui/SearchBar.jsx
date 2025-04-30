@@ -68,7 +68,7 @@ const SearchBar = ({ CustumClass, isExpanded, setIsExpanded }) => {
                                             <img
                                                 src={
                                                     meal.meal_img
-                                                        ? `/storage/meals/${meal.meal_img}`
+                                                        ? `/uploads/meals/${meal.meal_img}`
                                                         : Meal
                                                 }
                                                 alt={meal.title}

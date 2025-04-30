@@ -61,7 +61,7 @@ const PopularCard = ({ meal }) => {
             <img
                 src={
                     meal.meal_img
-                        ? `/storage/meals/${meal.meal_img}`
+                        ? `/uploads/meals/${meal.meal_img}`
                         : BlankMeal
                 }
                 alt="Meal Image"
@@ -122,7 +122,7 @@ const PopularCard = ({ meal }) => {
                         >
                             {meal.userImage ? (
                                 <img
-                                    src={`/storage/users/${meal.userImage}`}
+                                    src={`/uploads/users/${meal.userImage}`}
                                     alt="profile"
                                     className="rounded-full w-8 aspect-square object-cover md:w-12"
                                 />

@@ -76,7 +76,7 @@ export const ReportedMeals = ({ meals }) => {
                                         <div className="grid grid-cols-[1fr_3fr] sm:justify-start! flex-col sm:flex-row gap-4">
                                             <div className="w-full flexy">
                                                 <img
-                                                    src={meal.meal_img ? `/storage/meals/${meal.meal_img}`: BlankMeal
+                                                    src={meal.meal_img ? `/uploads/meals/${meal.meal_img}`: BlankMeal
                                                     }
                                                     className="aspect-[2/1] rounded-2xl"
                                                     alt={meal.title}
@@ -89,7 +89,7 @@ export const ReportedMeals = ({ meals }) => {
                                                 <h3 className="flex items-center gap-1 font-bold text-base">
                                                     {meal.profile_img ? (
                                                         <img
-                                                            src={`/storage/users/${meal.profile_img}`}
+                                                            src={`/uploads/users/${meal.profile_img}`}
                                                             alt="test"
                                                             className="w-6 h-6 rounded-full bg-red-600"
                                                         />

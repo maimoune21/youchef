@@ -74,7 +74,7 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
             <div className="relative w-full">
                 <Link href={`/mealDetails/${meal.idMeal}`}>
                 <img
-                  src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
+                  src={meal.meal_img ? `/uploads/meals/${meal.meal_img}` : BlankMeal}
                   alt={meal.title}
                   className="w-full h-full rounded-t-xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
                 />
@@ -133,7 +133,7 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                                 <div className="flexy justify-start! gap-2">
                                     {meal.userImage ? (
                                         <img
-                                            src={`/storage/users/${meal.userImage}`}
+                                            src={`/uploads/users/${meal.userImage}`}
                                             alt=""
                                             className="rounded-full w-8 aspect-square object-cover"
                                         />

@@ -55,7 +55,7 @@ export const UserAccounts = ({ users }) => {
                                                 <div className="w-20">
                                                     {user.profile_img ? (
                                                         <img
-                                                            src={`/storage/users/${user.profile_img}`}
+                                                            src={`/uploads/users/${user.profile_img}`}
                                                             className="rounded-full w-20"
                                                             alt={`${user.firstName} ${user.lastName}`}
                                                         />

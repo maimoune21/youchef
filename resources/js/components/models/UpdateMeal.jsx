@@ -124,7 +124,7 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
                                   <div className="relative custom-shadow rounded-lg">
                                       <input type="file" id='fileRef'  onChange={(e) => handleFileChange(e.target.files[0])} className="hidden"/>
                                       <label htmlFor="fileRef" className="cursor-pointer" >
-                                          <img className="w-full rounded-lg" alt="meal" src={ data.meal_img instanceof File ? URL.createObjectURL(data.meal_img) : meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}  />
+                                          <img className="w-full rounded-lg" alt="meal" src={ data.meal_img instanceof File ? URL.createObjectURL(data.meal_img) : meal.meal_img ? `/uploads/meals/${meal.meal_img}` : BlankMeal}  />
                                           <div className="absolute right-0 top-0 p-1 bg-30 text-black rounded-bl-lg rounded-tr-lg shadow-[-5px_5px_10px_hsla(0,0%,0%,0.2)]"><EditIcon /></div>
                                       </label>
                                   </div>

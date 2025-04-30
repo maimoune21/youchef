@@ -61,7 +61,7 @@ const PrivateProfile = ({ user, posts, favoriteMeals , dataCategories, dataKitch
                     {/* Avatar */}
                     {user.profile_img ? (
                         <img
-                            src={`/storage/users/${user.profile_img}`}
+                            src={`/uploads/users/${user.profile_img}`}
                             alt="Profile"
                             className="rounded-full w-34 aspect-square max-md:m-auto"
                         />

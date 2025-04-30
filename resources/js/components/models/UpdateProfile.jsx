@@ -9,7 +9,7 @@ import { router, useForm, usePage } from "@inertiajs/react";
 export function UpdateProfile({ user, buttonContent = "Edit Profile", buttonClassName = "",...props}) {
     const { errors } = usePage().props;
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(user.profile_img ? `/storage/users/${user.profile_img}` : null);
+    const [imagePreview, setImagePreview] = useState(user.profile_img ? `/uploads/users/${user.profile_img}` : null);
 
     const { data, setData, post, processing, reset } = useForm({
         firstName: user.firstName || "",

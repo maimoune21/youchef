@@ -183,7 +183,7 @@ const MealDetails = ({
                     <img
                         src={
                             meal.meal_img
-                                ? `/storage/meals/${meal.meal_img}`
+                                ? `/uploads/meals/${meal.meal_img}`
                                 : Meal
                         }
                         className="w-full max-h-[60vh] rounded-t-3xl border-b-2"
@@ -203,7 +203,7 @@ const MealDetails = ({
                                 <div className="flexy gap-4">
                                     {user.profile_img ? (
                                         <img
-                                            src={`/storage/users/${user.profile_img}`}
+                                            src={`/uploads/users/${user.profile_img}`}
                                             alt="test"
                                             className="rounded-full w-12 aspect-square"
                                         />
@@ -342,7 +342,7 @@ const MealDetails = ({
                                 <span className="flexy">
                                     {activUser?.profile_img ? (
                                         <img
-                                            src={`/storage/users/${activUser.profile_img}`}
+                                            src={`/uploads/users/${activUser.profile_img}`}
                                             alt="test"
                                             className="rounded-full w-10 aspect-square"
                                         />
@@ -384,7 +384,7 @@ const MealDetails = ({
                                     <span className="flexy">
                                         {comment.profile_img ? (
                                             <img
-                                                src={`/storage/users/${comment.profile_img}`}
+                                                src={`/uploads/users/${comment.profile_img}`}
                                                 alt="test"
                                                 className="rounded-full w-10 aspect-square"
                                             />

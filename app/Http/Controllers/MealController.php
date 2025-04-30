@@ -90,51 +90,51 @@ class MealController extends Controller
      * Store a newly created Meal in storage.
      */
 
-     public function store(Request $request)
-     {
-       $validated = $request->validate([
-         'title' => 'required|string|max:255',
-         'description' => 'required|string',
-         'idKitchen' => 'required|exists:kitchens,idKitchen',
-         'idCategory' => 'required|exists:categories,idCategory',
-         'meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-         'hours' => 'required|integer|min:0|max:23',
-         'minutes' => 'required|integer|min:0|max:59',
-         'ingredients' => 'required|array|min:1',
-         // for validate all ingredients must be required and string and minimum 1 letters: 
-         'ingredients.*' => 'required|string|min:1',
-         'instructions' => 'required|array|min:1',
-         // 7ta instructions: 
-         'instructions.*' => 'required|string|min:1',
-       ]);
-   
-       $meal = new Meal();
-       $meal->title = $validated['title'];
-       $meal->description = $validated['description'];
-       $meal->idKitchen = $validated['idKitchen'];
-       $meal->idCategory = $validated['idCategory'];
-       $meal->duration = sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']);
-       // json_encode converts the php array to json string for storage in database
-       // array_values for organisation index(keys) of array values after json_encode
-       // array_filter remove from array all values : ''  /  null  /  empty  / false 
-       $meal->ingredients = json_encode(array_values(array_filter($validated['ingredients'])));
-       $meal->instructions = json_encode(array_values(array_filter($validated['instructions'])));
-       $meal->idUser = Auth::id();
-       $meal->save();
-   
-       // image upload in public after meal is created
-       if ($request->hasFile('meal_img')) {
-         $extension = $request->file('meal_img')->getClientOriginalExtension();
-         $filename = 'Meal' . $meal->idMeal . '.' . $extension;
-         
-         // $path = $request->file('meal_img')->storeAs($filename);
-         $request->file('meal_img')->storeAs('meals', $filename, 'public');
-         $meal->meal_img = $filename;
-         $meal->save();
-       }
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'idKitchen' => 'required|exists:kitchens,idKitchen',
+            'idCategory' => 'required|exists:categories,idCategory',
+            'meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'hours' => 'required|integer|min:0|max:23',
+            'minutes' => 'required|integer|min:0|max:59',
+            'ingredients' => 'required|array|min:1',
+            // for validate all ingredients must be required and string and minimum 1 letters: 
+            'ingredients.*' => 'required|string|min:1',
+            'instructions' => 'required|array|min:1',
+            // 7ta instructions: 
+            'instructions.*' => 'required|string|min:1',
+        ]);
 
-       return redirect()->route('meals');
-     }
+        $meal = new Meal();
+        $meal->title = $validated['title'];
+        $meal->description = $validated['description'];
+        $meal->idKitchen = $validated['idKitchen'];
+        $meal->idCategory = $validated['idCategory'];
+        $meal->duration = sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']);
+        // json_encode converts the php array to json string for storage in database
+        // array_values for organisation index(keys) of array values after json_encode
+        // array_filter remove from array all values : ''  /  null  /  empty  / false 
+        $meal->ingredients = json_encode(array_values(array_filter($validated['ingredients'])));
+        $meal->instructions = json_encode(array_values(array_filter($validated['instructions'])));
+        $meal->idUser = Auth::id();
+        $meal->save();
+
+        // image upload in public after meal is created
+        if ($request->hasFile('meal_img')) {
+            $extension = $request->file('meal_img')->getClientOriginalExtension();
+            $filename = 'Meal' . $meal->idMeal . '.' . $extension;
+
+            // $path = $request->file('meal_img')->storeAs($filename);
+            $request->file('meal_img')->move(public_path('uploads/meals'), $filename);
+            $meal->meal_img = '/' . $filename;
+            $meal->save();
+        }
+
+        return redirect()->route('meals');
+    }
 
     /**
      * Display the specified Meal.
@@ -256,56 +256,65 @@ class MealController extends Controller
      * Update the specified Meal in storage.
      */
     public function update(Request $request, $idmeal)
-  {
-    $meal = Meal::findOrFail($idmeal);
+    {
+        $meal = Meal::findOrFail($idmeal);
 
-    // $validated = $request->validate(['title' => 'required|string|max:255','description' => 'required|string','idKitchen' => 'required|exists:kitchens,idKitchen','idCategory' => 'required|exists:categories,idCategory','meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048','hours' => 'required|integer|min:0|max:23','minutes' => 'required|integer|min:0|max:59','ingredients' => 'required|array|min:1','ingredients.*' => 'required|string|min:1','instructions' => 'required|array|min:1','instructions.*' => 'required|string|min:1',]);
-    // $meal->update(['title' => $validated['title'],'description' => $validated['description'],'idKitchen' => $validated['idKitchen'],'idCategory' => $validated['idCategory'],'duration' => sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']),'ingredients' => json_encode(array_values(array_filter($validated['ingredients']))),'instructions' => json_encode(array_values(array_filter($validated['instructions']))),]);
+        // $validated = $request->validate(['title' => 'required|string|max:255','description' => 'required|string','idKitchen' => 'required|exists:kitchens,idKitchen','idCategory' => 'required|exists:categories,idCategory','meal_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048','hours' => 'required|integer|min:0|max:23','minutes' => 'required|integer|min:0|max:59','ingredients' => 'required|array|min:1','ingredients.*' => 'required|string|min:1','instructions' => 'required|array|min:1','instructions.*' => 'required|string|min:1',]);
+        // $meal->update(['title' => $validated['title'],'description' => $validated['description'],'idKitchen' => $validated['idKitchen'],'idCategory' => $validated['idCategory'],'duration' => sprintf('%02d:%02d:00', $validated['hours'], $validated['minutes']),'ingredients' => json_encode(array_values(array_filter($validated['ingredients']))),'instructions' => json_encode(array_values(array_filter($validated['instructions']))),]);
 
-    $meal->update([
-      'title' => $request->title ?? "ttt",
-      'description' => $request->description ?? "ddddd",
-      'idKitchen' => $request->idKitchen ?? 2,
-      'idCategory' => $request->idCategory ?? 4,
-      'duration' => sprintf('%02d:%02d:00', $request->hours ?? 0, $request->minutes ?? 9),
-      'ingredients' => json_encode($request->ingredients ?? ['']),
-      'instructions' => json_encode($request->instructions ?? ['']),
-    ]);
+        $meal->update([
+            'title' => $request->title ?? "ttt",
+            'description' => $request->description ?? "ddddd",
+            'idKitchen' => $request->idKitchen ?? 2,
+            'idCategory' => $request->idCategory ?? 4,
+            'duration' => sprintf('%02d:%02d:00', $request->hours ?? 0, $request->minutes ?? 9),
+            'ingredients' => json_encode($request->ingredients ?? ['']),
+            'instructions' => json_encode($request->instructions ?? ['']),
+        ]);
 
-    // if ($meal->meal_img != $request->meal_img)
-    // {
-    //   Storage::disk('public')->delete($meal->meal_img);
-    //   $extension = $request->file('meal_img')->getClientOriginalExtension();
-    //   $filename = 'Meal' . $meal->idMeal . '.' . $extension;
-    //   $request->file('meal_img')->storeAs('meals', $filename, 'public');
-    //   $meal->meal_img = $filename;
-    //   $meal->save();
-    // };
+        // if ($meal->meal_img != $request->meal_img)
+        // {
+        //   Storage::disk('public')->delete($meal->meal_img);
+        //   $extension = $request->file('meal_img')->getClientOriginalExtension();
+        //   $filename = 'Meal' . $meal->idMeal . '.' . $extension;
+        //   $request->file('meal_img')->storeAs('meals', $filename, 'public');
+        //   $meal->meal_img = $filename;
+        //   $meal->save();
+        // };
 
-    
-    // if ($request->hasFile('meal_img')) {
-    //   $file = $request->file('meal_img');
-    //   $extension = $file->getClientOriginalExtension();
-    //   $filename = time() . '.' . $extension;
-    //   $file->storeAs('meals', $filename, 'public');
-    //   $meal->meal_img = $filename;
-    //   $meal->title = 'fromimage';
-    //   $meal->update(['title' => $request->title ?? "ddd",]);
-    // }
 
-    // Just for testing: update image only (and any other data you want)
-    if ($request->hasFile('meal_img')) {
-      Storage::disk('public')->delete($meal->meal_img);
-      $extension = $request->file('meal_img')->getClientOriginalExtension();
-      $filename = 'Meal' . $meal->idMeal . '.' . $extension;
-      $request->file('meal_img')->storeAs('meals', $filename, 'public');
-      $meal->meal_img = $filename;
+        // if ($request->hasFile('meal_img')) {
+        //   $file = $request->file('meal_img');
+        //   $extension = $file->getClientOriginalExtension();
+        //   $filename = time() . '.' . $extension;
+        //   $file->storeAs('meals', $filename, 'public');
+        //   $meal->meal_img = $filename;
+        //   $meal->title = 'fromimage';
+        //   $meal->update(['title' => $request->title ?? "ddd",]);
+        // }
+
+        // Just for testing: update image only (and any other data you want)
+        if ($request->hasFile('meal_img')) {
+            // Delete old file from uploads
+            if ($meal->meal_img) {
+                $oldImagePath = public_path('uploads/' . $meal->meal_img);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $extension = $request->file('meal_img')->getClientOriginalExtension();
+            $filename = 'Meal' . $meal->idMeal . '.' . $extension;
+
+            // Save new file
+            $request->file('meal_img')->move(public_path('uploads/meals'), $filename);
+            $meal->meal_img = '/' . $filename;
+        }
+
+        $meal->save();
+        // return response()->json(['message' => 'No image uploaded']);
+        return redirect()->back()->with('updated', 'Meal updated successfully!');
     }
-
-    $meal->save();  
-    // return response()->json(['message' => 'No image uploaded']);
-    return redirect()->back()->with('updated', 'Meal updated successfully!');
-  }
 
     public function likeMeal(Request $request)
     {
@@ -361,6 +370,12 @@ class MealController extends Controller
     public function destroy(Meal $meal, $idMeal)
     {
         $meal = Meal::findOrFail($idMeal);
+        if ($meal->meal_img) {
+            $imagePath = public_path('uploads/' . $meal->meal_img);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         $meal->delete();
 
         return redirect()->back()->with('deleted', 'Meal deleted successfully!');
