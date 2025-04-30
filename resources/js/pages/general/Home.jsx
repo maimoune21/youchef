@@ -13,8 +13,8 @@ const Home = ({ meals }) => {
     <>
       <Header />
       <SectionCategories/>
-      <PopularMeals popularMeals={meals.sort((a, b) => b.views - a.views).slice(0, 6)} />
       <WorldMeals />
+      <PopularMeals popularMeals={meals.sort((a, b) => b.views - a.views).slice(0, 6)} />
       <QuickMeals meals={meals.sort((a, b) => b.views - a.views)}/>
       <Together />
       <ContactUs />

@@ -32,8 +32,14 @@ import { UserMessages } from "./UserMessages";
 import { UserAccounts } from "./UserAccounts";
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
+import { Home, LayoutDashboard } from "lucide-react";
 
-const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  }) => {
+const Dashboard = ({
+    location = "reportedMeals",
+    users,
+    usersMessages,
+    meals,
+}) => {
     const [activeTeam, setActiveTeam] = useState({});
     const { auth } = usePage().props;
     const user = auth.user;
@@ -90,8 +96,8 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
                                         }`}
                                     >
                                         <span className="flexy gap-2 border-b-1 rounded-none">
-                                            <ManageIcon size="size-6.5! text-green" />
-                                            <p className="text-lg">Managing</p>
+                                            <LayoutDashboard className="size-5! text-green" />
+                                            <p className="text-sm">Dashboard</p>
                                         </span>
                                     </span>
                                 </div>
@@ -131,7 +137,7 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
                                         <AvatarImage
                                             src={
                                                 user.profile_img
-                                                    ? `/storage/users/${user.profile_img}`
+                                                    ? `/uploads/users/${user.profile_img}`
                                                     : BlankProfile
                                             }
                                             alt="profile"
@@ -154,7 +160,7 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
 
     const NavMain = () => {
         const getButtonClass = (path) => {
-            return location == path ? "bg-10 text-white!" : "";
+            return location === path ? "bg-10 text-white!" : "";
         };
         const getIconStyles = (path) => {
             return location == path
@@ -164,6 +170,21 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
         return (
             <SidebarGroup className="pl-0 h-full">
                 <SidebarMenu className="flex gap-8 h-full mt-6">
+                    <SidebarMenuItem>
+                        <Link href="/">
+                            <SidebarMenuButton
+                                tooltip="Home"
+                                className={`sideBarBtn group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pr-12! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:py-8! group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:pl-3! shadow hover:brightness-95 ${getButtonClass(
+                                    "/"
+                                )}`}
+                            >
+                                <Home className="size-7.5!" />
+                                <span className="font-bold text-[17px]">
+                                    Home
+                                </span>
+                            </SidebarMenuButton>
+                        </Link>
+                    </SidebarMenuItem>
                     <SidebarMenuItem>
                         <Link href="/dashboard/reportedMeals">
                             <SidebarMenuButton
@@ -228,10 +249,10 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
 
     // Main component render
     return (
-        <SidebarProvider className="-mt-5!">
+        <SidebarProvider className="-mt-25!">
             <Sidebar
                 collapsible="icon"
-                className="relative! h-[91vh] group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:w-20"
+                className="relative! h-[100vh] group-has-[[data-collapsible=icon][data-state=collapsed]]/sidebar-wrapper:w-20"
             >
                 <SidebarHeader className="z-50!">
                     <Compagy />
@@ -244,13 +265,13 @@ const Dashboard = ({ location = 'reportedMeals', users, usersMessages, meals  })
                 </SidebarContent>
                 <SidebarRail />
             </Sidebar>
-            <SidebarInset className="h-auto">
+            <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
                     <div className="flex items-center gap-2 px-4">
                         <CustomSidebarTrigger />
                     </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div className="flex flex-1! flex-col">
                     {renderContent()}
                 </div>
             </SidebarInset>

@@ -43,6 +43,46 @@ class AdminController extends Controller
         return Inertia::render('admin/Dashboard', compact('location', 'users', 'usersMessages', 'meals'));
     }
 
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $debug = [
+            'initial_profile_img' => $user->profile_img,
+            'has_file' => $request->hasFile('profile_img'),
+        ];
+
+        $validated = $request->validate([
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id . ',idUser',
+            'bio' => 'nullable|string|max:500',
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        if ($request->hasFile('profile_img')) {
+            $oldImage = public_path('uploads/users/' . $user->profile_img);
+            if ($user->profile_img && file_exists($oldImage)) {
+                unlink($oldImage);
+            }
+            $extension = $request->file('profile_img')->getClientOriginalExtension();
+            $filename = 'User' . $user->idUser . '.' . $extension;
+            $debug['new_filename'] = $filename;
+            $request->file('profile_img')->move(public_path('uploads/users'), $filename);
+            $validated['profile_img'] = $filename;
+        }
+
+        $user->update($validated);
+        $debug['updated_profile_img'] = $user->fresh()->profile_img;
+        $debug['validated_data'] = $validated;
+
+        return back()->with([
+            'success' => 'User updated successfully',
+            'user' => $user->fresh(),
+            'debug' => $debug
+        ]);
+    }
+
+
     public function deleteMeal($idMeal)
     {
         Meal::where('idMeal', $idMeal)->delete();
@@ -50,9 +90,21 @@ class AdminController extends Controller
     }
     public function deleteUser($id)
     {
-        User::where('idUser', $id)->delete();
-        return redirect()->back();
+        try {
+            $user = User::findOrFail($id);
+            if ($user->profile_img) {
+                $imagePath = public_path('uploads/users/' . $user->profile_img);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            $user->delete();
+            return back()->with('success', 'User and their profile image deleted successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to delete user: ' . $e->getMessage());
+        }
     }
+
     public function deleteMessage($id)
     {
         Message::where('idMessage', $id)->delete();

@@ -20,10 +20,17 @@ class User extends Authenticatable
     protected $fillable = [
         'firstName',
         'lastName',
+        'profile_img',
+        'bio',
         'email',
         'password',
         'idRole',
     ];
+    public function setProfileImgAttribute($value)
+{
+    // Remove or modify this if it exists
+    $this->attributes['profile_img'] = $value;
+}
 
     /**
      * The attributes that should be hidden for serialization.

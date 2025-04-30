@@ -20,6 +20,7 @@ import { CircleChevronRight } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export const ReportedMeals = ({ meals }) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -67,7 +68,7 @@ export const ReportedMeals = ({ meals }) => {
                         Filter
                     </button> */}
                 </div>
-                <div className="flex flex-col overflow-auto h-auto max-h-[75vh] scrollbar pb-10 max-md:pb-0!">
+                <ScrollArea className="flex flex-col h-screen pb-30">
                     {filteredMeals.length > 0 ? (
                         filteredMeals.map((meal) => (
                             <div key={meal.idMeal}>
@@ -174,7 +175,7 @@ export const ReportedMeals = ({ meals }) => {
                             No Meals found matching your search.
                         </div>
                     )}
-                </div>
+                </ScrollArea>
             </div>
         </div>
     );

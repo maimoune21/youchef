@@ -16,7 +16,7 @@ const PopularMeals = ({ popularMeals }) => {
     return (
         <div
             id="PopularMeals"
-            className="text-center bg-soft pb-30 pt-5 flex flex-col w-full"
+            className="text-center bg-soft pb-50 pt-5 flex flex-col w-full"
         >
             <h2 className="text-green pt-3.5 pb-2 sm:text-[54px] max-md:text-4xl max-sm:text-3xl tn:text-4xl font-bold tracking-wide cursor-pointer">
                 Popular Meals

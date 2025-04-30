@@ -134,12 +134,17 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('profile_img')) {
+            // Delete old file
             if ($user->profile_img) {
-                Storage::disk('public')->delete('users/' . $user->profile_img);
+                $oldImagePath = public_path('uploads/users/' . $user->profile_img);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
             }
+            // Store new file
             $extension = $request->file('profile_img')->getClientOriginalExtension();
             $filename = 'User' . $user->idUser . '.' . $extension;
-            $request->file('profile_img')->storeAs('users', $filename, 'public');
+            $request->file('profile_img')->move(public_path('uploads/users'), $filename);
             $user->profile_img = $filename;
         }
         if (!$user->profile_img) {
@@ -162,7 +167,10 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if ($user->profile_img) {
-            Storage::disk('public')->delete('users/' . $user->profile_img);
+            $imagePath = public_path('uploads/users/'.$user->profile_img);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
             $user->profile_img = null;
             $user->save();
         }

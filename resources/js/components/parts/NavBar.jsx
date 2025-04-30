@@ -11,6 +11,7 @@ import {
 import Logo from "../ui/Logo";
 import { Link } from "@inertiajs/react";
 import SearchBar from "../ui/SearchBar";
+import { LayoutDashboard } from "lucide-react";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -69,8 +70,8 @@ const Navbar = () => {
             ? [
                 {
                     path: "/dashboard/reportedMeals",
-                    label: "Manage",
-                    icon: ManageIcon,
+                    label: "Dashboard",
+                    icon: LayoutDashboard,
                 },
             ]
             : []),

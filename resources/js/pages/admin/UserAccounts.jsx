@@ -15,22 +15,38 @@ import React, { useState } from "react";
 import TextInputGroup from "@/components/ui/TextInputGroup";
 import { UpdateProfile } from "@/components/models/UpdateProfile";
 import { CircleChevronRight, Trash2Icon } from "lucide-react";
-import { Link } from "@inertiajs/react";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 export const UserAccounts = ({ users }) => {
     const [searchTerm, setSearchTerm] = useState("");
-    const filteredUsers = users.filter((user) => {
+    const [usersList, setUsersList] = useState(users); // Local state
+
+    const filteredUsers = usersList.filter((user) => {
         const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
         return fullName.includes(searchTerm.toLowerCase());
     });
+
+    const handleDeleteUser = (userId) => {
+        router.delete(`/admin/users/${userId}`, {
+            onSuccess: () => {
+                toast.success("User deleted successfully", { duration: 2000 });
+                setUsersList((prev) =>
+                    prev.filter((user) => user.idUser !== userId)
+                );
+            },
+            onError: () => {
+                toast.error("Failed to delete user", { duration: 2000 });
+            },
+        });
+    };
+
     return (
         <div className="mt-4 max-md:mb-20 overflow-hidden">
             <div className="TopManageDashboard max-sm:px-0!">
                 <UserIcon style="size-7 fill-gray-400 text-gray-400" />
                 <h1 className="text-lg text-gray-500">Users Accounts</h1>
             </div>
-            <div className="sm:m-3 rounded-sm ">
+            <div className="sm:m-3 rounded-sm">
                 <div className="flex relative">
                     <span className="bg-white! flexy absolute left-0">
                         <FilterIcon style="size-7.5 text-gray-400" />
@@ -40,15 +56,12 @@ export const UserAccounts = ({ users }) => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="bg-white! border-0! rounded-none! py-1 pl-10! pr-20! border-b-1! border-gray-400! focus:ring-0! focus:border-b-1!"
                     />
-                    {/* <button className="button absolute right-2 top-1 rounded-full! py-1.5! px-7!">
-                        Filter
-                    </button> */}
                 </div>
                 <div className="h-auto max-h-[75vh] scrollbar overflow-auto pb-10 max-md:pb-0!">
                     <div className="flex flex-col">
                         {filteredUsers.length > 0 ? (
                             filteredUsers.map((user) => (
-                                <div key={user.id}>
+                                <div key={user.idUser}>
                                     <div className="border-b-1 border-gray-400 py-4 px-2">
                                         <div className="grid gap-0 sm:grid-cols-[5fr_0.5fr] max-lg:grid-cols-[1fr]!">
                                             <div className="grid grid-cols-[1fr_16fr] gap-8 max-sm:gap-2 max-sm:items-center max-sm:flex-col">
@@ -119,6 +132,7 @@ export const UserAccounts = ({ users }) => {
                                                             buttonContent="Edit"
                                                             buttonClassName="h-auto! px-5! py-1.5!"
                                                             user={user}
+                                                            isAdmin={true}
                                                         />
                                                     </span>
                                                     <Drawer>
@@ -151,22 +165,11 @@ export const UserAccounts = ({ users }) => {
                                                                     </Button>
                                                                 </DrawerClose>
                                                                 <DrawerClose
-                                                                    onClick={() => {
-                                                                        router.delete(
-                                                                            `/admin/users/${user.idUser}`,
-                                                                            {
-                                                                                onSuccess:
-                                                                                    () => {
-                                                                                        toast.success(
-                                                                                            `deleted successfully`,
-                                                                                            {
-                                                                                                duration: 2000,
-                                                                                            }
-                                                                                        );
-                                                                                    },
-                                                                            }
-                                                                        );
-                                                                    }}
+                                                                    onClick={() =>
+                                                                        handleDeleteUser(
+                                                                            user.idUser
+                                                                        )
+                                                                    }
                                                                     className="cursor-pointer rounded-md text-sm w-20 bg-red-600 hover:bg-red-800"
                                                                 >
                                                                     Delete
