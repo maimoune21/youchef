@@ -9,70 +9,75 @@ class MealsSeeder extends Seeder
 {
     public function run(): void
     {
-        $kitchenIds = DB::table('kitchens')->pluck('idKitchen', 'name')->toArray();
-        $categoryIds = DB::table('categories')->pluck('idCategory', 'name')->toArray();
-        $mealTypes = [
-            'Salad' => [
-                'countries' => ['Morocco'],
-                'ingredients' => ['Lettuce', 'Tomato', 'Cucumber', 'Olives']
-            ],
-            'Drinks' => [
-                'countries' => ['Japan', 'India'],
-                'ingredients' => ['Fruits', 'Yogurt', 'Ice', 'Tea Leaves']
-            ],
-            'Pasta' => [
-                'countries' => ['Italy'],
-                'ingredients' => ['Pasta', 'Cheese', 'Tomato Sauce', 'Basil']
-            ],
-            'Soup' => [
-                'countries' => ['Japan', 'Mexico'],
-                'ingredients' => ['Broth', 'Vegetables', 'Chili', 'Beans']
-            ],
-            'Snacks' => [
-                'countries' => ['Usa', 'Mexico'],
-                'ingredients' => ['Potato', 'Cheese', 'Tortilla', 'Avocado']
-            ],
-            'Desserts' => [
-                'countries' => ['France', 'Italy'],
-                'ingredients' => ['Sugar', 'Flour', 'Eggs', 'Chocolate']
-            ],
-            'Cake' => [
-                'countries' => ['Usa', 'France'],
-                'ingredients' => ['Flour', 'Sugar', 'Butter', 'Vanilla']
-            ]
+        // Get all kitchen IDs
+        $kitchenIds = [
+            'Morocco' => DB::table('kitchens')->where('name', 'Morocco')->value('idKitchen'),
+            'Japan' => DB::table('kitchens')->where('name', 'Japan')->value('idKitchen'),
+            'Italy' => DB::table('kitchens')->where('name', 'Italy')->value('idKitchen'),
+            'Usa' => DB::table('kitchens')->where('name', 'Usa')->value('idKitchen'),
+            'France' => DB::table('kitchens')->where('name', 'France')->value('idKitchen'),
+            'India' => DB::table('kitchens')->where('name', 'India')->value('idKitchen'),
+            'Mexico' => DB::table('kitchens')->where('name', 'Mexico')->value('idKitchen'),
         ];
 
-        $meals = [];
-        $usedDurations = [];
+        // Get all category IDs
+        $categoryIds = [
+            'Salad' => DB::table('categories')->where('name', 'Salad')->value('idCategory'),
+            'Drinks' => DB::table('categories')->where('name', 'Drinks')->value('idCategory'),
+            'Pasta' => DB::table('categories')->where('name', 'Pasta')->value('idCategory'),
+            'Soup' => DB::table('categories')->where('name', 'Soup')->value('idCategory'),
+            'Snacks' => DB::table('categories')->where('name', 'Snacks')->value('idCategory'),
+            'Desserts' => DB::table('categories')->where('name', 'Desserts')->value('idCategory'),
+            'Cake' => DB::table('categories')->where('name', 'Cake')->value('idCategory'),
+        ];
 
-        for ($i = 0; $i < 20; $i++) {
-            $category = array_rand($mealTypes);
-            $country = $mealTypes[$category]['countries'][array_rand($mealTypes[$category]['countries'])];
+        // Define meals for each category
+        $meals = [
+            // Salads
+            ['title' => 'Panzanella', 'meal_img' => 'panzanella.png', 'duration' => '00:20:00', 'description' => 'Tuscan bread and tomato salad', 'ingredients' => json_encode(['Stale Bread', 'Tomatoes', 'Red Onion', 'Cucumber', 'Basil', 'Olive Oil', 'Vinegar']), 'instructions' => json_encode(['Soak bread in water', 'Mix with vegetables', 'Dress with oil and vinegar', 'Let flavors meld']), 'idCategory' => $categoryIds['Salad'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 1, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Taktouka', 'meal_img' => 'taktouka.png', 'duration' => '00:25:00', 'description' => 'Moroccan cooked pepper and tomato salad', 'ingredients' => json_encode(['Green Peppers', 'Tomatoes', 'Garlic', 'Paprika', 'Cumin', 'Olive Oil']), 'instructions' => json_encode(['Roast peppers and peel', 'Cook with tomatoes and spices', 'Serve at room temperature']), 'idCategory' => $categoryIds['Salad'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Moroccan Zaalouk', 'meal_img' => 'zaalouk.png', 'duration' => '00:25:00', 'description' => 'Traditional Moroccan eggplant and tomato salad', 'ingredients' => json_encode(['Eggplant', 'Tomatoes', 'Garlic', 'Olive Oil', 'Paprika', 'Cumin']), 'instructions' => json_encode(['Roast the eggplant until tender', 'Sauté garlic and tomatoes', 'Mash everything together with spices', 'Serve with bread']), 'idCategory' => $categoryIds['Salad'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 3, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Greek Salad', 'meal_img' => 'greek_salad.png', 'duration' => '00:15:00', 'description' => 'Classic salad with feta and olives', 'ingredients' => json_encode(['Cucumber', 'Tomatoes', 'Red Onion', 'Feta', 'Olives', 'Olive Oil']), 'instructions' => json_encode(['Chop vegetables into chunks', 'Add olives and feta', 'Drizzle with olive oil', 'Season with oregano']), 'idCategory' => $categoryIds['Salad'], 'idKitchen' => $kitchenIds['France'], 'idUser' => 4, 'created_at' => now(), 'updated_at' => now(),],
 
-            do {
-                $minutes = rand(1, 180);
-                $duration = sprintf("%02d:%02d:00", floor($minutes / 60), $minutes % 60);
-            } while (in_array($duration, $usedDurations));
+            // Drinks
+            ['title' => 'Limoncello', 'meal_img' => 'limoncello.png', 'duration' => '72:00:00', 'description' => 'Italian lemon liqueur from the Amalfi coast', 'ingredients' => json_encode(['Lemons', 'Pure Alcohol', 'Sugar', 'Water']), 'instructions' => json_encode(['Peel lemons carefully', 'Steep peels in alcohol', 'Prepare sugar syrup', 'Combine and age']), 'idCategory' => $categoryIds['Drinks'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Mint Tea', 'meal_img' => 'mint_tea.png', 'duration' => '00:10:00', 'description' => 'Traditional Moroccan mint green tea', 'ingredients' => json_encode(['Green Tea', 'Fresh Mint', 'Sugar', 'Water']), 'instructions' => json_encode(['Boil water', 'Add tea and mint', 'Sweeten to taste', 'Pour from height to create foam']), 'idCategory' => $categoryIds['Drinks'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 3, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Matcha Latte', 'meal_img' => 'matcha.png', 'duration' => '00:10:00', 'description' => 'Traditional Japanese green tea latte', 'ingredients' => json_encode(['Matcha Powder', 'Milk', 'Hot Water', 'Sugar']), 'instructions' => json_encode(['Sift matcha powder into bowl', 'Add hot water and whisk', 'Heat and froth milk', 'Combine and sweeten to taste']), 'idCategory' => $categoryIds['Drinks'], 'idKitchen' => $kitchenIds['Japan'], 'idUser' => 4, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Mango Lassi', 'meal_img' => 'lassi.png', 'duration' => '00:05:00', 'description' => 'Refreshing Indian yogurt drink', 'ingredients' => json_encode(['Mango', 'Yogurt', 'Milk', 'Sugar', 'Cardamom']), 'instructions' => json_encode(['Blend mango with yogurt', 'Add milk to desired consistency', 'Sweeten to taste', 'Sprinkle with cardamom']), 'idCategory' => $categoryIds['Drinks'], 'idKitchen' => $kitchenIds['India'], 'idUser' => 5, 'created_at' => now(), 'updated_at' => now(),],
 
-            $usedDurations[] = $duration;
+            // Pastas
+            ['title' => 'Osso Buco', 'meal_img' => 'osso_buco.png', 'duration' => '02:30:00', 'description' => 'Milanese braised veal shanks', 'ingredients' => json_encode(['Veal Shanks', 'White Wine', 'Carrots', 'Celery', 'Onion', 'Tomato Paste', 'Gremolata']), 'instructions' => json_encode(['Brown the shanks', 'Sauté vegetables', 'Add wine and simmer', 'Cook until tender']), 'idCategory' => $categoryIds['Pasta'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Risotto alla Milanese', 'meal_img' => 'risotto.png', 'duration' => '00:40:00', 'description' => 'Creamy Italian saffron risotto', 'ingredients' => json_encode(['Arborio Rice', 'Saffron', 'White Wine', 'Parmesan', 'Butter', 'Onion', 'Chicken Stock']), 'instructions' => json_encode(['Sauté onion', 'Toast rice', 'Deglaze with wine', 'Add stock gradually', 'Finish with saffron and cheese']), 'idCategory' => $categoryIds['Pasta'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 3, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Moroccan Couscous', 'meal_img' => 'couscous.png', 'duration' => '01:15:00', 'description' => 'Traditional Moroccan semolina with vegetables and meat', 'ingredients' => json_encode(['Couscous', 'Chicken', 'Carrots', 'Zucchini', 'Chickpeas', 'Raisins', 'Onions', 'Saffron']), 'instructions' => json_encode(['Steam the couscous', 'Cook vegetables and meat in broth', 'Layer couscous with vegetables', 'Serve with broth on the side']), 'idCategory' => $categoryIds['Pasta'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 3, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Spaghetti Carbonara', 'meal_img' => 'carbonara.png', 'duration' => '00:30:00', 'description' => 'Classic Roman pasta dish', 'ingredients' => json_encode(['Spaghetti', 'Eggs', 'Pancetta', 'Pecorino', 'Black Pepper']), 'instructions' => json_encode(['Cook pasta al dente', 'Fry pancetta until crisp', 'Mix eggs and cheese', 'Combine everything off heat']), 'idCategory' => $categoryIds['Pasta'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 4, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Pasta Puttanesca', 'meal_img' => 'puttanesca.png', 'duration' => '00:25:00', 'description' => 'Flavorful tomato sauce with olives and capers', 'ingredients' => json_encode(['Pasta', 'Tomatoes', 'Olives', 'Capers', 'Anchovies', 'Garlic']), 'instructions' => json_encode(['Sauté garlic and anchovies', 'Add tomatoes and simmer', 'Stir in olives and capers', 'Toss with cooked pasta']), 'idCategory' => $categoryIds['Pasta'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 6, 'created_at' => now(), 'updated_at' => now(),],
 
-            $meals[] = [
-                'title' => ucfirst(fake()->words(rand(1, 3), true)),
-                'meal_img' => '',
-                'duration' => $duration,
-                'description' => fake()->sentence(),
-                'ingredients' => json_encode(array_merge(
-                    $mealTypes[$category]['ingredients'],
-                    fake()->randomElements(['Salt', 'Pepper', 'Oil', 'Herbs'], rand(1, 3))
-                )),
-                'instructions' => json_encode(array_map(fn($s) => ucfirst($s), fake()->sentences(rand(3, 5)))),
-                'idCategory' => $categoryIds[$category],
-                'idKitchen' => $kitchenIds[$country],
-                'idUser' => rand(1, 9),
-                'created_at' => now()->subDays(rand(0, 365)),
-                'updated_at' => now(),
-            ];
-        }
+            // Soups
+            ['title' => 'Minestrone', 'meal_img' => 'minestrone.png', 'duration' => '00:45:00', 'description' => 'Hearty Italian vegetable soup with pasta', 'ingredients' => json_encode(['Onion', 'Carrots', 'Celery', 'Tomatoes', 'Beans', 'Pasta', 'Zucchini', 'Garlic', 'Vegetable Stock', 'Parmesan']), 'instructions' => json_encode(['Sauté onions, carrots and celery', 'Add garlic and tomatoes', 'Pour in stock and simmer', 'Add beans and pasta', 'Finish with zucchini and parsley', 'Serve with parmesan']), 'idCategory' => $categoryIds['Soup'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 8, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Harira Soup', 'meal_img' => 'harira.png', 'duration' => '01:30:00', 'description' => 'Hearty Moroccan lentil and tomato soup', 'ingredients' => json_encode(['Lentils', 'Tomatoes', 'Chickpeas', 'Lamb', 'Celery', 'Cilantro', 'Spices']), 'instructions' => json_encode(['Soak lentils overnight', 'Brown the meat', 'Add vegetables and spices', 'Simmer until thick']), 'idCategory' => $categoryIds['Soup'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 7, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Miso Soup', 'meal_img' => 'miso_soup.png', 'duration' => '00:15:00', 'description' => 'Traditional Japanese soybean paste soup', 'ingredients' => json_encode(['Dashi Stock', 'Miso Paste', 'Tofu', 'Wakame Seaweed', 'Green Onions']), 'instructions' => json_encode(['Heat dashi stock to simmer', 'Dissolve miso paste in stock', 'Add cubed tofu and seaweed', 'Garnish with green onions']), 'idCategory' => $categoryIds['Soup'], 'idKitchen' => $kitchenIds['Japan'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Tortilla Soup', 'meal_img' => 'tortilla_soup.png', 'duration' => '00:40:00', 'description' => 'Hearty Mexican soup with crispy tortilla strips', 'ingredients' => json_encode(['Chicken', 'Tomatoes', 'Chili Peppers', 'Garlic', 'Tortillas', 'Avocado']), 'instructions' => json_encode(['Sauté garlic and chili', 'Add tomatoes and chicken', 'Simmer until chicken cooks', 'Serve with tortilla strips and avocado']), 'idCategory' => $categoryIds['Soup'], 'idKitchen' => $kitchenIds['Mexico'], 'idUser' => 1, 'created_at' => now(), 'updated_at' => now(),],
+
+            // Snacks
+            ['title' => 'Focaccia', 'meal_img' => 'focaccia.png', 'duration' => '02:30:00', 'description' => 'Classic Italian olive oil bread', 'ingredients' => json_encode(['Flour', 'Yeast', 'Olive Oil', 'Rosemary', 'Sea Salt', 'Water']), 'instructions' => json_encode(['Make dough and let rise', 'Press into pan', 'Dimple and oil generously', 'Bake until golden']), 'idCategory' => $categoryIds['Snacks'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Arancini', 'meal_img' => 'arancini.png', 'duration' => '01:00:00', 'description' => 'Sicilian fried rice balls', 'ingredients' => json_encode(['Risotto', 'Mozzarella', 'Egg', 'Breadcrumbs', 'Peas', 'Ragu']), 'instructions' => json_encode(['Form rice balls with filling', 'Coat in egg and crumbs', 'Fry until golden brown']), 'idCategory' => $categoryIds['Snacks'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 3, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Briouats', 'meal_img' => 'briouats.png', 'duration' => '00:45:00', 'description' => 'Crispy Moroccan stuffed pastries', 'ingredients' => json_encode(['Phyllo Dough', 'Ground Meat', 'Spices', 'Lemon', 'Egg', 'Oil']), 'instructions' => json_encode(['Prepare meat filling', 'Wrap in phyllo triangles', 'Brush with egg wash', 'Fry until golden']), 'idCategory' => $categoryIds['Snacks'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 4, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Pastilla', 'meal_img' => 'pastilla.png', 'duration' => '02:00:00', 'description' => 'Sweet and savory Moroccan pigeon pie', 'ingredients' => json_encode(['Pigeon', 'Almonds', 'Phyllo Dough', 'Cinnamon', 'Sugar', 'Eggs', 'Onions']), 'instructions' => json_encode(['Cook pigeon with spices', 'Prepare almond mixture', 'Layer phyllo with filling', 'Bake until golden']), 'idCategory' => $categoryIds['Snacks'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 5, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Nachos Supreme', 'meal_img' => 'nachos.png', 'duration' => '00:20:00', 'description' => 'Loaded tortilla chips with cheese and toppings', 'ingredients' => json_encode(['Tortilla Chips', 'Cheese', 'Beans', 'Jalapeños', 'Sour Cream', 'Guacamole']), 'instructions' => json_encode(['Layer chips on baking sheet', 'Sprinkle with cheese and beans', 'Bake until cheese melts', 'Top with fresh toppings']), 'idCategory' => $categoryIds['Snacks'], 'idKitchen' => $kitchenIds['Mexico'], 'idUser' => 1, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Cheese Fries', 'meal_img' => 'cheese_fries.png', 'duration' => '00:25:00', 'description' => 'Crispy fries smothered in melted cheese', 'ingredients' => json_encode(['Potatoes', 'Cheddar Cheese', 'Bacon Bits', 'Green Onions', 'Ranch Dressing']), 'instructions' => json_encode(['Cut and fry potatoes until golden', 'Melt cheese over hot fries', 'Top with bacon and onions', 'Serve with ranch dressing']), 'idCategory' => $categoryIds['Snacks'], 'idKitchen' => $kitchenIds['Usa'], 'idUser' => 10, 'created_at' => now(), 'updated_at' => now(),],
+
+            // Desserts
+            ['title' => 'Panna Cotta', 'meal_img' => 'panna_cotta.png', 'duration' => '04:00:00', 'description' => 'Northern Italian set cream dessert', 'ingredients' => json_encode(['Heavy Cream', 'Sugar', 'Vanilla', 'Gelatin', 'Berries']), 'instructions' => json_encode(['Bloom gelatin', 'Heat cream mixture', 'Combine and pour into molds', 'Chill until set']), 'idCategory' => $categoryIds['Desserts'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Baghrir', 'meal_img' => 'baghrir.png', 'duration' => '00:30:00', 'description' => 'Moroccan thousand-hole pancakes', 'ingredients' => json_encode(['Semolina', 'Flour', 'Yeast', 'Sugar', 'Salt', 'Water']), 'instructions' => json_encode(['Mix batter and let rest', 'Cook on one side only', 'Serve with honey-butter']), 'idCategory' => $categoryIds['Desserts'], 'idKitchen' => $kitchenIds['Morocco'], 'idUser' => 4, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Crème Brûlée', 'meal_img' => 'creme_brulee.png', 'duration' => '01:30:00', 'description' => 'Classic French custard with caramelized sugar top', 'ingredients' => json_encode(['Heavy Cream', 'Egg Yolks', 'Sugar', 'Vanilla Bean', 'Fresh Berries']), 'instructions' => json_encode(['Heat cream with vanilla', 'Whisk yolks and sugar', 'Combine and bake in water bath', 'Chill then caramelize sugar top']), 'idCategory' => $categoryIds['Desserts'], 'idKitchen' => $kitchenIds['France'], 'idUser' => 3, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Tiramisu', 'meal_img' => 'tiramisu.png', 'duration' => '00:45:00', 'description' => 'Italian coffee-flavored layered dessert', 'ingredients' => json_encode(['Ladyfingers', 'Mascarpone', 'Coffee', 'Eggs', 'Cocoa Powder']), 'instructions' => json_encode(['Dip ladyfingers in coffee', 'Layer with mascarpone mixture', 'Repeat layers and chill', 'Dust with cocoa before serving']), 'idCategory' => $categoryIds['Desserts'], 'idKitchen' => $kitchenIds['Italy'], 'idUser' => 4, 'created_at' => now(), 'updated_at' => now(),],
+
+            // Cakes
+            ['title' => 'Tres Leches Cake', 'meal_img' => 'tres_leches.png', 'duration' => '03:00:00', 'description' => 'Ultra-moist Mexican sponge cake soaked in three kinds of milk', 'ingredients' => json_encode(['Flour', 'Eggs', 'Sugar', 'Whole Milk', 'Evaporated Milk', 'Sweetened Condensed Milk', 'Vanilla', 'Whipped Cream']), 'instructions' => json_encode(['Bake a light sponge cake and let cool', 'Mix the three milks together', 'Poke holes in cake and pour milk mixture over it', 'Refrigerate overnight to absorb', 'Top with whipped cream and fruit']), 'idCategory' => $categoryIds['Cake'], 'idKitchen' => $kitchenIds['Mexico'], 'idUser' => 5, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'New York Cheesecake', 'meal_img' => 'cheesecake.png', 'duration' => '05:00:00', 'description' => 'Classic dense American cheesecake with graham cracker crust', 'ingredients' => json_encode(['Cream Cheese', 'Graham Crackers', 'Butter', 'Sugar', 'Eggs', 'Sour Cream', 'Vanilla', 'Lemon Zest']), 'instructions' => json_encode(['Make graham cracker crust and pre-bake', 'Beat cream cheese until smooth', 'Add eggs one at a time', 'Mix in remaining ingredients', 'Bake in water bath until set', 'Chill overnight before serving']), 'idCategory' => $categoryIds['Cake'], 'idKitchen' => $kitchenIds['Usa'], 'idUser' => 6, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Red Velvet Cake', 'meal_img' => 'red_velvet.png', 'duration' => '01:15:00', 'description' => 'Classic American layered cake with cream cheese frosting', 'ingredients' => json_encode(['Flour', 'Cocoa', 'Buttermilk', 'Red Food Coloring', 'Cream Cheese', 'Powdered Sugar']), 'instructions' => json_encode(['Mix dry ingredients', 'Add wet ingredients and coloring', 'Bake layers and let cool', 'Frost with cream cheese icing']), 'idCategory' => $categoryIds['Cake'], 'idKitchen' => $kitchenIds['Usa'], 'idUser' => 1, 'created_at' => now(), 'updated_at' => now(),],
+            ['title' => 'Opera Cake', 'meal_img' => 'opera_cake.png', 'duration' => '02:00:00', 'description' => 'Elegant French layered coffee and chocolate cake', 'ingredients' => json_encode(['Almond Flour', 'Coffee', 'Dark Chocolate', 'Butter', 'Eggs', 'Sugar']), 'instructions' => json_encode(['Make almond sponge layers', 'Prepare coffee buttercream', 'Create chocolate ganache', 'Assemble layers and chill']), 'idCategory' => $categoryIds['Cake'], 'idKitchen' => $kitchenIds['France'], 'idUser' => 2, 'created_at' => now(), 'updated_at' => now(),]
+        ];
 
         DB::table('meals')->insert($meals);
     }

@@ -5,7 +5,7 @@ import { Link, usePage } from "@inertiajs/react";
 import FavoriteButton from "../../ui/favoriteButton";
 
 const PopularCard = ({ meal }) => {
-    const { thisUser } = usePage().props
+    const { thisUser } = usePage().props;
     const [status, setStatus] = useState("");
 
     useEffect(() => {
@@ -36,8 +36,9 @@ const PopularCard = ({ meal }) => {
             const months = Math.floor(differenceInDays / 30);
             return `${months} month${months > 1 ? "s" : ""} ago`;
         } else {
-            return `${differenceInDays} day${differenceInDays !== 1 ? "s" : ""
-                } ago`;
+            return `${differenceInDays} day${
+                differenceInDays !== 1 ? "s" : ""
+            } ago`;
         }
     };
 
@@ -45,8 +46,9 @@ const PopularCard = ({ meal }) => {
         const [hours, minutes] = duration.split(":").map(Number);
         const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
         if (hours > 0) {
-            return `${hours}h${paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
-                }`;
+            return `${hours}h${
+                paddedMinutes !== "00" ? `:${paddedMinutes}` : ""
+            }`;
         } else if (minutes > 0) {
             return `${minutes}m`;
         } else {
@@ -57,25 +59,28 @@ const PopularCard = ({ meal }) => {
     return (
         <div className="w-full bg-soft relative custom-shadow rounded-xl overflow-hidden my-2 max-h-[60vh] md:max-h-[75vh]">
             <img
-                src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
-                alt={meal.image}
-                className=" w-full max-sm:h-64 aspect-[4/2]"
-                onError={(e) => {
-                    e.target.src = BlankMeal;
-                }}
+                src={
+                    meal.meal_img
+                        ? `/storage/meals/${meal.meal_img}`
+                        : BlankMeal
+                }
+                alt="Meal Image"
+                className="w-full max-sm:h-64 aspect-[4/2]"
             />
+
             <div className="backdrop-brightness-50 absolute rounded-b-xl bottom-0 w-full">
                 <div className="absolute -top-10 text-md max-sm:text-sm! max-sm:-top-8 left-3 bg-30 flexy rounded-full p-1 pr-2 gap-1">
                     <TimeIcon style="size-6! max-sm:size-5!" />
                     {formatDuration(meal.duration)}
                 </div>
                 <div
-                    className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${status === "hard"
+                    className={`absolute -top-11 text-md max-sm:text-sm! max-sm:-top-8 right-3 bg-30 flexy rounded-full py-1 px-1 pr-1.5 pt-0.5 ${
+                        status === "hard"
                             ? "text-red-500"
                             : status === "medium"
-                                ? "text-orange-500"
-                                : "text-green-500"
-                        }`}
+                            ? "text-orange-500"
+                            : "text-green-500"
+                    }`}
                 >
                     <div className="flexy px-1">
                         <SignalIcon size="size-7.5 pb-1! max-sm:pb-0.5! max-sm:size-5.5!" />

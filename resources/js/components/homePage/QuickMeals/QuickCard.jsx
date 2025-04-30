@@ -62,9 +62,6 @@ const QuickCard = ({ meal }) => {
                         src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
                         alt={meal.title}
                         className="w-full h-full rounded-t-3xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
-                        onError={(e) => {
-                            e.target.src = BlankMeal;
-                        }}
                     />
                 </Link>
                 <div className="absolute bottom-1 text-xs left-3 bg-30 flexy rounded-full p-1 gap-1">

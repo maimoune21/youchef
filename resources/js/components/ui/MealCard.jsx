@@ -77,9 +77,6 @@ const MealCard = ({ meal, thisUser, favoriteMeals, mypost = false, handleDelete 
                   src={meal.meal_img ? `/storage/meals/${meal.meal_img}` : BlankMeal}
                   alt={meal.title}
                   className="w-full h-full rounded-t-xl aspect-[4/2.65] object-cover group-hover:scale-105 transition duration-300"
-                  onError={(e) => {
-                    e.target.src = BlankMeal;
-                  }}
                 />
                 </Link>
                 <div className="absolute bottom-2 text-sm left-3 bg-30 max-sm:text-xs flexy rounded-full p-1 pr-2 font-bold gap-1">
