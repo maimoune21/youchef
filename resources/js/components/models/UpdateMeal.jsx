@@ -95,7 +95,6 @@ export function UpdateMeal({ buttonStyles = "", meal , dataCategories, dataKitch
       //   }
       // });  
 
-
       router.post(`/meals/${meal.idMeal}`, formData, {
         onSuccess: () => {
           console.log('success - meal updated');

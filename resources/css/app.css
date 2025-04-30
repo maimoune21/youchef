@@ -210,7 +210,10 @@ body {
   @apply absolute top-2.5 left-1/2 transform -translate-x-1/2 py-2 px-5 flex items-center justify-center gap-4 border-b
 }
 .WorldMealBtn{
-  @apply flex bg-[var(--bg-10)] rounded-full text-white tn:text-2xl! max-sm:text-base max-sm:py-1 max-sm:px-6 sm:text-2xl tracking-wide font-medium font-mono py-1 px-3 sm:py-2 sm:px-7 cursor-pointer transition-all duration-300 active:scale-100 hover:bg-white hover:text-[var(--bg-10)] hover:scale-92;
+  @apply flex items-center justify-center gap-2 bg-[var(--bg-10)] rounded-full text-white tn:text-2xl! max-sm:text-base max-sm:py-1 max-sm:px-6 sm:text-2xl tracking-wide font-medium font-mono py-1 px-3 sm:py-2 sm:px-7 cursor-pointer transition-all duration-300 active:scale-100 hover:bg-white hover:text-[var(--bg-10)] hover:scale-92;
+}
+.WorlFlag {
+  @apply w-7 h-5 rounded-xs;
 }
 .sideBarCategoriesBtn {
   @apply relative flex border-b-2 rounded-r-full py-7 pr-2 justify-between cursor-pointer w-[80%];
